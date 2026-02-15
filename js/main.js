@@ -202,8 +202,9 @@ const vagasData = [
         empresa: 'Tech Innovations',
         tipo: 'estagio',
         localizacao: 'luanda',
-        salario_min: 2000,
-        salario_max: 3000,
+        salario_min: 120000,
+        salario_max: 180000,
+        currency: 'KZS',
         experiencia: 'junior',
         descricao: 'Estamos procurando um desenvolvedor frontend júnior entusiasmado para se juntar à nossa equipe. Você trabalhará em projetos modernos usando React e JavaScript.',
         responsabilidades: [
@@ -228,8 +229,9 @@ const vagasData = [
         empresa: 'FinanceHub',
         tipo: 'emprego',
         localizacao: 'luanda',
-        salario_min: 2500,
-        salario_max: 3500,
+        salario_min: 150000,
+        salario_max: 210000,
+        currency: 'KZS',
         experiencia: 'junior',
         descricao: 'Procuramos um analista de dados com habilidades em Python e SQL para análise e visualização de dados.',
         responsabilidades: [
@@ -254,8 +256,9 @@ const vagasData = [
         empresa: 'Digital Solutions',
         tipo: 'estagio',
         localizacao: 'luanda',
-        salario_min: 1500,
-        salario_max: 2000,
+        salario_min: 90000,
+        salario_max: 120000,
+        currency: 'KZS',
         experiencia: 'estagiario',
         descricao: 'Estágio em Marketing Digital com oportunidade de aprender sobre social media, SEO e campanhas.',
         responsabilidades: [
@@ -280,8 +283,9 @@ const vagasData = [
         empresa: 'Creative Studio',
         tipo: 'emprego',
         localizacao: 'remoto',
-        salario_min: 2200,
-        salario_max: 3200,
+        salario_min: 132000,
+        salario_max: 192000,
+        currency: 'KZS',
         experiencia: 'junior',
         descricao: 'Procuramos designer gráfico criativo para trabalhar em projetos de branding e design digital.',
         responsabilidades: [
@@ -306,8 +310,9 @@ const vagasData = [
         empresa: 'TechCorp Solutions',
         tipo: 'emprego',
         localizacao: 'luanda',
-        salario_min: 3500,
-        salario_max: 5000,
+        salario_min: 210000,
+        salario_max: 300000,
+        currency: 'KZS',
         experiencia: 'pleno',
         descricao: 'Buscamos desenvolvedor backend com experiência em Python e arquitetura de microsserviços.',
         responsabilidades: [
@@ -332,8 +337,9 @@ const vagasData = [
         empresa: 'Recursos Humanos Plus',
         tipo: 'emprego',
         localizacao: 'luanda',
-        salario_min: 2000,
-        salario_max: 2800,
+        salario_min: 120000,
+        salario_max: 168000,
+        currency: 'KZS',
         experiencia: 'junior',
         descricao: 'Auxiliar na gestão de recrutamento, onboarding e desenvolvimento de talentos.',
         responsabilidades: [
@@ -378,7 +384,6 @@ const vagasData = [
         skills: ['HTML', 'CSS', 'JavaScript', 'Web Development'],
         beneficios: ['Certificado de conclusão', 'Mentoria profissional', 'Experiência real', 'Networking'],
         sobreEmpresa: 'Startup CodeMinds é uma startup focada em educação e desenvolvimento de talentos.',
-        currency: 'BRL',
         isPaid: false
     },
     {
@@ -406,7 +411,6 @@ const vagasData = [
         skills: ['Figma', 'UI Design', 'UX Research', 'Prototyping'],
         beneficios: ['Certificado profissional', 'Portfolio boost', 'Experiência em projetos reais', 'Mentoria 1:1'],
         sobreEmpresa: 'Design Academy é uma academia de design focada em formar novos talentos.',
-        currency: 'BRL',
         isPaid: false
     },
     {
@@ -434,7 +438,6 @@ const vagasData = [
         skills: ['Análise de negócios', 'Excel', 'Pesquisa', 'Apresentações'],
         beneficios: ['Certificado de conclusão', 'Conhecimento prático', 'Rede profissional', 'Recomendação'],
         sobreEmpresa: 'Business Insights é consultoria especializada em análise e estratégia de negócios.',
-        currency: 'BRL',
         isPaid: false
     },
     {
@@ -443,8 +446,9 @@ const vagasData = [
         empresa: 'Digital Growth Lab',
         tipo: 'estagio',
         localizacao: 'luanda',
-        salario_min: 1200,
-        salario_max: 1800,
+        salario_min: 72000,
+        salario_max: 108000,
+        currency: 'KZS',
         experiencia: 'estagiario',
         descricao: 'Estágio remunerado em marketing digital com oportunidade de aprendizado prático e contatos valiosos.',
         responsabilidades: [

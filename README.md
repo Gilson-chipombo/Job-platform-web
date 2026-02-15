@@ -1,6 +1,6 @@
 # CarreiraHub - Plataforma de Estágios e Empregos
 
-Uma plataforma web profissional de estágios e empregos voltada para estudantes que concluíram o Ensino Médio.
+Uma plataforma web profissional de estágios e empregos voltada para estudantes que concluíram o Ensino Médio e Ensino Superio.
 
 ## 📋 Descrição
 

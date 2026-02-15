@@ -2,23 +2,12 @@
 // DETALHES VAGA - JOB DETAILS PAGE
 // ============================================
 
-// Declare variables before using them
-const vagasData = []; // This should be populated with actual data
-const isLoggedIn = () => false; // This should be implemented to check user login status
-const bootstrap = {}; // This should be imported or declared with actual bootstrap Modal functionality
-const showNotification = (message, type) => console.log(message, type); // This should be implemented to show notifications
-const getData = (key) => localStorage.getItem(key); // This should be implemented to get data from storage
-const saveData = (key, value) => localStorage.setItem(key, value); // This should be implemented to save data to storage
-const getCurrentUser = () => ({ id: 1, name: 'John Doe' }); // This should be implemented to get current user data
-const formatCurrency = (amount, currency) => {
-    // Simple currency formatting for demonstration purposes
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: currency }).format(amount);
-};
-
 class VagaDetailsManager {
     constructor() {
         this.vagaId = this.getVagaIdFromUrl();
         this.vaga = null;
+        this.authManager = new AuthManager();
+        this.favoritesManager = new FavoritesManager();
         this.init();
     }
 
@@ -134,14 +123,7 @@ class VagaDetailsManager {
      * Converter código de localização para nome
      */
     getLocalizacaoName(codigo) {
-        const localizacoes = {
-            'sao-paulo': 'São Paulo, SP',
-            'rio': 'Rio de Janeiro, RJ',
-            'bh': 'Belo Horizonte, MG',
-            'brasilia': 'Brasília, DF',
-            'remoto': 'Remoto'
-        };
-        return localizacoes[codigo] || codigo;
+        return getLocalizacaoName(codigo); // Usar função do main.js
     }
 
     /**
@@ -151,7 +133,7 @@ class VagaDetailsManager {
         const aplicarBtn = document.getElementById('aplicarBtn');
         if (aplicarBtn) {
             aplicarBtn.addEventListener('click', () => {
-                if (isLoggedIn()) {
+                if (this.authManager.isLoggedIn()) {
                     const modal = new bootstrap.Modal(document.getElementById('aplicacaoModal'));
                     modal.show();
                 } else {
@@ -177,7 +159,7 @@ class VagaDetailsManager {
         const notLoggedIn = document.getElementById('notLoggedIn');
         const loggedIn = document.getElementById('loggedIn');
 
-        if (isLoggedIn()) {
+        if (this.authManager.isLoggedIn()) {
             if (notLoggedIn) notLoggedIn.style.display = 'none';
             if (loggedIn) loggedIn.style.display = 'block';
         } else {
@@ -194,35 +176,30 @@ class VagaDetailsManager {
         if (!favoritarBtn) return;
 
         // Verificar se já está favoritado
-        const favoritas = getData('vagasFavoritas') ? JSON.parse(getData('vagasFavoritas')) : [];
-        if (favoritas.includes(this.vagaId)) {
+        const isFavorite = this.favoritesManager.isFavorite(this.vagaId);
+        if (isFavorite) {
             favoritarBtn.classList.add('active');
-            favoritarBtn.innerHTML = '<i class="bi bi-heart-fill me-2"></i>Removido dos Favoritos';
+            favoritarBtn.innerHTML = '<i class="bi bi-heart-fill me-2"></i>Remover dos Favoritos';
         }
 
         favoritarBtn.addEventListener('click', () => {
-            if (!isLoggedIn()) {
+            if (!this.authManager.isLoggedIn()) {
                 showNotification('Faça login para favoritar vagas', 'warning');
                 setTimeout(() => window.location.href = 'login.html', 1500);
                 return;
             }
 
-            const favoritas = getData('vagasFavoritas') ? JSON.parse(getData('vagasFavoritas')) : [];
-            const index = favoritas.indexOf(this.vagaId);
-
-            if (index > -1) {
-                favoritas.splice(index, 1);
+            if (this.favoritesManager.isFavorite(this.vagaId)) {
+                this.favoritesManager.removeFavorite(this.vagaId);
                 favoritarBtn.classList.remove('active');
-                favoritarBtn.innerHTML = '<i class="far fa-heart me-2"></i>Favoritar';
+                favoritarBtn.innerHTML = '<i class="bi bi-heart me-2"></i>Favoritar';
                 showNotification('Vaga removida dos favoritos', 'info');
             } else {
-                favoritas.push(this.vagaId);
+                this.favoritesManager.addFavorite(this.vagaId, this.vaga);
                 favoritarBtn.classList.add('active');
-                favoritarBtn.innerHTML = '<i class="bi bi-heart-fill me-2"></i>Removido dos Favoritos';
+                favoritarBtn.innerHTML = '<i class="bi bi-heart-fill me-2"></i>Remover dos Favoritos';
                 showNotification('Vaga adicionada aos favoritos', 'success');
             }
-
-            saveData('vagasFavoritas', JSON.stringify(favoritas));
         });
     }
 
@@ -240,11 +217,12 @@ class VagaDetailsManager {
         }
 
         const mensagem = document.getElementById('mensagemAplicacao').value;
-        const usuario = getCurrentUser();
+        const usuario = this.authManager.getCurrentUser();
 
         // Salvar candidatura
-        const candidaturas = getData('minhasCandidaturas') ? JSON.parse(getData('minhasCandidaturas')) : [];
+        const candidaturas = localStorage.getItem('applications') ? JSON.parse(localStorage.getItem('applications')) : [];
         candidaturas.push({
+            id: 'app_' + Date.now(),
             vagaId: this.vagaId,
             vagaTitulo: this.vaga.titulo,
             empresa: this.vaga.empresa,
@@ -252,7 +230,7 @@ class VagaDetailsManager {
             mensagem: mensagem,
             status: 'análise'
         });
-        saveData('minhasCandidaturas', JSON.stringify(candidaturas));
+        localStorage.setItem('applications', JSON.stringify(candidaturas));
 
         showNotification('Candidatura enviada com sucesso!', 'success');
 
@@ -275,5 +253,12 @@ class VagaDetailsManager {
  * Inicializar ao carregar
  */
 document.addEventListener('DOMContentLoaded', function() {
-    new VagaDetailsManager();
+    // Esperar um pouco para garantir que main.js foi carregado
+    setTimeout(() => {
+        if (typeof vagasData !== 'undefined' && Array.isArray(vagasData)) {
+            new VagaDetailsManager();
+        } else {
+            console.error('vagasData não foi carregado corretamente do main.js');
+        }
+    }, 100);
 });

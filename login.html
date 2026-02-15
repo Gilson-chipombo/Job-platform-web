@@ -145,41 +145,46 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navbar.js"></script>
     <script>
-        // Form Validation
         document.getElementById('loginEstudanteForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!this.checkValidity()) {
+            
+            const email = document.getElementById('emailEstudante').value;
+            const senha = document.getElementById('senhaEstudante').value;
+            
+            if (this.checkValidity() === false) {
                 e.stopPropagation();
             } else {
+                // Usar authManager para fazer login
+                const user = authManager.loginStudent(email, senha);
                 showNotification('Login realizado com sucesso!', 'success');
-                setTimeout(() => window.location.href = 'perfil.html', 1500);
+                setTimeout(() => {
+                    window.location.href = 'perfil.html';
+                }, 1500);
             }
             this.classList.add('was-validated');
         });
 
         document.getElementById('loginEmpresaForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!this.checkValidity()) {
+            
+            const email = document.getElementById('emailEmpresa').value;
+            const senha = document.getElementById('senhaEmpresa').value;
+            
+            if (this.checkValidity() === false) {
                 e.stopPropagation();
             } else {
+                // Usar authManager para fazer login
+                const user = authManager.loginCompany(email, senha);
                 showNotification('Login realizado com sucesso!', 'success');
-                setTimeout(() => window.location.href = 'perfil.html', 1500);
+                setTimeout(() => {
+                    window.location.href = 'publicar-vaga.html';
+                }, 1500);
             }
             this.classList.add('was-validated');
         });
-
-        function showNotification(message, type = 'info') {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-0 m-3`;
-            alertDiv.style.zIndex = '9999';
-            alertDiv.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-            document.body.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 3000);
-        }
     </script>
 </body>
 </html>

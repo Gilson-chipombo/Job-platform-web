@@ -2,30 +2,9 @@
 // VAGAS (JOB LISTINGS) - LISTING AND FILTERING
 // ============================================
 
-// Declare undeclared variables
-const vagasData = []; // Placeholder for vagasData, should be imported or defined elsewhere
-const debounce = (func, wait) => {
-    let timeout;
-    return function(...args) {
-        const context = this;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-};
-
-const formatCurrency = (value, currency) => {
-    // Placeholder for formatCurrency function
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency }).format(value);
-};
-
-const getLocalizacaoName = (localizacao) => {
-    // Placeholder for getLocalizacaoName function
-    return localizacao;
-};
-
 class VagasManager {
-    constructor() {
-        this.vagas = vagasData; // Dados do main.js
+    constructor(vagasData) {
+        this.vagas = vagasData || []; // Dados passados como parâmetro ou vazio
         this.filtrosTipo = [];
         this.filtrosRemuneracao = [];
         this.filtrosLocalizacao = '';
@@ -179,6 +158,13 @@ class VagasManager {
             
             const badgeText = vaga.isPaid === false ? 'Sem Remuneração' : 'Ativo';
 
+            // Verificar se é favorito
+            const isFavorite = favoritesManager && favoritesManager.isFavorite(vaga.id);
+            const heartClass = isFavorite ? 'bi-heart-fill text-danger' : 'bi-heart';
+            const heartBtn = `<button class="btn btn-sm btn-outline-danger favorite-btn" data-job-id="${vaga.id}" title="Adicionar aos favoritos">
+                                <i class="bi ${heartClass}"></i>
+                            </button>`;
+
             html += `
                 <div class="col-lg-6">
                     <div class="card job-card h-100 shadow-sm hover-shadow">
@@ -187,7 +173,10 @@ class VagasManager {
                                 <div class="company-avatar bg-info text-white rounded-circle p-3">
                                     <i class="bi bi-briefcase"></i>
                                 </div>
-                                <span class="badge bg-${badge}">${badgeText}</span>
+                                <div>
+                                    <span class="badge bg-${badge} me-2">${badgeText}</span>
+                                    ${heartBtn}
+                                </div>
                             </div>
                             <h5 class="card-title">${vaga.titulo}</h5>
                             <p class="text-muted small mb-2">
@@ -213,6 +202,42 @@ class VagasManager {
 
         html += '</div>';
         vagasList.innerHTML = html;
+
+        // Adicionar event listeners aos botões de favorito
+        setTimeout(() => {
+            this.setupFavoriteButtons();
+        }, 100);
+    }
+
+    /**
+     * Configurar botões de favorito
+     */
+    setupFavoriteButtons() {
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        
+        favoriteButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const jobId = parseInt(btn.getAttribute('data-job-id'));
+                const vaga = this.vagas.find(v => v.id === jobId);
+                
+                if (vaga) {
+                    if (favoritesManager.isFavorite(jobId)) {
+                        favoritesManager.removeFavorite(jobId);
+                        showNotification('Vaga removida dos favoritos!', 'info');
+                    } else {
+                        favoritesManager.addFavorite(jobId, vaga);
+                        showNotification('Vaga adicionada aos favoritos!', 'success');
+                    }
+                    
+                    // Atualizar ícone do botão
+                    const icon = btn.querySelector('i');
+                    icon.classList.toggle('bi-heart');
+                    icon.classList.toggle('bi-heart-fill');
+                    btn.classList.toggle('focus');
+                }
+            });
+        });
     }
 }
 
@@ -220,5 +245,12 @@ class VagasManager {
  * Inicializar ao carregar a página
  */
 document.addEventListener('DOMContentLoaded', function() {
-    new VagasManager();
+    // Esperar um pouco para garantir que main.js foi carregado
+    setTimeout(() => {
+        if (typeof vagasData !== 'undefined' && Array.isArray(vagasData)) {
+            new VagasManager(vagasData);
+        } else {
+            console.error('vagasData não foi carregado corretamente do main.js');
+        }
+    }, 100);
 });

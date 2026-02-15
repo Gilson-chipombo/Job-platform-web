@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da Empresa - CarreiraHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .stat-card {
+            border-left: 4px solid #0d6efd;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .stat-card h4 {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+        .vaga-card {
+            border-left: 4px solid #28a745;
+        }
+    </style>
+</head>
+<body data-require-auth="true">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-briefcase text-primary"></i> CarreiraHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vagas.html">Ver Vagas</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> Minha Conta
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="painel-empresa.html"><i class="bi bi-speedometer2"></i> Painel</a></li>
+                            <li><a class="dropdown-item" href="publicar-vaga.html"><i class="bi bi-file-earmark-plus"></i> Publicar Vaga</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Sair</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="min-vh-100 py-5" style="background: #f8f9fa;">
+        <div class="container">
+            <!-- Header -->
+            <div class="row mb-5">
+                <div class="col-lg-8">
+                    <h1 class="fw-bold mb-2">
+                        <i class="bi bi-speedometer2 text-primary me-2"></i>Painel da Empresa
+                    </h1>
+                    <p class="text-muted">Gerenie suas vagas e candidatos</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <a href="publicar-vaga.html" class="btn btn-primary btn-lg">
+                        <i class="bi bi-file-earmark-plus me-2"></i>Publicar Nova Vaga
+                    </a>
+                </div>
+            </div>
+
+            <!-- Saudação -->
+            <div class="alert alert-info mb-4">
+                <h5 class="mb-2">
+                    <i class="bi bi-info-circle me-2"></i>Bem-vindo, <span id="nomeEmpresaDisplay">Empresa</span>!
+                </h5>
+                <p class="mb-0">Você está logado como empresa. Aqui você pode gerenciar suas vagas e ver todas as candidaturas.</p>
+            </div>
+
+            <!-- Estatísticas -->
+            <div class="row mb-5">
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card">
+                        <h4 class="mb-2">0</h4>
+                        <p class="text-muted mb-0">Vagas Publicadas</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card">
+                        <h4 class="mb-2">0</h4>
+                        <p class="text-muted mb-0">Candidaturas Recebidas</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card stat-card">
+                        <h4 class="mb-2">0</h4>
+                        <p class="text-muted mb-0">Candidatos em Análise</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Vagas Publicadas -->
+            <div class="card shadow mb-5">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-briefcase me-2"></i>Suas Vagas Publicadas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="vagasPublicadasContainer">
+                        <div class="text-center py-5">
+                            <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                            <p class="text-muted mt-3">Você ainda não publicou nenhuma vaga</p>
+                            <a href="publicar-vaga.html" class="btn btn-primary">
+                                <i class="bi bi-plus-lg me-2"></i>Publicar Primeira Vaga
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Candidaturas -->
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-file-text me-2"></i>Candidaturas Recebidas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="candidaturasContainer">
+                        <div class="text-center py-5">
+                            <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                            <p class="text-muted mt-3">Nenhuma candidatura recebida ainda</p>
+                            <small class="text-muted">Quando candidatos se candidatarem às suas vagas, elas aparecerão aqui</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center text-muted small">
+            <p>&copy; 2024 CarreiraHub. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        // Atualizar nome da empresa no painel
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticação
+            if (!authManager.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = authManager.getCurrentUser();
+            if (user && user.nombre) {
+                document.getElementById('nomeEmpresaDisplay').textContent = user.nombre || user.email;
+            } else if (user && user.nomeEmpresa) {
+                document.getElementById('nomeEmpresaDisplay').textContent = user.nomeEmpresa;
+            } else if (user) {
+                document.getElementById('nomeEmpresaDisplay').textContent = user.email || 'Empresa';
+            }
+        });
+
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                authManager.logout();
+            }
+        }
+    </script>
+</body>
+</html>

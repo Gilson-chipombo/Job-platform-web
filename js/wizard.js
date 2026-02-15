@@ -254,15 +254,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('was-validated');
             } else {
                 const formData = {
-                    nome: document.getElementById('nomeCompleto').value,
+                    nomeCompleto: document.getElementById('nomeCompleto').value,
                     email: document.getElementById('emailCadastro').value,
-                    tipo: 'estudante'
+                    telefone: document.getElementById('telefone').value,
+                    cpf: document.getElementById('cpf').value,
+                    escola: document.getElementById('escola').value,
+                    serie: document.getElementById('serie').value
                 };
 
-                localStorage.setItem('user', JSON.stringify(formData));
-                localStorage.setItem('userType', 'student');
+                // Usar authManager para registrar
+                const user = authManager.registerStudent(formData);
 
-                window.alert('Cadastro realizado com sucesso! Bem-vindo!');
+                showNotification('Cadastro realizado com sucesso! Bem-vindo!', 'success');
                 setTimeout(() => {
                     window.location.href = 'perfil.html';
                 }, 1500);
@@ -287,17 +290,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.add('was-validated');
             } else {
                 const formData = {
-                    empresa: document.getElementById('nomeEmpresa').value,
+                    nomeEmpresa: document.getElementById('nomeEmpresa').value,
                     email: document.getElementById('emailEmpresaCad').value,
-                    tipo: 'empresa'
+                    telefone: document.getElementById('telefoneEmpresa').value || '',
+                    cnpj: document.getElementById('cnpj').value || '',
+                    website: document.getElementById('siteEmpresa').value || ''
                 };
 
-                localStorage.setItem('user', JSON.stringify(formData));
-                localStorage.setItem('userType', 'company');
+                // Usar authManager para registrar
+                const user = authManager.registerCompany(formData);
 
-                window.alert('Cadastro da empresa realizado com sucesso! Bem-vindo!');
+                showNotification('Cadastro da empresa realizado com sucesso! Bem-vindo!', 'success');
                 setTimeout(() => {
-                    window.location.href = 'perfil.html';
+                    window.location.href = 'painel-empresa.html';
                 }, 1500);
             }
         });

@@ -108,14 +108,7 @@ class NavbarManager {
                 <a class="nav-link" href="login.html">Login</a>
             </li>
         `;
-        const cadastroItem = `
-            <li class="nav-item ms-2" data-nav="cadastro">
-                <a class="btn btn-primary btn-sm" href="cadastro-estudante.html">Cadastro</a>
-            </li>
-        `;
-
         navbarNav.insertAdjacentHTML('beforeend', loginItem);
-        navbarNav.insertAdjacentHTML('beforeend', cadastroItem);
     }
 
     /**

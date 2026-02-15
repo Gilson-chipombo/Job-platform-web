@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Vaga - CarreiraHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-briefcase text-primary"></i> CarreiraHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vagas.html">Vagas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="empresas.html">Empresas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item ms-2"><a class="btn btn-primary btn-sm" href="cadastro-estudante.html">Cadastro</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-5" style="background: #f8f9fa; min-height: 100vh;">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="vagas.html">Vagas</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" id="breadcrumbTitle">Detalhes da Vaga</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Vaga Details -->
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-4">
+                                <div>
+                                    <h1 class="fw-bold mb-2" id="vagaTitulo">Desenvolvedor Frontend Jr.</h1>
+                                    <p class="text-muted mb-0"><i class="bi bi-building me-2"></i><span id="vagaEmpresa">Tech Innovations</span></p>
+                                </div>
+                                <button class="btn btn-outline-primary" id="favoritarBtn">
+                                    <i class="bi bi-heart me-2"></i>Favoritar
+                                </button>
+                            </div>
+
+                            <div class="row mb-4 py-3 border-top border-bottom">
+                                <div class="col-md-3 mb-3">
+                                    <small class="text-muted d-block">Tipo</small>
+                                    <strong id="vagaTipo">Estágio</strong>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <small class="text-muted d-block">Localização</small>
+                                    <strong id="vagaLocal">São Paulo, SP</strong>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <small class="text-muted d-block">Salário</small>
+                                    <strong id="vagaSalario">R$ 2.000 - 3.000/mês</strong>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <small class="text-muted d-block">Publicada</small>
+                                    <strong id="vagaData">2 dias atrás</strong>
+                                </div>
+                            </div>
+
+                            <!-- Descrição -->
+                            <h5 class="fw-bold mb-3 mt-4">Sobre a Vaga</h5>
+                            <p id="vagaDescricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+                            <!-- Responsabilidades -->
+                            <h5 class="fw-bold mb-3 mt-4">Responsabilidades</h5>
+                            <ul id="vagaResponsabilidades" class="ms-3">
+                                <li>Responsabilidade 1</li>
+                                <li>Responsabilidade 2</li>
+                            </ul>
+
+                            <!-- Requisitos -->
+                            <h5 class="fw-bold mb-3 mt-4">Requisitos</h5>
+                            <ul id="vagaRequisitos" class="ms-3">
+                                <li>Requisito 1</li>
+                                <li>Requisito 2</li>
+                            </ul>
+
+                            <!-- Skills -->
+                            <h5 class="fw-bold mb-3 mt-4">Competências Desejadas</h5>
+                            <div id="vagaSkills" class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-light text-dark">React</span>
+                                <span class="badge bg-light text-dark">JavaScript</span>
+                            </div>
+
+                            <!-- Benefícios -->
+                            <h5 class="fw-bold mb-3 mt-4">Benefícios</h5>
+                            <div class="row" id="vagaBeneficios">
+                                <div class="col-md-6 mb-2">
+                                    <i class="bi bi-check text-success me-2"></i>Benefício 1
+                                </div>
+                            </div>
+
+                            <!-- Sobre a Empresa -->
+                            <h5 class="fw-bold mb-3 mt-4">Sobre a Empresa</h5>
+                            <p id="vagaSobreEmpresa">Informações sobre a empresa...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Application Card -->
+                    <div class="card shadow-sm mb-4 sticky-top" style="top: 20px;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3">Interessado?</h5>
+                            
+                            <div id="notLoggedIn" class="text-center">
+                                <p class="text-muted mb-4">Faça login para se candidatar a esta vaga</p>
+                                <a href="login.html" class="btn btn-primary w-100 mb-2">
+                                    <i class="bi bi-sign-in-alt me-2"></i>Fazer Login
+                                </a>
+                                <a href="cadastro-estudante.html" class="btn btn-outline-primary w-100">
+                                    <i class="bi bi-user-plus me-2"></i>Criar Conta
+                                </a>
+                            </div>
+
+                            <div id="loggedIn" style="display: none;">
+                                <button class="btn btn-success w-100 mb-3" id="aplicarBtn">
+                                    <i class="bi bi-paper-plane me-2"></i>Candidatar-se Agora
+                                </button>
+                                <p class="text-muted small text-center mb-0">
+                                    Ao se candidatar você concorda com nossos <a href="#" class="text-decoration-none">termos</a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Empresa Info Card -->
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3">Informações da Empresa</h5>
+                            <div class="text-center mb-4">
+                                <div class="bg-info text-white rounded-circle p-4 mx-auto" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-building" style="font-size: 40px;"></i>
+                                </div>
+                            </div>
+                            <h6 class="fw-bold text-center mb-3" id="empresaNome">Tech Innovations</h6>
+                            <ul class="list-unstyled small">
+                                <li class="mb-2">
+                                    <i class="bi bi-globe text-primary me-2"></i>
+                                    <a href="#" class="text-decoration-none" id="empresaWebsite">www.techinnovations.com</a>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-map-marker-alt text-primary me-2"></i>
+                                    <span id="empresaLocalizacao">São Paulo, SP</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-building text-primary me-2"></i>
+                                    <span id="empresaRamo">Tecnologia</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Aplicação -->
+    <div class="modal fade" id="aplicacaoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Candidatar-se à Vaga</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="aplicacaoForm">
+                    <div class="modal-body">
+                        <p class="text-muted mb-3">Adicione uma mensagem sobre por que você é um ótimo candidato para esta vaga.</p>
+                        <textarea class="form-control" id="mensagemAplicacao" rows="5" placeholder="Conte sobre você, sua experiência e interesse nesta vaga..." required></textarea>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="confirmacaoCV" required>
+                            <label class="form-check-label" for="confirmacaoCV">
+                                Confirmo que meu currículo está atualizado
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-paper-plane me-2"></i>Enviar Candidatura
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container text-center text-muted small">
+            <p>&copy; 2024 CarreiraHub. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/detalhes-vaga.js"></script>
+</body>
+</html>

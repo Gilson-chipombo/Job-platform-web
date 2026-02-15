@@ -1,0 +1,566 @@
+/* ============================================
+   GENERAL STYLES
+   ============================================ */
+
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --success-color: #27ae60;
+    --danger-color: #e74c3c;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+    --light-bg: #f8f9fa;
+    --border-radius: 8px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+html, body {
+    height: 100%;
+}
+
+main {
+    flex: 1;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #222;
+}
+
+.text-balance {
+    text-wrap: balance;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5568d3, #6a3d8e);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-lg {
+    padding: 12px 30px;
+    font-size: 16px;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.job-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+}
+
+.hover-shadow {
+    transition: box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ============================================
+   COMPANY AVATAR
+   ============================================ */
+
+.company-avatar {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+/* ============================================
+   FORM STYLES
+   ============================================ */
+
+.form-control,
+.form-select {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-label {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.invalid-feedback {
+    display: block;
+    color: var(--danger-color);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.was-validated .form-control:invalid {
+    border-color: var(--danger-color);
+}
+
+.was-validated .form-select:invalid {
+    border-color: var(--danger-color);
+}
+
+/* ============================================
+   WIZARD / STEPS
+   ============================================ */
+
+.step-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    border: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #999;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.step-circle.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.step-circle.completed {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.form-step {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* ============================================
+   ALERTS
+   ============================================ */
+
+.alert {
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+.alert-info {
+    background-color: #e7f3ff;
+    color: #0066cc;
+    border-left: 4px solid #0066cc;
+}
+
+.alert-success {
+    background-color: #e6f9e6;
+    color: #27ae60;
+    border-left: 4px solid #27ae60;
+}
+
+.alert-warning {
+    background-color: #fff3e0;
+    color: #f39c12;
+    border-left: 4px solid #f39c12;
+}
+
+.alert-danger {
+    background-color: #ffe6e6;
+    color: #e74c3c;
+    border-left: 4px solid #e74c3c;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+
+.navbar {
+    background-color: white !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-brand {
+    font-size: 24px;
+    color: var(--primary-color) !important;
+}
+
+.nav-link {
+    color: #555 !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background-color: #222 !important;
+    margin-top: auto;
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.shadow {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+}
+
+.text-muted {
+    color: #777 !important;
+}
+
+.border-top {
+    border-top: 1px solid #eee !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #eee !important;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .lead {
+        font-size: 16px;
+    }
+
+    .btn-group-vertical .btn {
+        width: 100%;
+    }
+
+    .step-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .step-circle span {
+        font-size: 16px;
+    }
+
+    .table {
+        font-size: 13px;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 1.8rem;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .step-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+}
+
+/* ============================================
+   NAVIGATION TABS
+   ============================================ */
+
+.nav-tabs .nav-link {
+    color: #555;
+    border: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    background-color: transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    border-bottom-color: var(--primary-color);
+}
+
+/* ============================================
+   DROPDOWN
+   ============================================ */
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color);
+}
+
+/* ============================================
+   MODALS
+   ============================================ */
+
+.modal-content {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: white;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-footer {
+    border-top: 1px solid #eee;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.3s ease;
+}
+
+/* ============================================
+   STICKY ELEMENTS
+   ============================================ */
+
+.sticky-top {
+    top: 20px;
+}
+
+/* ============================================
+   TABLE STYLES
+   ============================================ */
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #333;
+}
+
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table-responsive {
+    border-radius: var(--border-radius);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+}
+
+/* ============================================
+   PARTNER LOGOS
+   ============================================ */
+
+.partner-logo {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.partner-logo:hover {
+    transform: translateY(-5px);
+}
+
+.partner-logo > div {
+    transition: background-color 0.3s ease;
+}
+
+.partner-logo:hover > div {
+    background-color: #f0f0f0 !important;
+}

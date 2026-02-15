@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vagas - CarreiraHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-briefcase text-primary"></i> CarreiraHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vagas.html">Vagas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="empresas.html">Empresas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item ms-2"><a class="btn btn-primary btn-sm" href="cadastro-estudante.html">Cadastro</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-5" style="background: #f8f9fa; min-height: 100vh;">
+        <div class="container">
+            <h1 class="fw-bold mb-4"><i class="bi bi-briefcase me-2 text-primary"></i>Vagas Disponíveis</h1>
+
+            <div class="row">
+                <!-- Filtros Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-4"><i class="bi bi-funnel me-2"></i>Filtros</h5>
+
+                            <!-- Busca -->
+                            <div class="mb-4">
+                                <label for="searchVagas" class="form-label fw-bold">Buscar</label>
+                                <input type="text" class="form-control" id="searchVagas" placeholder="Cargo, empresa...">
+                            </div>
+
+                            <!-- Tipo de Vaga -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Tipo de Vaga</label>
+                                <div class="form-check">
+                                    <input class="form-check-input filter-checkbox" type="checkbox" id="estagio" value="estagio">
+                                    <label class="form-check-label" for="estagio">Estágio</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input filter-checkbox" type="checkbox" id="emprego" value="emprego">
+                                    <label class="form-check-label" for="emprego">Emprego</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input filter-checkbox" type="checkbox" id="freelance" value="freelance">
+                                    <label class="form-check-label" for="freelance">Freelance</label>
+                                </div>
+                            </div>
+
+                            <!-- Localização -->
+                            <div class="mb-4">
+                                <label for="filterLocation" class="form-label fw-bold">Localização</label>
+                                <select class="form-select" id="filterLocation">
+                                    <option value="">Todas as cidades</option>
+                                    <option value="luanda">Luanda Centro</option>
+                                    <option value="luanda-centro">Luanda Centro</option>
+                                    <option value="luanda-kilamba">Kilamba Kiaxi</option>
+                                    <option value="luanda-viana">Viana</option>
+                                    <option value="luanda-cazenga">Cazenga</option>
+                                    <option value="remoto">Remoto</option>
+                                </select>
+                            </div>
+
+                            <!-- Remuneração -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Remuneração</label>
+                                <div class="form-check">
+                                    <input class="form-check-input filter-checkbox" type="checkbox" id="unpaid" value="unpaid">
+                                    <label class="form-check-label" for="unpaid">
+                                        <i class="bi bi-award me-1"></i>Sem Remuneração
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input filter-checkbox" type="checkbox" id="paid" value="paid">
+                                    <label class="form-check-label" for="paid">
+                                        <i class="bi bi-cash-coin me-1"></i>Com Remuneração
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Salário (apenas para vagas remuneradas) -->
+                            <div class="mb-4" id="salaryFilters">
+                                <label class="form-label fw-bold">Faixa Salarial</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="salary1">
+                                    <label class="form-check-label" for="salary1">Kzs 10.000 - 20.000</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="salary2">
+                                    <label class="form-check-label" for="salary2">Kzs 20.000 - 35.000</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="salary3">
+                                    <label class="form-check-label" for="salary3">Kzs 35.000 - 50.000</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="salary4">
+                                    <label class="form-check-label" for="salary4">Acima de Kzs 50.000</label>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary w-100" id="clearFilters">Limpar Filtros</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vagas List -->
+                <div class="col-lg-9">
+                    <div id="vagasList">
+                        <!-- Vagas serão inseridas aqui por JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>CarreiraHub</h5>
+                    <p class="text-muted">Conectando talentos com oportunidades desde 2024.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Links Úteis</h5>
+                    <ul class="list-unstyled text-muted small">
+                        <li><a href="sobre.html" class="text-decoration-none text-muted">Sobre Nós</a></li>
+                        <li><a href="contato.html" class="text-decoration-none text-muted">Contato</a></li>
+                        <li><a href="blog.html" class="text-decoration-none text-muted">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Redes Sociais</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-decoration-none text-muted"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="text-center text-muted small">
+                <p>&copy; 2024 CarreiraHub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/vagas.js"></script>
+</body>
+</html>

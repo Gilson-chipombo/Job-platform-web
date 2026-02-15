@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - CarreiraHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-briefcase text-primary"></i> CarreiraHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vagas.html">Vagas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="empresas.html">Empresas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item ms-2"><a class="btn btn-primary btn-sm" href="cadastro-estudante.html">Cadastro</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0;">
+        <div class="container">
+            <h1 class="fw-bold mb-3"><i class="bi bi-envelope me-2"></i>Contato</h1>
+            <p class="lead">Ficou com dúvidas? Entre em contato conosco!</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Formulário -->
+                <div class="col-lg-7">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-5">
+                            <h3 class="fw-bold mb-4"><i class="bi bi-paper-plane me-2 text-primary"></i>Envie sua Mensagem</h3>
+                            <form id="contactForm">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label fw-bold">Nome Completo</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Seu nome" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-bold">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="seu@email.com" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label fw-bold">Telefone (Opcional)</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="(84) 99999-9999">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label fw-bold">Assunto</label>
+                                    <select class="form-select" id="subject" required>
+                                        <option value="">Selecione um assunto...</option>
+                                        <option value="duvida">Dúvida sobre a plataforma</option>
+                                        <option value="vaga">Publicar uma vaga</option>
+                                        <option value="problema">Problema técnico</option>
+                                        <option value="parceria">Parceria empresarial</option>
+                                        <option value="feedback">Feedback e sugestões</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="message" class="form-label fw-bold">Mensagem</label>
+                                    <textarea class="form-control" id="message" rows="6" placeholder="Descreva sua mensagem..." required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="bi bi-send me-2"></i>Enviar Mensagem
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informações de Contato -->
+                <div class="col-lg-5">
+                    <!-- Card de Email -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex gap-3">
+                                <div>
+                                    <i class="bi bi-envelope fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Email</h5>
+                                    <p class="text-muted mb-0"><a href="mailto:contato@carreirahub.com" class="text-decoration-none">contato@carreirahub.com</a></p>
+                                    <small class="text-muted">Respondemos em até 24h</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card de Telefone -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex gap-3">
+                                <div>
+                                    <i class="bi bi-phone fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Telefone</h5>
+                                    <p class="text-muted mb-0"><a href="tel:+244912345678" class="text-decoration-none">(+244) 912 345 678</a></p>
+                                    <small class="text-muted">Seg-Sex: 9h às 18h (Horário Local)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card de Endereço -->
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex gap-3">
+                                <div>
+                                    <i class="bi bi-map-marker-alt fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h5 class="fw-bold">Endereço</h5>
+                                    <p class="text-muted mb-0">Luanda, Angola</p>
+                                    <small class="text-muted">Escritório central</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card de Redes Sociais -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-share-alt me-2 text-primary"></i>Redes Sociais</h5>
+                            <div class="d-flex gap-3 flex-wrap">
+                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-facebook me-2"></i>Facebook</a>
+                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-twitter me-2"></i>Twitter</a>
+                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-linkedin me-2"></i>LinkedIn</a>
+                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="fab fa-instagram me-2"></i>Instagram</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perguntas Frequentes -->
+            <hr class="my-5">
+
+            <section>
+                <h2 class="fw-bold mb-5 text-center"><i class="bi bi-question-circle me-2 text-primary"></i>Perguntas Frequentes</h2>
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Como me cadastro na plataforma?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        O cadastro é gratuito e leva apenas alguns minutos. Clique em "Cadastro" no menu superior, escolha se é estudante ou empresa, e preencha seus dados.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Qual é o custo da plataforma?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Para estudantes, a plataforma é totalmente gratuita. Para empresas, oferecemos planos com diferentes funcionalidades.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        Como faço para candidatar a uma vaga?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Localize a vaga que te interessa, clique em "Saiba Mais" ou "Candidatar" e preencha o formulário com suas informações.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                        Como eu publico uma vaga?
+                                    </button>
+                                </h2>
+                                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Após criar uma conta como empresa, você pode publicar vagas através do painel de administração. É rápido e fácil!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                        O certificado é válido?
+                                    </button>
+                                </h2>
+                                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Sim! Os certificados emitidos por nossa plataforma são reconhecidos por empresas e instituições educacionais.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>CarreiraHub</h5>
+                    <p class="text-muted">Conectando talentos com oportunidades desde 2024.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Links Úteis</h5>
+                    <ul class="list-unstyled text-muted small">
+                        <li><a href="sobre.html" class="text-decoration-none text-muted">Sobre Nós</a></li>
+                        <li><a href="contato.html" class="text-decoration-none text-muted">Contato</a></li>
+                        <li><a href="vagas.html" class="text-decoration-none text-muted">Vagas</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Redes Sociais</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-decoration-none text-muted"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-decoration-none text-muted"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-decoration-none text-muted"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="text-center text-muted small">
+                <p>&copy; 2024 CarreiraHub. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Manipular submissão do formulário
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Coletar dados
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simular envio
+            showNotification(`Mensagem recebida! Em breve entraremos em contato em ${email}`, 'success');
+            
+            // Limpar formulário
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - CarreiraHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-briefcase text-primary"></i> CarreiraHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="vagas.html">Vagas</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-user me-2"></i>Minha Conta
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-user-circle me-2"></i>Perfil</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-heart me-2"></i>Vagas Salvas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="bi bi-sign-out-alt me-2"></i>Sair</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-5" style="background: #f8f9fa; min-height: 100vh;">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="bg-primary text-white rounded-circle p-5 mx-auto mb-3" style="width: 120px; height: 120px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-user" style="font-size: 50px;"></i>
+                            </div>
+                            <h5 class="fw-bold" id="nomePerfilDisplay">João Silva</h5>
+                            <p class="text-muted small mb-3" id="profissaoDisplay">Estudante</p>
+                            <button class="btn btn-sm btn-primary w-100 mb-2">
+                                <i class="bi bi-edit me-1"></i>Editar Perfil
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary w-100">
+                                <i class="bi bi-download me-1"></i>Currículo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Menu de Navegação -->
+                    <div class="list-group mt-4">
+                        <button class="list-group-item list-group-item-action active" id="tabInfoPessoal">
+                            <i class="bi bi-user-circle me-2 text-primary"></i>Informações Pessoais
+                        </button>
+                        <button class="list-group-item list-group-item-action" id="tabCandidaturas">
+                            <i class="bi bi-file-alt me-2"></i>Minhas Candidaturas
+                        </button>
+                        <button class="list-group-item list-group-item-action" id="tabVagasSalvas">
+                            <i class="bi bi-heart me-2"></i>Vagas Salvas
+                        </button>
+                        <button class="list-group-item list-group-item-action" id="tabCandidatos">
+                            <i class="bi bi-users me-2"></i>Candidatos
+                        </button>
+                        <button class="list-group-item list-group-item-action" id="tabMinhasVagas">
+                            <i class="bi bi-briefcase me-2"></i>Minhas Vagas
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="col-lg-9">
+                    <!-- Informações Pessoais -->
+                    <div class="tab-content" id="infoPessoal">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-user-circle me-2"></i>Informações Pessoais</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Nome Completo</label>
+                                        <p id="displayNomeCompleto">João Silva Santos</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Email</label>
+                                        <p id="displayEmail">joao@example.com</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Telefone</label>
+                                        <p id="displayTelefone">(11) 99999-9999</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">CPF</label>
+                                        <p id="displayCPF">123.456.789-00</p>
+                                    </div>
+                                </div>
+
+                                <h6 class="fw-bold mt-4 mb-3">Informações Acadêmicas</h6>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Escola</label>
+                                        <p id="displayEscola">Escola Estadual João Goulart</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Série</label>
+                                        <p id="displaySerie">3º Ano</p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Turno</label>
+                                        <p id="displayTurno">Matutino</p>
+                                    </div>
+                                </div>
+
+                                <h6 class="fw-bold mt-4 mb-3">Áreas de Interesse</h6>
+                                <div id="interessesDisplay">
+                                    <span class="badge bg-primary me-2">Tecnologia</span>
+                                    <span class="badge bg-primary me-2">Marketing</span>
+                                </div>
+
+                                <h6 class="fw-bold mt-4 mb-3">Habilidades</h6>
+                                <div id="habilidadesDisplay">
+                                    <span class="badge bg-info me-2">JavaScript</span>
+                                    <span class="badge bg-info me-2">React</span>
+                                    <span class="badge bg-info">CSS</span>
+                                </div>
+
+                                <button class="btn btn-primary mt-4">
+                                    <i class="bi bi-edit me-2"></i>Editar Informações
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Minhas Candidaturas -->
+                    <div class="tab-content" id="candidaturas" style="display: none;">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-file-alt me-2"></i>Minhas Candidaturas</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Vaga</th>
+                                                <th>Empresa</th>
+                                                <th>Data</th>
+                                                <th>Status</th>
+                                                <th>Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Desenvolvedor Frontend Jr.</td>
+                                                <td>Tech Innovations</td>
+                                                <td>15/01/2024</td>
+                                                <td><span class="badge bg-warning">Análise</span></td>
+                                                <td><a href="#" class="btn btn-sm btn-outline-primary">Ver</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Estagiário de Marketing</td>
+                                                <td>Digital Solutions</td>
+                                                <td>10/01/2024</td>
+                                                <td><span class="badge bg-success">Aceito</span></td>
+                                                <td><a href="#" class="btn btn-sm btn-outline-primary">Ver</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Analista de Dados Jr.</td>
+                                                <td>FinanceHub</td>
+                                                <td>05/01/2024</td>
+                                                <td><span class="badge bg-danger">Rejeitado</span></td>
+                                                <td><a href="#" class="btn btn-sm btn-outline-primary">Ver</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vagas Salvas -->
+                    <div class="tab-content" id="vagasSalvas" style="display: none;">
+                        <h5 class="mb-4">Vagas Salvas</h5>
+                        <div class="row" id="vagasSalvasList">
+                            <!-- Vagas salvas serão carregadas aqui -->
+                        </div>
+                    </div>
+
+                    <!-- Candidatos (para empresas) -->
+                    <div class="tab-content" id="candidatos" style="display: none;">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-users me-2"></i>Candidatos</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Vaga</th>
+                                                <th>Data</th>
+                                                <th>Avaliação</th>
+                                                <th>Ação</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Maria Santos</td>
+                                                <td>Desenvolvedor Frontend Jr.</td>
+                                                <td>15/01/2024</td>
+                                                <td>
+                                                    <div>
+                                                        <i class="bi bi-star text-warning"></i>
+                                                        <i class="bi bi-star text-warning"></i>
+                                                        <i class="bi bi-star text-warning"></i>
+                                                        <i class="bi bi-star text-warning"></i>
+                                                        <i class="far fa-star text-muted"></i>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success me-1">Aceitar</button>
+                                                    <button class="btn btn-sm btn-danger">Rejeitar</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Minhas Vagas (para empresas) -->
+                    <div class="tab-content" id="minhasVagas" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5>Minhas Vagas Publicadas</h5>
+                            <a href="publicar-vaga.html" class="btn btn-primary">
+                                <i class="bi bi-plus me-2"></i>Publicar Nova Vaga
+                            </a>
+                        </div>
+
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="fw-bold mb-1">Desenvolvedor Frontend Jr.</h6>
+                                        <p class="text-muted small mb-0">Publicada em 10/01/2024 - <strong>8 candidatos</strong></p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-sm btn-primary me-2">Editar</button>
+                                        <button class="btn btn-sm btn-danger">Remover</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h6 class="fw-bold mb-1">Analista de Dados Jr.</h6>
+                                        <p class="text-muted small mb-0">Publicada em 08/01/2024 - <strong>15 candidatos</strong></p>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-sm btn-primary me-2">Editar</button>
+                                        <button class="btn btn-sm btn-danger">Remover</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container text-center text-muted small">
+            <p>&copy; 2024 CarreiraHub. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/perfil.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

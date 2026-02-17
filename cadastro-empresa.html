@@ -70,9 +70,9 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="cnpj" class="form-label">CNPJ</label>
-                                        <input type="text" class="form-control" id="cnpj" placeholder="00.000.000/0000-00" required>
-                                        <div class="invalid-feedback">Por favor, insira um CNPJ válido.</div>
+                                        <label for="cnpj" class="form-label">NIF</label>
+                                        <input type="text" class="form-control" id="nif" placeholder="00.000.000/0000-00" required>
+                                        <div class="invalid-feedback">Por favor, insira um NIF válido.</div>
                                     </div>
 
                                     <div class="mb-3">
@@ -157,7 +157,7 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="cidades" class="form-label">Cidade</label>
-                                            <input type="text" class="form-control" id="cidades" placeholder="Luanda" value="Luanda" required>
+                                            <input type="text" class="form-control" id="cidade" placeholder="Luanda" value="Luanda" required>
                                             <div class="invalid-feedback">Por favor, insira a cidade.</div>
                                         </div>
                                         <div class="col-md-6 mb-3">
@@ -184,6 +184,10 @@
                                     </div>
                                 </div>
 
+                                 <div id="successMessage" class="alert alert-success d-none mt-3">
+                                    Cadastro realizado com sucesso! Redirecionando...
+                                </div>
+                                
                                 <!-- Navigation Buttons -->
                                 <div class="d-flex justify-content-between mt-5 pt-3 border-top">
                                     <button type="button" class="btn btn-outline-secondary" id="prevBtnEmpresa" style="display: none;">
@@ -220,5 +224,75 @@
     <script src="js/auth.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/wizard.js"></script>
+
+    <script>
+        document
+            .getElementById("cadastroEmpresaForm")
+            .addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById("nomeEmpresa").value;
+                const nif  = document.getElementById("nif").value;
+                const description  = document.getElementById("descricaoEmpresa").value;
+                const segment      = document.getElementById("segmento").value;
+                const size         = document.getElementById("tamanho").value;
+                const website      = document.getElementById("siteEmpresa").value;  
+                const email        = document.getElementById("emailEmpresaCad").value;   
+                const telphone     = document.getElementById("telefoneEmpresa").value;  
+                const responsavelName = document.getElementById("nomeResponsavel").value;             
+                const role         = document.getElementById("cargoResponsavel").value;        
+                const password     = document.getElementById("senhaEmpresaCad").value;         
+                const address      = document.getElementById("enderecoEmpresa").value;         
+                const city         = document.getElementById("cidade").value;        
+                const Province     = document.getElementById("estado").value;  
+                
+                
+                const CompanyData = {
+                    name,
+                    nif,
+                    description,
+                    segment,
+                    size,
+                    website,
+                    email,
+                    telphone,
+                    responsavelName,
+                    role,
+                    password,
+                    address,
+                    city,
+                    Province
+                };
+
+                try {
+                    const response = await fetch(
+                        "http://127.0.0.1:3000/companies/create",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json"},
+                            body: JSON.stringify(CompanyData),
+                        }
+                    );
+
+                    const data =  await response.json();
+
+                    if (!response.ok){
+                          alert( JSON.stringify(CompanyData));
+                        throw new Error(data.message || "Erro ao cadastrar empresa")
+                    }
+                    //alert("Estudante cadastrado com sucesso! Redirecionando...");
+                    const successMessage = document.getElementById("successMessage");
+                    successMessage.classList.remove("d-none");
+
+                    setTimeout(()=>{
+                        window.location.href = "painel-empresa.html";
+                    }, 2000)
+
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+            });
+    </script>
 </body>
 </html>

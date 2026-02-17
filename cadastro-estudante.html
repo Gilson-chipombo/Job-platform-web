@@ -247,7 +247,7 @@
                 // Capturar áreas de interesse (checkbox)
                 const interessesSelecionados = [];
                 document.querySelectorAll(".form-check-input:checked").forEach((el) => {
-                if (el.value) interessesSelecionados.push(el.value);
+                    if (el.value) interessesSelecionados.push(el.value);
                 });
 
                 const AreaInterest = interessesSelecionados.join(",");

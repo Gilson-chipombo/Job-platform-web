@@ -168,13 +168,19 @@
                                     </div>
 
                                     <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" id="TermosVaga" required>
+                                        <input class="form-check-input" type="checkbox" id="TermosVaga">
                                         <label class="form-check-label" for="TermosVaga">
                                             Confirmo que todas as informações estão corretas
                                         </label>
                                         <div class="invalid-feedback">Você deve confirmar as informações.</div>
                                     </div>
                                 </div>
+
+
+                                 <div id="successMessage" class="alert alert-success d-none mt-3">
+                                    Cadastro realizado com sucesso! Redirecionando...
+                                </div>
+
 
                                 <!-- Navigation Buttons -->
                                 <div class="d-flex justify-content-between mt-5 pt-3 border-top">
@@ -209,5 +215,71 @@
     <script src="js/navbar.js"></script>
     <script src="js/wizard.js"></script>
     <script src="js/publicar-vaga.js"></script>
+
+    <script>
+        document
+            .getElementById("publicarVagaForm")
+            .addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const title           = document.getElementById("tituloVaga").value;
+                const type            = document.getElementById("tipoVagaPublicar").value;      
+                const Location        = document.getElementById("localizacaoVaga").value;     
+                const minSalary       = document.getElementById("salarioMin").value;   
+                const maxSalary       = document.getElementById("salarioMax").value;    
+                const experience      = document.getElementById("experienciaVaga").value;   
+                const description     = document.getElementById("descricaoVaga").value; 
+                const Responsability  = document.getElementById("responsabilidades").value;
+                const requirements    = document.getElementById("requisitos").value; 
+                const skills          = document.getElementById("competenciasVaga").value;  
+                const beneficios      = document.getElementById("beneficiosVaga").value;    
+                const idCompany = 1;
+
+                const VagaData = {
+                    title,   
+                    type,         
+                    Location,      
+                    minSalary,      
+                    maxSalary,     
+                    experience,     
+                    description,    
+                    Responsability, 
+                    requirements,
+                    skills,  
+                    beneficios,     
+                    idCompany
+                }
+                try {
+                    
+                    const response = await fetch(
+                        "http://127.0.0.1:3000/vagas/create",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json"},
+                            body: JSON.stringify(CompanyData),
+                        }
+                    );
+
+                    const data =  await response.json();
+                        
+                    if (!response.ok){
+                          alert( JSON.stringify(CompanyData));
+                        throw new Error(data.message || "Erro ao cadastrar empresa")
+                    }
+                    //alert("Estudante cadastrado com sucesso! Redirecionando...");
+                    const successMessage = document.getElementById("successMessage");
+                    successMessage.classList.remove("d-none");
+
+                    setTimeout(()=>{
+                        window.location.href = "painel-empresa.html";
+                    }, 2000)
+
+                } catch (error) {
+                    console.log(error);
+                    
+                }
+        
+            });
+    </script>
 </body>
 </html>

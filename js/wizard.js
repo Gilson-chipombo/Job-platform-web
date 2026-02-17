@@ -310,21 +310,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Wizard para publicar vaga
     const publicarVagaForm = document.getElementById('publicarVagaForm');
-    if (publicarVagaForm) {
+     if (publicarVagaForm) {
         new FormWizard('#publicarVagaForm', {
             prevBtnSelector: '#prevBtnVaga',
             nextBtnSelector: '#nextBtnVaga',
             submitBtnSelector: '#submitBtnVaga'
         });
 
-        // Listener para submit
+         window.alert('Estou aqui');
+        //Listener para submit
         publicarVagaForm.addEventListener('submit', function(e) {
             e.preventDefault();
             if (this.checkValidity() === false) {
                 e.stopPropagation();
                 this.classList.add('was-validated');
             } else {
-                window.alert('Vaga publicada com sucesso! Boa sorte atraindo candidatos!');
+                window.alert('Estou aqui');
                 setTimeout(() => {
                     window.location.href = 'perfil.html';
                 }, 1500);

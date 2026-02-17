@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="senhaConfirm" class="form-label">Telefone</label>
-                                            <input type="tel" class="form-control" id="telefone" placeholder="935 626 001" required>
+                                            <input type="number" class="form-control" id="telefone" placeholder="935 626 001" min="900000000" max="999999999" maxlength="9" required>
                                             <div class="invalid-feedback">Por favor, insira um telefone válido.</div>
                                         </div>
                                     </div>
@@ -198,6 +198,9 @@
                                         <i class="bi bi-check me-2"></i>Concluir Cadastro
                                     </button>
                                 </div>
+                                 <div id="successMessage" class="alert alert-success d-none mt-3">
+                                    Cadastro realizado com sucesso! Redirecionando...
+                                </div>
                             </form>
 
                             <p class="text-center text-muted mt-4 mb-0">
@@ -283,11 +286,15 @@
                     throw new Error(data.message || "Erro ao cadastrar estudante");
                 }
 
-                alert("Estudante cadastrado com sucesso!");
-                console.log("Resposta:", data);
+                //alert("Estudante cadastrado com sucesso! Redirecionando...");
+                //console.log("Resposta:", data);
+                
+                const successMessage = document.getElementById("successMessage");
+                successMessage.classList.remove("d-none");
 
-                // opcional: redirecionar
-                // window.location.href = "login.html";
+                setTimeout(()=>{
+                    window.location.href = "login.html";
+                }, 2000)
 
                 } catch (error) {
                     console.error("Erro:", error);

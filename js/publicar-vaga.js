@@ -145,7 +145,7 @@ function setupPublishVagaForm() {
 /**
  * Gerar resumo de confirmação para publicação de vaga
  */
-function generatePublishConfirmation() {
+ function generatePublishConfirmation() {
     const confirmDiv = document.getElementById('confirmacaoVaga');
     if (!confirmDiv) return;
 

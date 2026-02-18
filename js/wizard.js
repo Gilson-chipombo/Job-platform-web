@@ -80,9 +80,9 @@ class FormWizard {
             }
         });
 
-        if (!isValid) {
-            window.alert('Por favor, preencha todos os campos obrigatórios corretamente.');
-        }
+        // if (!isValid) {
+        //     window.alert('Por favor, preencha todos os campos obrigatórios corretamente.');
+        // }
 
         return isValid;
     }
@@ -314,23 +314,23 @@ document.addEventListener('DOMContentLoaded', function() {
         new FormWizard('#publicarVagaForm', {
             prevBtnSelector: '#prevBtnVaga',
             nextBtnSelector: '#nextBtnVaga',
-            submitBtnSelector: '#submitBtnVaga'
+            //submitBtnSelector: '#submitBtnVaga'
         });
 
-         window.alert('Estou aqui');
-        //Listener para submit
-        publicarVagaForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (this.checkValidity() === false) {
-                e.stopPropagation();
-                this.classList.add('was-validated');
-            } else {
-                window.alert('Estou aqui');
-                setTimeout(() => {
-                    window.location.href = 'perfil.html';
-                }, 1500);
-            }
-        });
+         window.alert('Estou Caht');
+        // //Listener para submit
+        // publicarVagaForm.addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     if (this.checkValidity() === false) {
+        //         e.stopPropagation();
+        //         this.classList.add('was-validated');
+        //     } else {
+        //         window.alert('Estou aqui');
+        //         setTimeout(() => {
+        //             window.location.href = 'perfil.html';
+        //         }, 1500);
+        //     }
+        // });
     }
 });
 

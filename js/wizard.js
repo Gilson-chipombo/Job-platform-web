@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //submitBtnSelector: '#submitBtnVaga'
         });
 
-         window.alert('Estou Caht');
+        //window.alert('Estou Caht');
         // //Listener para submit
         // publicarVagaForm.addEventListener('submit', function(e) {
         //     e.preventDefault();

@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     nomeCompleto: document.getElementById('nomeCompleto').value,
                     email: document.getElementById('emailCadastro').value,
                     telefone: document.getElementById('telefone').value,
-                    cpf: document.getElementById('cpf').value,
+                    cpf: document.getElementById('NIF').value,
                     escola: document.getElementById('escola').value,
                     serie: document.getElementById('serie').value
                 };
@@ -265,10 +265,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Usar authManager para registrar
                 const user = authManager.registerStudent(formData);
 
-                showNotification('Cadastro realizado com sucesso! Bem-vindo!', 'success');
-                setTimeout(() => {
-                    window.location.href = 'perfil.html';
-                }, 1500);
+                // showNotification('Cadastro realizado com sucesso! Bem-vindo!', 'success');
+                // setTimeout(() => {
+                //     window.location.href = 'perfil.html';
+                // }, 1500);
             }
         });
     }

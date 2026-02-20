@@ -215,7 +215,7 @@ class VagaDetailsManager {
         });
     }
 
-    handleApplicationSubmit(e) {
+    async handleApplicationSubmit(e) {
         e.preventDefault();
 
         const form = e.target;
@@ -227,34 +227,43 @@ class VagaDetailsManager {
         }
 
         const mensagem = document.getElementById('mensagemAplicacao').value;
+        
+        const applicationData = {
+            idStudent: 2,
+            idVaga: this.getVagaIdFromUrl(),
+            description: mensagem,
+        };
+        
+        try{
+            const response = await fetch('http://127.0.0.1:3000/applies/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(applicationData)
+            });
 
-        const candidaturas = localStorage.getItem('applications')
-            ? JSON.parse(localStorage.getItem('applications'))
-            : [];
+            const result = await response.json();
+            if (!response.ok){
+                showNotification(data.message || `Erro ao enviar candidatura. Tente novamente.`, 'danger');
+                throw new Error(result.message || 'Erro ao enviar candidatura');
+            }
 
-        candidaturas.push({
-            id: 'app_' + Date.now(),
-            vagaId: this.vagaId,
-            vagaTitulo: this.vaga.titulo,
-            empresa: this.vaga.empresa,
-            data: new Date().toISOString(),
-            mensagem: mensagem,
-            status: 'análise'
-        });
+            showNotification('Candidatura enviada com sucesso!', 'success');
 
-        localStorage.setItem('applications', JSON.stringify(candidaturas));
+            const modal = bootstrap.Modal.getInstance(document.getElementById('aplicacaoModal'));
+            modal.hide();
 
-        showNotification('Candidatura enviada com sucesso!', 'success');
+            form.reset();
+            form.classList.remove('was-validated');
 
-        const modal = bootstrap.Modal.getInstance(document.getElementById('aplicacaoModal'));
-        modal.hide();
-
-        form.reset();
-        form.classList.remove('was-validated');
-
-        setTimeout(() => {
-            window.location.href = 'vagas.html';
-        }, 2000);
+            setTimeout(() => {
+                window.location.href = 'vagas.html';
+            }, 2000);
+`           `
+        }catch(error){
+            console.error('Erro ao enviar candidatura:', error);
+            showNotification(error.message || `Erro ao enviar candidatura. Tente novamente.`, 'danger');
+            return;
+        }
     }
 }
 

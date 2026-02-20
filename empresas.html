@@ -9,264 +9,203 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="bi bi-briefcase text-primary"></i> CarreiraHub
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="vagas.html">Vagas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="empresas.html">Empresas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Header -->
-    <div class="bg-light py-5 border-bottom">
-        <div class="container">
-            <h1 class="fw-bold mb-3"><i class="bi bi-building me-2 text-primary"></i>Empresas Parceiras</h1>
-            <p class="text-muted">Conheça as empresas que oferecem oportunidades de estágio e emprego na plataforma CarreiraHub</p>
-            <div class="mt-4">
-                <input type="text" class="form-control form-control-lg" id="searchCompanies" placeholder="Buscar empresa..." style="max-width: 500px;">
-            </div>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+            <i class="bi bi-briefcase text-primary"></i> CarreiraHub
+        </a>
+    </div>
+</nav>
+
+<!-- Header -->
+<div class="bg-light py-5 border-bottom">
+    <div class="container">
+        <h1 class="fw-bold mb-3">
+            <i class="bi bi-building me-2 text-primary"></i>
+            Empresas Parceiras
+        </h1>
+        <p class="text-muted">
+            Conheça as empresas que oferecem oportunidades na plataforma
+        </p>
+
+        <div class="mt-4">
+            <input type="text"
+                   class="form-control form-control-lg"
+                   id="searchCompanies"
+                   placeholder="Buscar empresa..."
+                   style="max-width: 500px;">
         </div>
     </div>
+</div>
 
-    <!-- Main Content -->
-    <main class="py-5">
-        <div class="container">
-            <div class="row g-4" id="companiesList">
-                <!-- Empresas serão inseridas aqui por JavaScript -->
-            </div>
+<!-- Main -->
+<main class="py-5">
+    <div class="container">
 
-            <!-- Empty State -->
-            <div id="emptyState" class="text-center py-5" style="display: none;">
-                <i class="fas fa-search fa-3x text-muted mb-3"></i>
-                <p class="text-muted">Nenhuma empresa encontrada</p>
-            </div>
+        <!-- Loading -->
+        <div id="loadingState" class="text-center py-5">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-3 text-muted">Carregando empresas...</p>
         </div>
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-5 mt-5">
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3"><i class="fas fa-briefcase me-2"></i>CarreiraHub</h5>
-                    <p class="text-muted">Conectando talentos com oportunidades desde 2024.</p>
+        <!-- Empresas -->
+        <div class="row g-4" id="companiesList"></div>
+
+        <!-- Empty -->
+        <div id="emptyState" class="text-center py-5" style="display:none;">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <p class="text-muted">Nenhuma empresa encontrada</p>
+        </div>
+
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-4 text-center">
+    <p class="mb-0 small">&copy; 2024 CarreiraHub</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const companiesList = document.getElementById("companiesList");
+    const emptyState = document.getElementById("emptyState");
+    const loadingState = document.getElementById("loadingState");
+    const searchInput = document.getElementById("searchCompanies");
+
+    let companies = [];
+
+    // ===============================
+    // BUSCAR EMPRESAS DO BACKEND
+    // ===============================
+    async function loadCompanies() {
+        try {
+            const response = await fetch("http://127.0.0.1:3000/companies");
+
+            if (!response.ok) {
+                throw new Error("Erro ao buscar empresas");
+            }
+
+            const data = await response.json();
+
+            companies = data.map(company => ({
+                id: company.id,
+                name: company.name,
+                area: company.segment,
+                description: company.description || "Sem descrição",
+                jobCount: company._count?.vagas || 0,
+                website: company.website || "#",
+                email: company.email || ""
+            }));
+
+            renderCompanies(companies);
+
+        } catch (error) {
+            console.error(error);
+            companiesList.innerHTML = `
+                <div class="alert alert-danger text-center">
+                    Erro ao carregar empresas.
                 </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Links Úteis</h5>
-                    <ul class="list-unstyled text-muted small">
-                        <li><a href="sobre.html" class="text-decoration-none text-muted">Sobre Nós</a></li>
-                        <li><a href="contato.html" class="text-decoration-none text-muted">Contato</a></li>
-                        <li><a href="vagas.html" class="text-decoration-none text-muted">Vagas</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold mb-3">Redes Sociais</h5>
-                    <div class="d-flex gap-3">
-                        <a href="#" class="text-decoration-none text-muted"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="#" class="text-decoration-none text-muted"><i class="fab fa-twitter fa-lg"></i></a>
-                        <a href="#" class="text-decoration-none text-muted"><i class="fab fa-linkedin fa-lg"></i></a>
+            `;
+        } finally {
+            loadingState.style.display = "none";
+        }
+    }
+
+    // ===============================
+    // RENDERIZAR
+    // ===============================
+    function renderCompanies(list) {
+
+        companiesList.innerHTML = "";
+
+        if (!list.length) {
+            emptyState.style.display = "block";
+            return;
+        }
+
+        emptyState.style.display = "none";
+
+        list.forEach(company => {
+
+            const card = `
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+
+                            <div class="text-center mb-3">
+                                <i class="bi bi-building fs-1 text-primary"></i>
+                            </div>
+
+                            <h5 class="card-title text-center">${company.name}</h5>
+
+                            <div class="text-center mb-3">
+                                <span class="badge bg-primary">
+                                    ${company.area}
+                                </span>
+                            </div>
+
+                            <p class="card-text text-muted text-center small">
+                                ${company.description}
+                            </p>
+
+                            <div class="mt-4 pt-3 border-top small text-muted">
+
+                                <div class="mb-2">
+                                    <i class="fas fa-briefcase me-2"></i>
+                                    <strong>${company.jobCount}</strong> vagas abertas
+                                </div>
+
+                                <div class="mb-2">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    ${company.email}
+                                </div>
+
+                            </div>
+
+                            <div class="d-grid gap-2 mt-3">
+                                <a href="vagas.html?empresa=${company.id}"
+                                   class="btn btn-outline-primary btn-sm">
+                                   Ver Vagas
+                                </a>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr class="bg-secondary">
-            <div class="text-center text-muted small">
-                <p>&copy; 2024 CarreiraHub. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
+            `;
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/navbar.js"></script>
-    <script>
-        // Dados das empresas
-        const companiesData = [
-            {
-                id: 1,
-                name: 'Tech Innovations',
-                logo: '💻',
-                area: 'Tecnologia',
-                description: 'Empresa de tecnologia focada em soluções inovadoras para empresas e startups.',
-                jobCount: 3,
-                website: '#',
-                email: 'careers@techinnovations.com'
-            },
-            {
-                id: 2,
-                name: 'FinanceHub',
-                logo: '📊',
-                area: 'Finanças',
-                description: 'Líder em soluções financeiras e análise de dados para o mercado corporativo.',
-                jobCount: 2,
-                website: '#',
-                email: 'careers@financehub.com'
-            },
-            {
-                id: 3,
-                name: 'Digital Solutions',
-                logo: '📱',
-                area: 'Marketing Digital',
-                description: 'Especializada em marketing digital e presença online para empresas.',
-                jobCount: 2,
-                website: '#',
-                email: 'careers@digitalsolutions.com'
-            },
-            {
-                id: 4,
-                name: 'Creative Studio',
-                logo: '🎨',
-                area: 'Design',
-                description: 'Estúdio de design focado em criatividade e inovação visual.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@creativestudio.com'
-            },
-            {
-                id: 5,
-                name: 'TechCorp Solutions',
-                logo: '⚙️',
-                area: 'Tecnologia',
-                description: 'Empresa de tecnologia com soluções enterprise e microsserviços.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@techcorp.com'
-            },
-            {
-                id: 6,
-                name: 'Recursos Humanos Plus',
-                logo: '👥',
-                area: 'Recursos Humanos',
-                description: 'Consultoria em gestão de pessoas e recrutamento especializado.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@rhplus.com'
-            },
-            {
-                id: 7,
-                name: 'Startup CodeMinds',
-                logo: '💡',
-                area: 'Tecnologia',
-                description: 'Startup focada em educação e desenvolvimento de talentos em programação.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@codeminds.com'
-            },
-            {
-                id: 8,
-                name: 'Design Academy',
-                logo: '🎓',
-                area: 'Educação',
-                description: 'Academia de design focada em formar novos talentos criativos.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@designacademy.com'
-            },
-            {
-                id: 9,
-                name: 'Business Insights',
-                logo: '📈',
-                area: 'Consultoria',
-                description: 'Consultoria especializada em análise e estratégia de negócios.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@businessinsights.com'
-            },
-            {
-                id: 10,
-                name: 'Digital Growth Lab',
-                logo: '🚀',
-                area: 'Marketing Digital',
-                description: 'Agência especializada em crescimento digital e marketing estratégico.',
-                jobCount: 1,
-                website: '#',
-                email: 'careers@digitalgrowth.com'
-            }
-        ];
-
-        // Renderizar empresas
-        document.addEventListener('DOMContentLoaded', function() {
-            const companiesList = document.getElementById('companiesList');
-            const emptyState = document.getElementById('emptyState');
-            const searchInput = document.getElementById('searchCompanies');
-
-            function renderCompanies(companies) {
-                companiesList.innerHTML = '';
-                
-                if (companies.length === 0) {
-                    emptyState.style.display = 'block';
-                    return;
-                }
-                
-                emptyState.style.display = 'none';
-                
-                companies.forEach(company => {
-                    const card = `
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card h-100 shadow-sm hover-shadow">
-                                <div class="card-body">
-                                    <div class="text-center mb-3">
-                                        <div style="font-size: 60px; line-height: 1;">${company.logo}</div>
-                                    </div>
-                                    <h5 class="card-title text-center">${company.name}</h5>
-                                    <div class="text-center mb-3">
-                                        <span class="badge bg-primary">${company.area}</span>
-                                    </div>
-                                    <p class="card-text text-muted text-center small">${company.description}</p>
-                                    
-                                    <div class="mt-4 pt-3 border-top">
-                                        <div class="mb-3">
-                                            <small class="text-muted"><i class="fas fa-briefcase me-2"></i></small>
-                                            <small class="text-muted"><strong>${company.jobCount}</strong> vagas abertas</small>
-                                        </div>
-                                        <div class="mb-3">
-                                            <small class="text-muted"><i class="fas fa-envelope me-2"></i></small>
-                                            <small class="text-muted">${company.email}</small>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="d-grid gap-2 mt-3">
-                                        <a href="vagas.html?empresa=${company.name}" class="btn btn-outline-primary btn-sm">
-                                            <i class="fas fa-briefcase me-2"></i>Ver Vagas
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    companiesList.innerHTML += card;
-                });
-            }
-
-            // Renderizar todas as empresas inicialmente
-            renderCompanies(companiesData);
-
-            // Busca
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const filtered = companiesData.filter(company => 
-                    company.name.toLowerCase().includes(searchTerm) ||
-                    company.area.toLowerCase().includes(searchTerm) ||
-                    company.description.toLowerCase().includes(searchTerm)
-                );
-                renderCompanies(filtered);
-            });
+            companiesList.innerHTML += card;
         });
-    </script>
+    }
+
+    // ===============================
+    // BUSCA
+    // ===============================
+    searchInput.addEventListener("input", (e) => {
+
+        const searchTerm = e.target.value.toLowerCase();
+
+        const filtered = companies.filter(company =>
+            company.name.toLowerCase().includes(searchTerm) ||
+            company.area.toLowerCase().includes(searchTerm) ||
+            company.description.toLowerCase().includes(searchTerm)
+        );
+
+        renderCompanies(filtered);
+    });
+
+    // Inicializar
+    loadCompanies();
+});
+</script>
+
 </body>
 </html>
+`   

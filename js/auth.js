@@ -126,6 +126,9 @@ class AuthManager {
         localStorage.removeItem(this.userTypeKey);
         this.currentUser = null;
         this.userType = null;
+
+        localStorage.removeItem("tokenStudent");
+        localStorage.removeItem("idStudent");
     }
 
     /**

@@ -229,7 +229,7 @@ class VagaDetailsManager {
         const mensagem = document.getElementById('mensagemAplicacao').value;
         
         const applicationData = {
-            idStudent: 2,
+            idStudent: parseInt(localStorage.getItem("idStudent")),
             idVaga: this.getVagaIdFromUrl(),
             description: mensagem,
         };

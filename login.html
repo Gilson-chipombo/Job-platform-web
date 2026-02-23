@@ -148,40 +148,114 @@
     <script src="js/auth.js"></script>
     <script src="js/navbar.js"></script>
     <script>
-        document.getElementById('loginEstudanteForm').addEventListener('submit', function(e) {
+        document.getElementById('loginEstudanteForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const email = document.getElementById('emailEstudante').value;
-            const senha = document.getElementById('senhaEstudante').value;
+            const email    = document.getElementById('emailEstudante').value;
+            const password = document.getElementById('senhaEstudante').value;
+
+            const loginStudantData = {email, password}
             
             if (this.checkValidity() === false) {
                 e.stopPropagation();
             } else {
-                // Usar authManager para fazer login
-                const user = authManager.loginStudent(email, senha);
-                showNotification('Login realizado com sucesso!', 'success');
-                setTimeout(() => {
-                    window.location.href = 'perfil.html';
-                }, 1500);
+                // // Usar authManager para fazer login
+                // const user = authManager.loginStudent(email, senha);
+                // showNotification('Login realizado com sucesso!', 'success');
+                // setTimeout(() => {
+                //     window.location.href = 'perfil.html';
+                // }, 1500);
+
+
+
+                try{
+                    const response = await fetch('http://127.0.0.1:3000/auth/student/login',
+                        {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify(loginStudantData)
+                        }
+                    );
+
+                    const data = await response.json();
+
+                    if (data.message) {
+                        alert(data.message || "Credenciais Erradas");
+                        console.log(data);
+                        
+                        return ;
+                    }
+
+                    const tokenStudend = data.access_token;
+                    const idStudend    = data.idUser;
+                    
+                    const user = authManager.loginStudent(email, password);
+
+                    localStorage.setItem("tokenStudent", tokenStudend);
+                    localStorage.setItem("idStudent", idStudend);
+                    
+                    showNotification('Login realizado com sucesso!', 'success');
+                    setTimeout(()=>{
+                        window.location.href = 'perfil.html';
+                    })
+                } catch(error){
+                    console.log(error);
+                }
             }
             this.classList.add('was-validated');
         });
 
-        document.getElementById('loginEmpresaForm').addEventListener('submit', function(e) {
+        document.getElementById('loginEmpresaForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const email = document.getElementById('emailEmpresa').value;
-            const senha = document.getElementById('senhaEmpresa').value;
+            const email    = document.getElementById('emailEmpresa').value;
+            const password = document.getElementById('senhaEmpresa').value;
             
+             const loginCompanyData = {email, password}
+
             if (this.checkValidity() === false) {
                 e.stopPropagation();
             } else {
                 // Usar authManager para fazer login
-                const user = authManager.loginCompany(email, senha);
-                showNotification('Login realizado com sucesso!', 'success');
-                setTimeout(() => {
-                    window.location.href = 'publicar-vaga.html';
-                }, 1500);
+                // const user = authManager.loginCompany(email, senha);
+                // showNotification('Login realizado com sucesso!', 'success');
+                // setTimeout(() => {
+                //     window.location.href = 'publicar-vaga.html';
+                // }, 1500);
+
+                 try{
+                    const response = await fetch('http://127.0.0.1:3000/auth/company/login',
+                        {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify(loginCompanyData)
+                        }
+                    );
+
+                    const data = await response.json();
+
+                    if (data.message) {
+                        alert(data.message || "Credenciais Erradas");
+                        console.log(data);
+                        
+                        return ;
+                    }
+
+                    const tokenCompany = data.access_token;
+                    const idCompany    = data.idUser;
+                    
+                    const user = authManager.loginCompany(email, password);
+
+                    localStorage.setItem("tokenCompany", tokenCompany);
+                    localStorage.setItem("idCompany", idCompany);
+                    
+                    showNotification('Login realizado com sucesso!', 'success');
+                    setTimeout(()=>{
+                        window.location.href = 'painel-empresa.html';
+                    })
+                } catch(error){
+                    console.log(error);
+                }
             }
             this.classList.add('was-validated');
         });

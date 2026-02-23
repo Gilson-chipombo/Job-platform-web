@@ -233,7 +233,7 @@
                 const requirements    = document.getElementById("requisitos").value; 
                 const skills          = document.getElementById("competenciasVaga").value;  
                 const beneficios      = document.getElementById("beneficiosVaga").value;    
-                const idCompany = 1;
+                const idCompany       = parseInt(localStorage.getItem("idCompany"));
 
                 const VagaData = {
                     title,   

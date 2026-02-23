@@ -6,7 +6,9 @@
     <title>Painel da Empresa - CarreiraHub</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <style>
         .stat-card {
@@ -15,19 +17,17 @@
             border-radius: 8px;
             background: #f8f9fa;
         }
-
         .stat-card h4 {
             color: #0d6efd;
             font-weight: bold;
         }
-
         .vaga-card {
             border-left: 4px solid #28a745;
         }
     </style>
 </head>
 
-<body>
+<body data-require-auth="true">
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -36,17 +36,27 @@
             <i class="bi bi-briefcase text-primary"></i> CarreiraHub
         </a>
 
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="vagas.html">Ver Vagas</a></li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle"></i> Minha Conta
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#" onclick="logout()">Sair</a></li>
+                        <li><a class="dropdown-item" href="painel-empresa.html">
+                            <i class="bi bi-speedometer2"></i> Painel</a></li>
+                        <li><a class="dropdown-item" href="publicar-vaga.html">
+                            <i class="bi bi-file-earmark-plus"></i> Publicar Vaga</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                            <i class="bi bi-box-arrow-right"></i> Sair</a></li>
                     </ul>
                 </li>
             </ul>
@@ -55,10 +65,10 @@
 </nav>
 
 <!-- MAIN -->
-<main class="min-vh-100 py-5" style="background:#f8f9fa;">
+<main class="min-vh-100 py-5" style="background: #f8f9fa;">
 <div class="container">
 
-    <!-- HEADER -->
+    <!-- Header -->
     <div class="row mb-5">
         <div class="col-lg-8">
             <h1 class="fw-bold mb-2">
@@ -67,14 +77,20 @@
             </h1>
             <p class="text-muted">Gerencie suas vagas e candidatos</p>
         </div>
+        <div class="col-lg-4 text-end">
+            <a href="publicar-vaga.html" class="btn btn-primary btn-lg">
+                <i class="bi bi-file-earmark-plus me-2"></i>Publicar Nova Vaga
+            </a>
+        </div>
     </div>
 
-    <!-- SAUDAÇÃO -->
+    <!-- Saudação -->
     <div class="alert alert-info mb-4">
-        Bem-vindo, <strong><span id="nomeEmpresaDisplay">Empresa</span></strong>
+        <h5>Bem-vindo, <span id="nomeEmpresaDisplay">Empresa</span>!</h5>
+        <p class="mb-0">Aqui você pode gerenciar suas vagas e visualizar candidaturas.</p>
     </div>
 
-    <!-- ESTATÍSTICAS -->
+    <!-- Estatísticas -->
     <div class="row mb-5">
         <div class="col-md-4 mb-3">
             <div class="card stat-card">
@@ -82,14 +98,12 @@
                 <p class="text-muted mb-0">Vagas Publicadas</p>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
             <div class="card stat-card">
                 <h4>0</h4>
                 <p class="text-muted mb-0">Candidaturas Recebidas</p>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
             <div class="card stat-card">
                 <h4>0</h4>
@@ -98,7 +112,7 @@
         </div>
     </div>
 
-    <!-- VAGAS -->
+    <!-- Vagas -->
     <div class="card shadow mb-5">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Suas Vagas Publicadas</h5>
@@ -116,8 +130,11 @@
 </div>
 </main>
 
-<footer class="bg-dark text-light py-4 mt-5 text-center">
-    &copy; 2026 CarreiraHub
+<!-- Footer -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center small">
+        &copy; 2024 CarreiraHub
+    </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -136,11 +153,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         user?.nomeEmpresa || user?.email || "Empresa";
 
     const idCompany = localStorage.getItem("idCompany");
-
-    if (!idCompany) {
-        alert("Empresa não identificada.");
-        return;
-    }
+    if (!idCompany) return;
 
     try {
         const response = await fetch(`http://127.0.0.1:3000/vagas/company/${idCompany}`);
@@ -155,16 +168,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.querySelectorAll(".stat-card h4")[0].textContent = totalVagas;
         document.querySelectorAll(".stat-card h4")[1].textContent = totalCandidaturas;
 
+        container.innerHTML = "";
+
         if (vagas.length === 0) {
-            container.innerHTML = `
-                <div class="text-center py-5">
-                    <p class="text-muted">Você ainda não publicou nenhuma vaga</p>
-                </div>
-            `;
+            container.innerHTML = "<p class='text-muted text-center'>Nenhuma vaga publicada.</p>";
             return;
         }
-
-        container.innerHTML = "";
 
         vagas.forEach(vaga => {
             container.innerHTML += `
@@ -173,35 +182,23 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h5 class="fw-bold">${vaga.title}</h5>
-                                <p class="text-muted mb-1">
-                                    <i class="bi bi-geo-alt"></i> ${vaga.location}
-                                </p>
+                                <p class="text-muted mb-1">${vaga.location}</p>
                                 <span class="badge bg-primary">${vaga.type}</span>
                                 <span class="badge bg-secondary">${vaga.experience}</span>
-                                <p class="mt-2">${vaga.description || ""}</p>
-                                <small class="text-muted">
-                                    Salário: ${vaga.minSalary}
-                                    ${vaga.maxSalary ? " - " + vaga.maxSalary : ""}
-                                </small>
                             </div>
                             <div class="text-end">
                                 <span class="badge bg-success mb-2">
                                     ${vaga._count?.applies || 0} candidaturas
                                 </span>
                                 <br>
-                                <button class="btn btn-sm btn-outline-primary mt-2"
+                                <button class="btn btn-sm btn-outline-primary"
                                     onclick="toggleCandidatos(${vaga.id})">
                                     Ver Candidatos
                                 </button>
                             </div>
                         </div>
 
-                        <div id="candidatos-${vaga.id}" class="mt-4 d-none">
-                            <div class="text-center py-3">
-                                <div class="spinner-border text-primary"></div>
-                            </div>
-                        </div>
-
+                        <div id="candidatos-${vaga.id}" class="mt-4 d-none"></div>
                     </div>
                 </div>
             `;
@@ -209,7 +206,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     } catch (error) {
         console.error(error);
-        alert("Erro ao carregar vagas.");
     }
 });
 
@@ -226,54 +222,67 @@ async function toggleCandidatos(idVaga) {
 
     if (container.dataset.loaded === "true") return;
 
+    container.innerHTML = `
+        <div class="text-center py-3">
+            <div class="spinner-border text-primary"></div>
+        </div>
+    `;
+
     try {
         const response = await fetch(`http://127.0.0.1:3000/applies/vaga/${idVaga}`);
         const candidatos = await response.json();
 
         if (candidatos.length === 0) {
-            container.innerHTML = `
-                <div class="alert alert-light text-center">
-                    Nenhum candidato ainda.
-                </div>
-            `;
+            container.innerHTML = "<div class='alert alert-light'>Nenhum candidato ainda.</div>";
             container.dataset.loaded = "true";
             return;
         }
 
-        let html = `<h6 class="fw-bold mb-3">Candidatos:</h6>`;
+        let html = `
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>Escola</th>
+                            <th>Área</th>
+                            <th>Skills</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
 
         candidatos.forEach(c => {
             html += `
-                <div class="card mb-3 border">
-                    <div class="card-body">
-                        <h6 class="fw-bold">${c.student.fullName}</h6>
-                        <p class="mb-1"><strong>Email:</strong> ${c.student.email}</p>
-                        <p class="mb-1"><strong>Telefone:</strong> ${c.student.telphone}</p>
-                        <p class="mb-1"><strong>Escola:</strong> ${c.student.school}</p>
-                        <p class="mb-1"><strong>Área:</strong> ${c.student.areaInterest}</p>
-                        <p class="mb-1"><strong>Skills:</strong> ${c.student.skills}</p>
-                        <span class="badge bg-warning text-dark">
-                            ${c.status}
-                        </span>
-                    </div>
-                </div>
+                <tr>
+                    <td>${c.student.fullName}</td>
+                    <td>${c.student.email}</td>
+                    <td>${c.student.telphone}</td>
+                    <td>${c.student.school}</td>
+                    <td>${c.student.areaInterest}</td>
+                    <td>${c.student.skills}</td>
+                    <td>
+                        <span class="badge bg-warning text-dark">${c.status}</span>
+                    </td>
+                </tr>
             `;
         });
+
+        html += `</tbody></table></div>`;
 
         container.innerHTML = html;
         container.dataset.loaded = "true";
 
     } catch (error) {
-        container.innerHTML = `
-            <div class="alert alert-danger">
-                Erro ao carregar candidatos.
-            </div>
-        `;
+        container.innerHTML = "<div class='alert alert-danger'>Erro ao carregar candidatos.</div>";
     }
 }
 
 function logout() {
-    if (confirm("Deseja realmente sair?")) {
+    if (confirm('Tem certeza que deseja sair?')) {
         authManager.logout();
     }
 }

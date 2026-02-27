@@ -233,6 +233,7 @@ class VagaDetailsManager {
             idVaga: this.getVagaIdFromUrl(),
             description: mensagem,
         };
+        console.log(applicationData);
         
         try{
             const response = await fetch('http://127.0.0.1:3000/applies/create', {
@@ -241,23 +242,25 @@ class VagaDetailsManager {
                 body: JSON.stringify(applicationData)
             });
 
-            const result = await response.json();
-            if (!response.ok){
+            
+            const data = await response.json();
+            
+            if (data.message)
                 showNotification(data.message || `Erro ao enviar candidatura. Tente novamente.`, 'danger');
-                throw new Error(result.message || 'Erro ao enviar candidatura');
+            else{
+
+                showNotification('Candidatura enviada com sucesso!', 'success');
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById('aplicacaoModal'));
+                modal.hide();
+
+                form.reset();
+                form.classList.remove('was-validated');
+
+                setTimeout(() => {
+                   window.location.href = 'vagas.html';
+                }, 2000);
             }
-
-            showNotification('Candidatura enviada com sucesso!', 'success');
-
-            const modal = bootstrap.Modal.getInstance(document.getElementById('aplicacaoModal'));
-            modal.hide();
-
-            form.reset();
-            form.classList.remove('was-validated');
-
-            setTimeout(() => {
-                window.location.href = 'vagas.html';
-            }, 2000);
 `           `
         }catch(error){
             console.error('Erro ao enviar candidatura:', error);

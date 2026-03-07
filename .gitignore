@@ -2,7 +2,6 @@
 
 # dependencies
 /node_modules
-/painel-carreirahub
 # next.js
 /.next/
 /out/

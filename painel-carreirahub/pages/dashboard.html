@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Painel Administrativo CarreiraHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/painel-styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="dashboard.html">
+                <i class="bi bi-shield-lock me-2"></i>CarreiraHub Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Dropdown será inserido aqui pelo auth-painel.js -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-md-block sidebar collapse">
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="dashboard.html" class="active">
+                            <i class="bi bi-speedometer2"></i>Dashboard
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="usuarios.html?tipo=estudante">
+                            <i class="bi bi-person-badge"></i>Estudantes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="usuarios.html?tipo=empresa">
+                            <i class="bi bi-building"></i>Empresas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="perfil-admin.html">
+                            <i class="bi bi-person-circle"></i>Perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configuracoes.html">
+                            <i class="bi bi-gear"></i>Configurações
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-10 main-content">
+                <div class="page-header">
+                    <h1><i class="bi bi-speedometer2"></i>Dashboard</h1>
+                    <p>Visão geral do sistema CarreiraHub</p>
+                </div>
+
+                <!-- Estatísticas -->
+                <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-primary">
+                            <div class="card-body">
+                                <div class="stat-number" id="totalUsuarios">0</div>
+                                <p class="stat-label">Total de Usuários</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-success">
+                            <div class="card-body">
+                                <div class="stat-number" id="totalEstudantes">0</div>
+                                <p class="stat-label">Estudantes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-info">
+                            <div class="card-body">
+                                <div class="stat-number" id="totalEmpresas">0</div>
+                                <p class="stat-label">Empresas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-warning">
+                            <div class="card-body">
+                                <div class="stat-number" id="pendentes">0</div>
+                                <p class="stat-label">Pendentes Aprovação</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mais Estatísticas -->
+                <div class="row mt-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-success">
+                            <div class="card-body">
+                                <div class="stat-number" id="aprovados">0</div>
+                                <p class="stat-label">Aprovados</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-danger">
+                            <div class="card-body">
+                                <div class="stat-number" id="rejeitados">0</div>
+                                <p class="stat-label">Rejeitados</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-danger">
+                            <div class="card-body">
+                                <div class="stat-number" id="bloqueados">0</div>
+                                <p class="stat-label">Bloqueados</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card stat-card stat-primary">
+                            <div class="card-body">
+                                <div class="stat-number" id="vagas">15</div>
+                                <p class="stat-label">Vagas Ativas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usuários Recentes Pendentes -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="card-header bg-primary text-white mb-3">
+                            <h5 class="mb-0">
+                                <i class="bi bi-clock-history me-2"></i>Últimos Registros Pendentes
+                            </h5>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table class="table table-hover mb-0" id="tabelaUltimosPendentes">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Tipo</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Preenchido por JavaScript -->
+                                </tbody>
+                            </table>
+                            <div class="no-data" id="emptyPendentes" style="display: none;">
+                                <i class="bi bi-inbox"></i>
+                                <p>Nenhum usuário pendente de aprovação</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth-painel.js"></script>
+    <script src="../js/usuarios-manager.js"></script>
+    <!-- Modal para visualizar dados do usuário -->
+    <div class="modal fade" id="userDetailModal" tabindex="-1" aria-labelledby="userDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userDetailModalLabel">Detalhes do Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="userDetailContent">
+                        <!-- Preenchido por JS -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+        });
+
+        async function loadDashboard() {
+
+    try {
+
+        const response = await fetch("http://127.0.0.1:3000/admin/dashboard");
+
+        const stats = await response.json();
+
+        document.getElementById('totalUsuarios').textContent = stats.totalUsuarios + stats.totalEmpresas;
+        document.getElementById('totalEstudantes').textContent = stats.totalEstudantes;
+        document.getElementById('totalEmpresas').textContent = stats.totalEmpresas;
+        document.getElementById('pendentes').textContent = stats.pendentes + stats.empresaPendentes;
+        document.getElementById('aprovados').textContent = stats.aprovados + stats.empresaAprovados;
+        document.getElementById('rejeitados').textContent = stats.rejeitados + stats.empresaRejeitados;
+        document.getElementById('bloqueados').textContent = stats.bloqueados + stats.empresaBloqueados;
+        document.getElementById('vagas').textContent = stats.vagas;
+
+    } catch (error) {
+
+        console.error("Erro ao carregar estatísticas:", error);
+
+    }
+}
+
+        function approveUser(id) {
+            if (confirm('Tem certeza que deseja aprovar este usuário?')) {
+                userManager.approveUser(id);
+                alert('Usuário aprovado com sucesso!');
+                loadDashboard();
+            }
+        }
+
+        function rejectUser(id) {
+            if (confirm('Tem certeza que deseja rejeitar este usuário?')) {
+                userManager.rejectUser(id);
+                alert('Usuário rejeitado!');
+                loadDashboard();
+            }
+        }
+
+        // Marcar item no sidebar como ativo
+        document.querySelector('a[href="dashboard.html"]').classList.add('active');
+
+        // Função para visualizar detalhes do usuário
+        function viewUser(id) {
+            const user = userManager.getUserById(id);
+            if (!user) {
+                alert('Usuário não encontrado');
+                return;
+            }
+
+            const container = document.getElementById('userDetailContent');
+            const escolaridade = user.nivelEscolaridade ? `<li><strong>Nível de escolaridade:</strong> ${user.nivelEscolaridade}</li>` : '';
+            const anoConclusao = (user.anoConclusao !== undefined && user.anoConclusao !== null) ? `<li><strong>Ano de conclusão:</strong> ${user.anoConclusao}</li>` : '';
+            const emContinuacao = (user.emContinuacao !== undefined) ? `<li><strong>Em continuidade:</strong> ${user.emContinuacao ? 'Sim' : 'Não'}</li>` : '';
+
+            let extraHtml = '';
+            if (user.tipo === 'estudante') {
+                extraHtml = `
+                    <h6>Informações Acadêmicas</h6>
+                    <ul class="list-unstyled">
+                        <li><strong>Instituição:</strong> ${user.escola || '—'}</li>
+                        ${escolaridade}
+                        ${anoConclusao}
+                        ${emContinuacao}
+                    </ul>
+                `;
+            } else if (user.tipo === 'empresa') {
+                extraHtml = `
+                    <h6>Informações da Empresa</h6>
+                    <ul class="list-unstyled">
+                        <li><strong>Segmento:</strong> ${user.segmento || '—'}</li>
+                    </ul>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Nome:</strong> ${user.nome}</p>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Tipo:</strong> ${user.tipo === 'estudante' ? 'Estudante' : 'Empresa'}</p>
+                        <p><strong>Telefone:</strong> ${user.telefone || '—'}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Status:</strong> ${user.status}</p>
+                        <p><strong>Data de cadastro:</strong> ${new Date(user.dataCadastr).toLocaleDateString('pt-PT')}</p>
+                        <p><strong>Bloqueado:</strong> ${user.bloqueado ? 'Sim' : 'Não'}</p>
+                    </div>
+                    <div class="col-12 mt-3">
+                        ${extraHtml}
+                    </div>
+                </div>
+            `;
+
+            const modalEl = document.getElementById('userDetailModal');
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+    </script>
+</body>
+</html>

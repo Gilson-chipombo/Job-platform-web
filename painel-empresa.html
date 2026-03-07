@@ -249,6 +249,7 @@ async function toggleCandidatos(idVaga) {
                             <th>Escola</th>
                             <th>Área</th>
                             <th>Skills</th>
+                            <th>CV</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -264,6 +265,9 @@ async function toggleCandidatos(idVaga) {
                     <td>${c.student.school}</td>
                     <td>${c.student.areaInterest}</td>
                     <td>${c.student.skills}</td>
+                    <td>
+                        ${c.cvUrl ? `<a href="${c.cvUrl}" target="_blank" class="btn btn-sm btn-outline-primary">Ver CV</a>` : 'CV não disponível'}
+                    </td>
                     <td>
                         <span class="badge bg-warning text-dark">${c.status}</span>
                     </td>

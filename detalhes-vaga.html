@@ -186,17 +186,20 @@
                     <h5 class="modal-title">Candidatar-se à Vaga</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form id="aplicacaoForm">
+                
+                <form id="aplicacaoForm" enctype="multipart/form-data">
                     <div class="modal-body">
                         <p class="text-muted mb-3">Adicione uma mensagem sobre por que você é um ótimo candidato para esta vaga.</p>
                         <textarea class="form-control" id="mensagemAplicacao" rows="5" placeholder="Conte sobre você, sua experiência e interesse nesta vaga..." required></textarea>
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="confirmacaoCV" required>
-                            <label class="form-check-label" for="confirmacaoCV">
-                                Confirmo que meu currículo está atualizado
-                            </label>
-                        </div>
                     </div>
+
+                    <div class="form-check mt-3">
+                        <label class="form-check-label" for="confirmacaoCV">
+                            <input type="file" name="cv" id="cv" accept=".pdf" required> <br>
+                                Selecione o CV no formato PDF
+                            </label>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-success">

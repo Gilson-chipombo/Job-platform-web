@@ -227,19 +227,24 @@ class VagaDetailsManager {
         }
 
         const mensagem = document.getElementById('mensagemAplicacao').value;
-        
-        const applicationData = {
-            idStudent: parseInt(localStorage.getItem("idStudent")),
-            idVaga: this.getVagaIdFromUrl(),
-            description: mensagem,
-        };
-        console.log(applicationData);
+        const fileInput = document.getElementById('cv');
+
+        const formData = new FormData();
+
+        formData.append("idStudent", parseInt(localStorage.getItem("idStudent")));
+        formData.append("idVaga", this.getVagaIdFromUrl());
+        formData.append("description", mensagem);
+
+        if (fileInput.files.length > 0) {
+            formData.append("cv", fileInput.files[0]);
+        }
+
+        //console.log(applicationData);
         
         try{
             const response = await fetch('http://127.0.0.1:3000/applies/create', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(applicationData)
+                body: formData
             });
 
             

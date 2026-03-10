@@ -367,15 +367,15 @@ row.innerHTML=`
 
 <td>
 
-<button class="btn btn-sm btn-outline-primary me-1" onclick="viewUser(${user.id})">
+<button class="btn btn-sm btn-outline-primary me-1" onclick="viewUser(${user.id, user.tipo})">
     <i class="bi bi-eye"></i>
 </button>
 
-<button class="btn btn-sm btn-success me-1" onclick="approveUser(${user.id})">
+<button class="btn btn-sm btn-success me-1" onclick="approveUser(${user.id}, '${user.tipo}')">
 <i class="bi bi-check"></i>
 </button>
 
-<button class="btn btn-sm btn-danger" onclick="rejectUser(${user.id})">
+<button class="btn btn-sm btn-danger" onclick="rejectUser(${user.id}, '${user.tipo}')">
 <i class="bi bi-x"></i>
 </button>
 
@@ -399,14 +399,14 @@ console.error("Erro ao carregar pendentes:",error);
 
 
 
-async function approveUser(id){
+async function approveUser(id, tipo){
 
 
-    if(!confirm("Aprovar usuário?")) return
-    await userManager.approveUser(id)
+    if(!confirm("Aprovar usuárioUUUUUUUUuu?")) return
+    await userManager.approveUser(id, tipo)
     await userManager.loadUsers()
-    loadPendentes();
-    loadDashboard();
+    loadDashboard()
+    loadPendentes()
 }
 
 
@@ -417,9 +417,8 @@ async function rejectUser(id){
 
     await userManager.rejectUser(id)
     await userManager.loadUsers()
-
-    loadPendentes();
-    loadDashboard();
+    loadDashboard()
+    loadPendentes()
 }
 
 

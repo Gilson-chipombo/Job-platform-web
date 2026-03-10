@@ -285,11 +285,11 @@ ${new Date(user.dataCadastr).toLocaleDateString()}
 <i class="bi bi-eye"></i>
 </button>
 
-<button class="btn btn-sm btn-success" onclick="approveUser(${user.id})">
+<button class="btn btn-sm btn-success" onclick="approveUser(${user.id}, '${user.tipo}')">
 <i class="bi bi-check"></i>
 </button>
 
-<button class="btn btn-sm btn-danger" onclick="rejectUser(${user.id})">
+<button class="btn btn-sm btn-danger" onclick="rejectUser(${user.id}, '${user.tipo}')">
 <i class="bi bi-x"></i>
 </button>
 
@@ -303,39 +303,28 @@ ${new Date(user.dataCadastr).toLocaleDateString()}
 
 
 function applyFilters(){
+    let users = userManager.getAllUsers()
 
-let users = userManager.getAllUsers()
+    const search = document.getElementById("searchInput").value.toLowerCase()
+    const tipo = document.getElementById("tipoFilter").value
+    const status = document.getElementById("statusFilter").value
 
-const search = document.getElementById("searchInput").value.toLowerCase()
-const tipo = document.getElementById("tipoFilter").value
-const status = document.getElementById("statusFilter").value
+    if(search){
+        users = users.filter(u =>
+        u.nome.toLowerCase().includes(search) ||
+        u.email.toLowerCase().includes(search) ||
+        (u.telefone && u.telefone.includes(search))
+        )
+    }
 
-if(search){
+    if(tipo){
+        users = users.filter(u => u.tipo === tipo)
+    }
 
-users = users.filter(u =>
-
-u.nome.toLowerCase().includes(search) ||
-u.email.toLowerCase().includes(search) ||
-(u.telefone && u.telefone.includes(search))
-
-)
-
-}
-
-if(tipo){
-
-users = users.filter(u => u.tipo === tipo)
-
-}
-
-if(status){
-
-users = users.filter(u => u.status === status)
-
-}
-
-renderUsuarios(users)
-
+    if(status){
+        users = users.filter(u => u.status === status)
+    }
+    renderUsuarios(users)
 }
 
 

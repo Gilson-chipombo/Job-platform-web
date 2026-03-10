@@ -91,14 +91,14 @@ class UserManager {
     // APROVAR USUÁRIO
     // ===============================
 
-    async approveUser(id) {
+    async approveUser(id, tipo) {
 
-        const user = this.getUserById(id);
-        if (!user) return false;
+        //const user = this.getUserById(id);
+        //if (!user) return false;
 
         try {
 
-            if (user.tipo === "estudante") {
+            if (tipo === "Estudante") {
 
                 const res = await fetch(`${this.API}/students/approve/${id}`, {
                     method: "PUT"
@@ -118,7 +118,7 @@ class UserManager {
 
             }
 
-            user.status = "aprovado";
+            //user.status = "aprovado";
 
             return true;
 
@@ -135,14 +135,14 @@ class UserManager {
     // REJEITAR USUÁRIO
     // ===============================
 
-    async rejectUser(id) {
+    async rejectUser(id, tipo) {
 
-        const user = this.getUserById(id);
-        if (!user) return false;
+        //const user = this.getUserById(id);
+        //if (!user) return false;
 
         try {
 
-            if (user.tipo === "estudante") {
+            if (tipo === "Estudante") {
 
                 const res = await fetch(`${this.API}/students/reject/${id}`, {
                     method: "PUT"
@@ -162,7 +162,7 @@ class UserManager {
 
             }
 
-            user.status = "rejeitado";
+            //user.status = "rejeitado";
 
             return true;
 

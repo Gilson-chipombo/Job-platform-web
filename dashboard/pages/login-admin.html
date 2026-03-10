@@ -150,6 +150,8 @@
                     
                     //adminAuth.loginAdmin(email, password)
                     //showNotification('Login realizado com sucesso!', 'success');
+                    localStorage.setItem('adminRole', 'admin');
+                    
                     setTimeout(()=>{
                         window.location.href = 'dashboard.html';
                     })

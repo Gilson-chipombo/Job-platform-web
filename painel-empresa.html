@@ -43,7 +43,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="vagas.html">Ver Vagas</a></li>
+                <li class="nav-item"><a class="nav-link" href="minhas-vagas-empresa.html">Ver Vagas</a></li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -87,45 +87,96 @@
     <!-- Saudação -->
     <div class="alert alert-info mb-4">
         <h5>Bem-vindo, <span id="nomeEmpresaDisplay">Empresa</span>!</h5>
-        <p class="mb-0">Aqui você pode gerenciar suas vagas e visualizar candidaturas.</p>
+        <p class="mb-0">Gerencie suas vagas em um único lugar e acompanhe as candidaturas em tempo real.</p>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="row dashboard-actions">
+        <div class="col-md-4 mb-3">
+            <a href="publicar-vaga.html" class="btn btn-primary w-100 shadow-sm">
+                <i class="bi bi-file-earmark-plus me-2"></i>Publicar nova vaga
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="minhas-vagas-empresa.html" class="btn btn-outline-primary w-100 shadow-sm">
+                <i class="bi bi-briefcase me-2"></i>Ver minhas vagas
+            </a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <button class="btn btn-outline-secondary w-100 shadow-sm" onclick="location.reload()">
+                <i class="bi bi-arrow-clockwise me-2"></i>Atualizar dados
+            </button>
+        </div>
     </div>
 
     <!-- Estatísticas -->
-    <div class="row mb-5">
+    <div class="row dashboard-stats mb-5">
         <div class="col-md-4 mb-3">
             <div class="card stat-card">
-                <h4>0</h4>
-                <p class="text-muted mb-0">Vagas Publicadas</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4>0</h4>
+                        <div class="stat-label">Vagas Publicadas</div>
+                    </div>
+                    <div class="text-end">
+                        <i class="bi bi-folder-fill fs-2 text-primary"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="card stat-card">
-                <h4>0</h4>
-                <p class="text-muted mb-0">Candidaturas Recebidas</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4>0</h4>
+                        <div class="stat-label">Candidaturas Recebidas</div>
+                    </div>
+                    <div class="text-end">
+                        <i class="bi bi-people-fill fs-2 text-primary"></i>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="card stat-card">
-                <h4>0</h4>
-                <p class="text-muted mb-0">Candidatos em Análise</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Vagas -->
-    <div class="card shadow mb-5">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Suas Vagas Publicadas</h5>
-        </div>
-        <div class="card-body">
-            <div id="vagasPublicadasContainer">
-                <div class="text-center py-5">
-                    <div class="spinner-border text-primary"></div>
-                    <p class="mt-3 text-muted">Carregando vagas...</p>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4>0</h4>
+                        <div class="stat-label">Candidatos em Análise</div>
+                    </div>
+                    <div class="text-end">
+                        <i class="bi bi-hourglass-split fs-2 text-primary"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Suas Vagas Publicadas -->
+    <section class="mb-5">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h2 class="fw-bold mb-0">Suas Vagas Publicadas</h2>
+                <p class="text-muted mb-0">Somente as vagas que você publicou estão visíveis aqui.</p>
+            </div>
+            <a href="publicar-vaga.html" class="btn btn-primary">
+                <i class="bi bi-file-earmark-plus me-2"></i>Nova vaga
+            </a>
+        </div>
+
+        <div id="vagasCardsContainer" class="row g-4">
+            <div class="col-12 text-center py-5" id="vagasLoading">
+                <div class="spinner-border text-primary"></div>
+                <p class="mt-3 text-muted">Carregando vagas...</p>
+            </div>
+        </div>
+
+        <div id="vagasEmpty" class="text-center text-muted mt-5" style="display: none;">
+            <i class="bi bi-briefcase fs-1 mb-3"></i>
+            <p class="mb-0">Você ainda não publicou nenhuma vaga.</p>
+            <a href="publicar-vaga.html" class="btn btn-outline-primary mt-3">Publicar primeira vaga</a>
+        </div>
+    </section>
 
 </div>
 </main>
@@ -133,7 +184,7 @@
 <!-- Footer -->
 <footer class="bg-dark text-light py-4 mt-5">
     <div class="container text-center small">
-        &copy; 2024 CarreiraHub
+        &copy; 2026 CarreiraHub
     </div>
 </footer>
 
@@ -159,7 +210,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const response = await fetch(`http://127.0.0.1:3000/vagas/company/${idCompany}`);
         const vagas = await response.json();
 
-        const container = document.getElementById("vagasPublicadasContainer");
+        const container = document.getElementById("vagasCardsContainer");
 
         const totalVagas = vagas.length;
         const totalCandidaturas = vagas.reduce((acc, vaga) =>
@@ -169,36 +220,48 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.querySelectorAll(".stat-card h4")[1].textContent = totalCandidaturas;
 
         container.innerHTML = "";
+        document.getElementById('vagasLoading').style.display = 'none';
 
         if (vagas.length === 0) {
-            container.innerHTML = "<p class='text-muted text-center'>Nenhuma vaga publicada.</p>";
+            document.getElementById('vagasEmpty').style.display = 'block';
             return;
         }
 
         vagas.forEach(vaga => {
             container.innerHTML += `
-                <div class="card mb-4 vaga-card shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="fw-bold">${vaga.title}</h5>
-                                <p class="text-muted mb-1">${vaga.location}</p>
-                                <span class="badge bg-primary">${vaga.type}</span>
-                                <span class="badge bg-secondary">${vaga.experience}</span>
+                <div class="col-md-6">
+                    <div class="card h-100 vaga-card shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="fw-bold mb-1">${vaga.title}</h5>
+                                    <p class="text-muted mb-2">${vaga.location}</p>
+                                    <div class="mb-2">
+                                        <span class="badge bg-primary me-1">${vaga.type}</span>
+                                        <span class="badge bg-secondary">${vaga.experience}</span>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-success mb-2">
+                                        ${vaga._count?.applies || 0} candidaturas
+                                    </span>
+                                </div>
                             </div>
-                            <div class="text-end">
-                                <span class="badge bg-success mb-2">
-                                    ${vaga._count?.applies || 0} candidaturas
-                                </span>
-                                <br>
-                                <button class="btn btn-sm btn-outline-primary"
-                                    onclick="toggleCandidatos(${vaga.id})">
-                                    Ver Candidatos
-                                </button>
-                            </div>
-                        </div>
 
-                        <div id="candidatos-${vaga.id}" class="mt-4 d-none"></div>
+                            <div class="mt-auto">
+                                <div class="d-flex gap-2 flex-wrap">
+                                    <button class="btn btn-sm btn-outline-primary flex-grow-1"
+                                        onclick="toggleCandidatos(${vaga.id})">
+                                        Ver Candidatos
+                                    </button>
+                                    <a href="publicar-vaga.html?id=${vaga.id}" class="btn btn-sm btn-outline-secondary flex-grow-1">
+                                        Editar
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div id="candidatos-${vaga.id}" class="mt-4 d-none"></div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -251,6 +314,7 @@ async function toggleCandidatos(idVaga) {
                             <th>Skills</th>
                             <th>CV</th>
                             <th>Status</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -269,7 +333,13 @@ async function toggleCandidatos(idVaga) {
                         ${c.cvUrl ? `<a href="${c.cvUrl}" target="_blank" class="btn btn-sm btn-outline-primary">Ver CV</a>` : 'CV não disponível'}
                     </td>
                     <td>
-                        <span class="badge bg-warning text-dark">${c.status}</span>
+                        <span class="badge bg-warning text-dark" id="candidate-status-${c.id}">${c.status}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-success" onclick="setCandidateStatus(${c.id}, 'Aprovado')">Aprovar</button>
+                            <button class="btn btn-sm btn-danger" onclick="setCandidateStatus(${c.id}, 'Rejeitado')">Rejeitar</button>
+                        </div>
                     </td>
                 </tr>
             `;
@@ -283,6 +353,14 @@ async function toggleCandidatos(idVaga) {
     } catch (error) {
         container.innerHTML = "<div class='alert alert-danger'>Erro ao carregar candidatos.</div>";
     }
+}
+
+function setCandidateStatus(candidateId, status) {
+    const statusEl = document.getElementById(`candidate-status-${candidateId}`);
+    if (!statusEl) return;
+
+    statusEl.textContent = status;
+    statusEl.className = `badge ${status === 'Aprovado' ? 'bg-success' : 'bg-danger'} text-white`;
 }
 
 function logout() {

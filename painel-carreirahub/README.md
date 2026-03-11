@@ -153,7 +153,7 @@ Ativo  Bloqueado
   tipo: "estudante" | "empresa",
   telefone: "923456789",
   status: "aprovado" | "pendente" | "rejeitado",
-  dataCadastr: "2024-02-15",
+  dataCadastr: "2026-02-15",
   bloqueado: false,
   escola: "Universidade ABC" // para estudantes
   segmento: "Tecnologia" // para empresas
@@ -214,6 +214,6 @@ Para dúvidas ou bugs, contate:
 
 ---
 
-**Última Atualização:** 15 de Fevereiro de 2024
+**Última Atualização:** 15 de Fevereiro de 2026
 **Versão:** 1.0.0
 **Status:** ✅ Desenvolvimento Completo

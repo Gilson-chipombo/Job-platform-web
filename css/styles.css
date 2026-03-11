@@ -188,6 +188,58 @@ main {
 }
 
 /* ============================================
+   DASHBOARD / ADMIN
+   ============================================ */
+
+.dashboard-actions {
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-actions .btn {
+    min-height: 54px;
+    font-weight: 600;
+}
+
+.dashboard-stats .stat-card {
+    background: rgba(59, 130, 246, 0.08);
+    border: none;
+    border-left: 4px solid var(--primary-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-stats .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
+}
+
+.dashboard-stats .stat-card h4 {
+    color: var(--primary-color);
+    font-size: 2.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.dashboard-stats .stat-card .stat-label {
+    color: rgba(31, 41, 55, 0.7);
+    font-weight: 500;
+}
+
+.vaga-card {
+    border-left: 4px solid var(--accent-color);
+}
+
+.dashboard-table .table {
+    min-width: 720px;
+}
+
+.dashboard-table .table thead {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.dashboard-table .table-hover tbody tr:hover {
+    background: rgba(59, 130, 246, 0.06);
+}
+
+/* ============================================
    TYPOGRAPHY
    ============================================ */
 

@@ -9,6 +9,7 @@ class NavbarManager {
     constructor() {
         this.currentUser = this.getCurrentUser();
         this.userType = this.getUserType();
+        this.isAuthenticated = this.checkAuthentication();
         this.init();
     }
 
@@ -33,6 +34,15 @@ class NavbarManager {
     }
 
     /**
+     * Verificar autenticação usando tokenStudent ou user
+     */
+    checkAuthentication() {
+        const tokenStudent = localStorage.getItem('tokenStudent');
+        const user = this.getCurrentUser();
+        return !!(tokenStudent || user);
+    }
+
+    /**
      * Renderizar navbar baseado no estado de autenticação
      */
     renderNavbar() {
@@ -54,23 +64,35 @@ class NavbarManager {
         if (oldCadastroItem) oldCadastroItem.remove();
         if (oldDropdownContainer) oldDropdownContainer.remove();
 
-        if (this.currentUser && this.userType) {
+        if (this.isAuthenticated) {
             // Usuário logado - Mostrar dropdown
             this.renderAutenticatedNav(navbarNav);
         } else {
-            // Não logado - Mostrar login e cadastro
+            // Não logado - Mostrar login
             this.renderUnauthenticatedNav(navbarNav);
         }
+    }
+
+    /**
+     * Obter nome do usuário
+     */
+    getUserName() {
+        if (this.currentUser && this.currentUser.nome) {
+            return this.currentUser.nome;
+        }
+        const tokenStudent = localStorage.getItem('tokenStudent');
+        return tokenStudent ? 'Minha Conta' : 'Usuário';
     }
 
     /**
      * Renderizar navbar para usuário autenticado
      */
     renderAutenticatedNav(navbarNav) {
+        const userName = this.getUserName();
         const dropdownHtml = `
             <li class="nav-item dropdown" data-nav="user-dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle me-1"></i>${this.currentUser.nome || 'Minha Conta'}
+                    <i class="bi bi-person-circle me-1"></i>${userName}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item" href="perfil.html">
@@ -103,12 +125,14 @@ class NavbarManager {
      * Renderizar navbar para usuário não autenticado
      */
     renderUnauthenticatedNav(navbarNav) {
-        const loginItem = `
+        const loginHtml = `
             <li class="nav-item" data-nav="login">
-                <a class="nav-link" href="login.html">Login</a>
+                <a class="nav-link" href="login.html">
+                    <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
+                </a>
             </li>
         `;
-        navbarNav.insertAdjacentHTML('beforeend', loginItem);
+        navbarNav.insertAdjacentHTML('beforeend', loginHtml);
     }
 
     /**
@@ -119,11 +143,13 @@ class NavbarManager {
     }
 
     /**
-     * Logout - Simular saída
+     * Logout - Limpar autenticação
      */
     logout() {
         localStorage.removeItem('user');
         localStorage.removeItem('userType');
+        localStorage.removeItem('tokenStudent');
+        localStorage.removeItem('idStudent');
         showNotification('Você foi desconectado!', 'info');
         setTimeout(() => {
             window.location.href = 'index.html';

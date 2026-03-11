@@ -119,16 +119,23 @@ class AuthManager {
     }
 
     /**
-     * Logout
+     * Logout - Limpar todos os dados de autenticação
      */
     logout() {
         localStorage.removeItem(this.storageKey);
         localStorage.removeItem(this.userTypeKey);
-        this.currentUser = null;
-        this.userType = null;
-
         localStorage.removeItem("tokenStudent");
         localStorage.removeItem("idStudent");
+        this.currentUser = null;
+        this.userType = null;
+    }
+
+    /**
+     * Verificar se usuário está autenticado (via tokenStudent ou user)
+     */
+    isTokenValid() {
+        const tokenStudent = localStorage.getItem('tokenStudent');
+        return tokenStudent || this.isLoggedIn();
     }
 
     /**

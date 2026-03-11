@@ -1,16 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* ============================================
    GENERAL STYLES
    ============================================ */
 
 :root {
-    --primary-color: #667eea;
-    --secondary-color: #764ba2;
-    --success-color: #27ae60;
-    --danger-color: #e74c3c;
-    --warning-color: #f39c12;
-    --info-color: #3498db;
-    --light-bg: #f8f9fa;
-    --border-radius: 8px;
+    --primary-color: #3b82f6;
+    --secondary-color: #9333ea;
+    --accent-color: #22c55e;
+    --success-color: #22c55e;
+    --danger-color: #ef4444;
+    --warning-color: #f97316;
+    --info-color: #0ea5e9;
+    --light-bg: #f8fafc;
+    --dark-bg: #0f172a;
+    --border-radius: 10px;
 }
 
 * {
@@ -20,9 +24,10 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1f2937;
     line-height: 1.6;
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.03) 60%, rgba(248, 250, 252, 1) 100%);
 }
 
 html, body {
@@ -31,6 +36,155 @@ html, body {
 
 main {
     flex: 1;
+}
+
+.page-main {
+    background: var(--light-bg);
+    min-height: 100vh;
+}
+
+.page-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    padding: 80px 0;
+}
+
+.page-hero-panel {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: 60px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+}
+
+.auth-bg {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+/* --------------------------------------------
+   Layout Helpers
+   -------------------------------------------- */
+
+.container {
+    max-width: 1140px;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
+.navbar {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    color: rgba(31, 41, 55, 0.85);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar .nav-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    padding: 120px 0;
+    min-height: 72vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-slideshow {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.62);
+    opacity: 0;
+    animation: heroFade 18s ease-in-out infinite;
+}
+
+.hero-slide:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.hero-slide:nth-child(2) {
+    animation-delay: 6s;
+}
+
+.hero-slide:nth-child(3) {
+    animation-delay: 12s;
+}
+
+@keyframes heroFade {
+    0%, 25%, 100% {
+        opacity: 0;
+    }
+    5%, 20% {
+        opacity: 1;
+    }
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.52) 0%, rgba(15, 23, 42, 0.55) 40%, rgba(15, 23, 42, 0.72) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    max-width: 720px;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: heroContentIn 0.9s ease-out 0.35s forwards;
+}
+
+@keyframes heroContentIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content .display-4 {
+    text-shadow: 0 18px 34px rgba(0, 0, 0, 0.35);
+}
+
+.hero-content .lead {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* ============================================
+   UTILS
+   ============================================ */
+
+.shadow-soft {
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
 }
 
 /* ============================================
@@ -196,6 +350,24 @@ h1, h2, h3, h4, h5, h6 {
 
 .was-validated .form-control:invalid {
     border-color: var(--danger-color);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92));
+    color: rgba(255, 255, 255, 0.85);
+}
+
+footer a {
+    color: rgba(255, 255, 255, 0.75);
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: rgba(255, 255, 255, 1);
 }
 
 .was-validated .form-select:invalid {

@@ -13,66 +13,70 @@ class AdminAuthManager {
     }
 
     /**
-     * Verificar acesso administrativo
+     * Verificar acesso administrativo e carregar dados do storage
      */
     checkAdminAccess() {
         const admin = localStorage.getItem('admin');
         const adminRole = localStorage.getItem('adminRole');
 
-        if (!admin || adminRole !== 'admin') {
-            // Modo permissivo: criar um admin de exemplo para permitir acesso em ambiente local/demo
-            const adminData = {
-                username: 'admin',
-                email: 'admin@careeirahub.com',
-                name: 'Administrador Demo',
-                role: 'admin',
-                loginAt: new Date().toISOString(),
-                demo: true
-            };
-
-            localStorage.setItem('admin', JSON.stringify(adminData));
-            localStorage.setItem('adminRole', 'admin');
-            localStorage.setItem('adminToken', 'token_demo_' + Date.now());
-
-            this.adminUser = adminData;
-            // Não redirecionamos — o painel ficará acessível imediatamente
+        if (admin && adminRole === 'admin') {
+            try {
+                this.adminUser = JSON.parse(admin);
+            } catch (err) {
+                console.warn('Falha ao ler dados de admin do localStorage', err);
+                this.clearAuth();
+            }
         } else {
-            this.adminUser = JSON.parse(admin);
+            this.adminUser = null;
         }
     }
 
     /**
-     * Login do administrador
+     * Garantir que o usuário esteja autenticado; caso contrário, redireciona para login
      */
-    loginAdmin(username, password) {
-        // Modo permissivo/demo: aceitar qualquer credencial e criar/admin de exemplo
-        const uname = username || 'admin';
-        const adminData = {
-            username: uname,
-            email: `${uname}@careeirahub.com`,
-            name: 'Administrador',
-            role: 'admin',
-            loginAt: new Date().toISOString(),
-            demo: true
-        };
-
-        localStorage.setItem('admin', JSON.stringify(adminData));
-        localStorage.setItem('adminRole', 'admin');
-        localStorage.setItem('adminToken', 'token_' + Date.now());
-
-        this.adminUser = adminData;
-        return true;
+    ensureAuthenticated() {
+        if (!this.isAuthenticated()) {
+            window.location.href = this.getLoginUrl();
+        }
     }
 
     /**
-     * Logout do administrador
+     * URL relativa para a página de login, dependendo da pasta atual
      */
-    logoutAdmin() {
+    getLoginUrl() {
+        const path = window.location.pathname;
+        return path.includes('/pages/') ? 'login-admin.html' : 'pages/login-admin.html';
+    }
+
+    /**
+     * Definir dados de autenticação (armazenar no localStorage)
+     */
+    setAuth({ username, email, name, role = 'admin', token }) {
+        const adminData = {
+            username: username || 'admin',
+            email: email || 'admin@careeirahub.com',
+            name: name || 'Administrador',
+            role,
+            loginAt: new Date().toISOString()
+        };
+
+        localStorage.setItem('admin', JSON.stringify(adminData));
+        localStorage.setItem('adminRole', role);
+        if (token) {
+            localStorage.setItem('adminToken', token);
+        }
+
+        this.adminUser = adminData;
+    }
+
+    /**
+     * Remover dados de autenticação
+     */
+    clearAuth() {
         localStorage.removeItem('admin');
         localStorage.removeItem('adminRole');
         localStorage.removeItem('adminToken');
         this.adminUser = null;
-        window.location.href = 'pages/login-admin.html';
     }
 
     /**
@@ -80,6 +84,14 @@ class AdminAuthManager {
      */
     isAuthenticated() {
         return !!localStorage.getItem('adminRole');
+    }
+
+    /**
+     * Logout do administrador
+     */
+    logoutAdmin() {
+        this.clearAuth();
+        window.location.href = this.getLoginUrl();
     }
 
     /**
@@ -97,7 +109,7 @@ class AdminAuthManager {
     }
 }
 
-// Instância global
+// Instância global (usada como "adminAuth")
 const adminAuth = new AdminAuthManager();
 
 // Renderizar navbar apenas se autenticado

@@ -909,17 +909,20 @@ footer a:hover {
    VAGAS PAGE - STICKY HEADER & PAGINATION
    ============================================ */
 
-/* Navbar sticky - acompanha scroll */
+/* Navbar sticky - acompanha scroll permanentemente */
 .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1030;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1030 !important;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.95) !important;
+    will-change: transform;
 }
 
 .navbar.scrolled {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.98) !important;
 }
 
 /* Collapse de filtros com animação suave */

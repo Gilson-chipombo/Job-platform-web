@@ -13,16 +13,32 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <i class="fas fa-briefcase text-primary"></i> CarreiraHub
+            <a class="navbar-brand fw-bold" href="painel-empresa.html">
+                <i class="bi bi-speedometer2 text-primary"></i> Painel da Empresa
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="vagas.html">Vagas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="painel-empresa.html">
+                        <i class="bi bi-speedometer2 me-1"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="minhas-vagas-empresa.html">
+                        <i class="bi bi-briefcase me-1"></i>Minhas Vagas</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="publicar-vaga.html">
+                        <i class="bi bi-file-earmark-plus me-1"></i>Publicar Vaga</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> Conta
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" onclick="alert('Perfil da empresa em breve')">
+                                <i class="bi bi-gear me-2"></i>Configurações</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                <i class="bi bi-box-arrow-right me-2"></i>Sair</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -217,6 +233,17 @@
     <script src="js/publicar-vaga.js"></script>
 
     <script>
+        // Logout function
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                authManager.logout();
+                // Redirecionar para website em vez de login
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 500);
+            }
+        }
+
         document
             .getElementById("publicarVagaForm")
             .addEventListener("submit", async function (e) {

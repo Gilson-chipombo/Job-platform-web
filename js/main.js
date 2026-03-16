@@ -76,6 +76,20 @@ function getLocalizacaoName(localizacao) {
 }
 
 /**
+ * Obter dados do localStorage
+ * @param {string} key - Chave
+ * @returns {any}
+ */
+function getData(key) {
+    const data = localStorage.getItem(key);
+    try {
+        return data ? JSON.parse(data) : null;
+    } catch {
+        return data;
+    }
+}
+
+/**
  * Remover dados do localStorage
  * @param {string} key - Chave
  */
@@ -84,11 +98,17 @@ function removeData(key) {
 }
 
 /**
- * Logout - Simular saída
+ * Logout - Simular saída com authManager se disponível
  */
 function logout() {
-    removeData('user');
-    removeData('userType');
+    if (typeof authManager !== 'undefined') {
+        authManager.logout();
+    } else {
+        removeData('user');
+        removeData('userType');
+        removeData('authToken');
+        removeData('tokenExpiry');
+    }
     showNotification('Você foi desconectado!', 'info');
     setTimeout(() => {
         window.location.href = 'index.html';
@@ -489,3 +509,22 @@ function getData(key) {
     const value = localStorage.getItem(key);
     return value ? JSON.parse(value) : null;
 }
+
+/**
+ * Sticky navbar ao fazer scroll - acompanha scroll e adiciona shadow
+ */
+function initStickyNavbar() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }, { passive: true });
+}
+
+// Inicializar sticky navbar quando página carregar
+document.addEventListener('DOMContentLoaded', initStickyNavbar);

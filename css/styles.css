@@ -5,16 +5,16 @@
    ============================================ */
 
 :root {
-    --primary-color: #3b82f6;
-    --secondary-color: #9333ea;
+    --primary-color: #E21912;
+    --secondary-color: #1A3960;
     --accent-color: #22c55e;
     --success-color: #22c55e;
     --danger-color: #ef4444;
     --warning-color: #f97316;
     --info-color: #0ea5e9;
-    --light-bg: #f8fafc;
-    --dark-bg: #0f172a;
-    --border-radius: 10px;
+    --light-bg: #f5f5f5;
+    --dark-bg: #1A3960;
+    --border-radius: 8px;
 }
 
 * {
@@ -27,7 +27,7 @@ body {
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: #1f2937;
     line-height: 1.6;
-    background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.03) 60%, rgba(248, 250, 252, 1) 100%);
+    background: var(--light-bg);
 }
 
 html, body {
@@ -44,13 +44,13 @@ main {
 }
 
 .page-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: var(--primary-color);
     color: white;
     padding: 80px 0;
 }
 
 .page-hero-panel {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: var(--secondary-color);
     padding: 60px;
     border-radius: 15px;
     color: white;
@@ -58,7 +58,7 @@ main {
 }
 
 .auth-bg {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: var(--secondary-color);
 }
 
 /* --------------------------------------------
@@ -201,7 +201,7 @@ main {
 }
 
 .dashboard-stats .stat-card {
-    background: rgba(59, 130, 246, 0.08);
+    background: #fef5f4;
     border: none;
     border-left: 4px solid var(--primary-color);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -209,7 +209,7 @@ main {
 
 .dashboard-stats .stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 8px 20px rgba(226, 25, 18, 0.12);
 }
 
 .dashboard-stats .stat-card h4 {
@@ -232,11 +232,11 @@ main {
 }
 
 .dashboard-table .table thead {
-    background: rgba(59, 130, 246, 0.08);
+    background: #fef5f4;
 }
 
 .dashboard-table .table-hover tbody tr:hover {
-    background: rgba(59, 130, 246, 0.06);
+    background: #f5f5f5;
 }
 
 /* ============================================
@@ -264,21 +264,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: var(--primary-color);
     border: none;
     color: white;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #5568d3, #6a3d8e);
+    background: #c71510;
     transform: translateY(-2px);
-    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 20px rgba(226, 25, 18, 0.3);
     color: white;
 }
 
 .btn-primary:active {
     transform: translateY(0px);
-    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 12px rgba(226, 25, 18, 0.2);
 }
 
 .btn-light {
@@ -310,8 +310,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-outline-primary:hover {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    border-color: var(--secondary-color);
+    background: var(--primary-color);
+    border-color: var(--primary-color);
     color: white;
     transform: translateY(-2px);
 }
@@ -385,7 +385,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(226, 25, 18, 0.15);
 }
 
 .form-label {
@@ -409,7 +409,7 @@ h1, h2, h3, h4, h5, h6 {
    ============================================ */
 
 footer {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(30, 41, 59, 0.92));
+    background: var(--dark-bg);
     color: rgba(255, 255, 255, 0.85);
 }
 
@@ -447,10 +447,10 @@ footer a:hover {
 }
 
 .step-circle.active {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: var(--primary-color);
     border-color: var(--primary-color);
     color: white;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px rgba(226, 25, 18, 0.3);
 }
 
 .step-circle.completed {
@@ -684,13 +684,64 @@ footer a:hover {
 
 .dropdown-menu {
     border: none;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    border-radius: var(--border-radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    background-color: white;
+    position: absolute;
+    z-index: 2000 !important;
+    min-width: 220px;
+    top: 100% !important;
+    border: 1px solid #e5e5e5;
+    padding: 8px 0;
+}
+
+.dropdown-menu.show {
+    z-index: 2000 !important;
+}
+
+.dropdown-item {
+    padding: 10px 16px;
+    color: #1f2937;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 0;
 }
 
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+    background-color: #f5f5f5;
     color: var(--primary-color);
+    padding-left: 20px;
+}
+
+.dropdown-item.text-danger {
+    color: var(--primary-color);
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #fef5f4;
+    color: #c71510;
+}
+
+.dropdown-divider {
+    margin: 8px 0;
+    border-color: #e5e5e5;
+}
+
+.dropdown-toggle::after {
+    border-color: var(--primary-color);
+}
+
+.nav-link.dropdown-toggle:hover::after {
+    border-color: var(--primary-color);
+}
+
+/* Garantir que o navbar não interfira com dropdown */
+.navbar {
+    z-index: 1030;
+}
+
+.navbar-collapse {
+    z-index: 1031;
 }
 
 /* ============================================
@@ -852,4 +903,131 @@ footer a:hover {
 
 .partner-logo:hover > div {
     background-color: #f0f0f0 !important;
+}
+
+/* ============================================
+   VAGAS PAGE - STICKY HEADER & PAGINATION
+   ============================================ */
+
+/* Navbar sticky - acompanha scroll */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Collapse de filtros com animação suave */
+.collapse {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapse:not(.show) {
+    display: none;
+}
+
+.collapse.collapsing {
+    display: block;
+    overflow: hidden;
+}
+
+.collapse.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botão de toggle filtros */
+#toggleFiltros {
+    transition: all 0.2s ease;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+#toggleFiltros:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+#toggleFiltros[aria-expanded="true"] {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Card do filtro collapse */
+#filtrosCollapse .card {
+    border: none;
+    border-top: 2px solid var(--primary-color);
+    animation: slideDown 0.3s ease-out;
+}
+
+/* Paginação styling */
+#paginationControls {
+    padding: 20px 0;
+    gap: 12px !important;
+}
+
+.pagination-info {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+#paginationControls .btn {
+    min-width: 140px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#paginationControls .btn-primary {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+#paginationControls .btn-primary:hover {
+    background: #c71510;
+    border-color: #c71510;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(226, 25, 18, 0.3);
+}
+
+#paginationControls .btn-outline-primary:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Vagas container com transição suave */
+#vagasList {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

@@ -1,23 +1,33 @@
 // ============================================
-// AUTHENTICATION MANAGER
+// AUTHENTICATION MANAGER - IMPROVED
 // ============================================
 
 /**
- * Gerenciar autenticação de usuários
+ * Gerenciar autenticação de usuários com sistema de tokens robusto
  */
 class AuthManager {
     constructor() {
         this.storageKey = 'user';
         this.userTypeKey = 'userType';
+        this.tokenKey = 'authToken';
+        this.tokenExpiryKey = 'tokenExpiry';
         this.currentUser = this.getCurrentUser();
         this.userType = this.getUserType();
+    }
+
+    /**
+     * Gerar token único para o usuário
+     */
+    generateToken() {
+        const timestamp = Date.now();
+        const random = Math.random().toString(36).substring(2, 15);
+        return `token_${timestamp}_${random}`;
     }
 
     /**
      * Realizar login de estudante
      */
     loginStudent(email, senha) {
-        // Em produção, isto seria uma chamada para o backend
         const user = {
             id: 'user_' + Date.now(),
             email: email,
@@ -26,15 +36,15 @@ class AuthManager {
             loginAt: new Date().toISOString()
         };
 
-        this.saveUser(user, 'estudante');
-        return user;
+        const token = this.generateToken();
+        this.saveUser(user, 'estudante', token);
+        return { user, token };
     }
 
     /**
      * Realizar login de empresa
      */
     loginCompany(email, senha) {
-        // Em produção, isto seria uma chamada para o backend
         const user = {
             id: 'company_' + Date.now(),
             email: email,
@@ -43,8 +53,9 @@ class AuthManager {
             loginAt: new Date().toISOString()
         };
 
-        this.saveUser(user, 'empresa');
-        return user;
+        const token = this.generateToken();
+        this.saveUser(user, 'empresa', token);
+        return { user, token };
     }
 
     /**
@@ -63,8 +74,9 @@ class AuthManager {
             createdAt: new Date().toISOString()
         };
 
-        this.saveUser(user, 'estudante');
-        return user;
+        const token = this.generateToken();
+        this.saveUser(user, 'estudante', token);
+        return { user, token };
     }
 
     /**
@@ -82,16 +94,25 @@ class AuthManager {
             createdAt: new Date().toISOString()
         };
 
-        this.saveUser(user, 'empresa');
-        return user;
+        const token = this.generateToken();
+        this.saveUser(user, 'empresa', token);
+        return { user, token };
     }
 
     /**
-     * Salvar usuário no localStorage
+     * Salvar usuário no localStorage com token
      */
-    saveUser(user, userType) {
+    saveUser(user, userType, token = null) {
         localStorage.setItem(this.storageKey, JSON.stringify(user));
         localStorage.setItem(this.userTypeKey, userType);
+        
+        if (token) {
+            localStorage.setItem(this.tokenKey, token);
+            // Token expira em 24 horas
+            const expiry = new Date().getTime() + (24 * 60 * 60 * 1000);
+            localStorage.setItem(this.tokenExpiryKey, expiry.toString());
+        }
+        
         this.currentUser = user;
         this.userType = userType;
     }
@@ -112,10 +133,32 @@ class AuthManager {
     }
 
     /**
+     * Obter token atual
+     */
+    getToken() {
+        if (!this.isTokenValid()) {
+            return null;
+        }
+        return localStorage.getItem(this.tokenKey);
+    }
+
+    /**
+     * Verificar se token é válido (não expirado)
+     */
+    isTokenValid() {
+        const token = localStorage.getItem(this.tokenKey);
+        const expiry = localStorage.getItem(this.tokenExpiryKey);
+        
+        if (!token || !expiry) return false;
+        
+        return new Date().getTime() < parseInt(expiry);
+    }
+
+    /**
      * Verificar se está logado
      */
     isLoggedIn() {
-        return this.getCurrentUser() !== null;
+        return this.getCurrentUser() !== null && this.isTokenValid();
     }
 
     /**
@@ -124,18 +167,12 @@ class AuthManager {
     logout() {
         localStorage.removeItem(this.storageKey);
         localStorage.removeItem(this.userTypeKey);
+        localStorage.removeItem(this.tokenKey);
+        localStorage.removeItem(this.tokenExpiryKey);
         localStorage.removeItem("tokenStudent");
         localStorage.removeItem("idStudent");
         this.currentUser = null;
         this.userType = null;
-    }
-
-    /**
-     * Verificar se usuário está autenticado (via tokenStudent ou user)
-     */
-    isTokenValid() {
-        const tokenStudent = localStorage.getItem('tokenStudent');
-        return tokenStudent || this.isLoggedIn();
     }
 
     /**
@@ -144,15 +181,59 @@ class AuthManager {
     updateUser(data) {
         if (this.currentUser) {
             const updatedUser = { ...this.currentUser, ...data };
-            this.saveUser(updatedUser, this.userType);
+            this.saveUser(updatedUser, this.userType, this.getToken());
             return updatedUser;
         }
         return null;
+    }
+
+    /**
+     * Verificar autenticação e retornar dados seguros
+     */
+    getAuthData() {
+        if (!this.isLoggedIn()) {
+            return null;
+        }
+        return {
+            user: this.currentUser,
+            userType: this.userType,
+            token: this.getToken()
+        };
     }
 }
 
 // Criar instância global de autenticação
 const authManager = new AuthManager();
+
+/**
+ * Limpar dados antigos/expirados do localStorage
+ * Remove user órfão (sem token válido) para evitar navbar falsamente logado
+ */
+function cleanupOldAuthData() {
+    try {
+        const tokenExpiry = localStorage.getItem('tokenExpiry');
+        const authToken = localStorage.getItem('authToken');
+        const user = localStorage.getItem('user');
+        const userType = localStorage.getItem('userType');
+
+        // Se há tokenExpiry, verificar se expirou
+        if (tokenExpiry && new Date().getTime() >= parseInt(tokenExpiry)) {
+            console.log('[v0] Token expirado - limpando dados');
+            authManager.logout();
+            return;
+        }
+
+        // Se há user/userType MAS SEM token válido, remover user
+        // Isto evita mostrar dropdown para dados órfãos do localStorage
+        if (user && userType && !authToken) {
+            console.log('[v0] Dados órfãos encontrados - limpando');
+            localStorage.removeItem('user');
+            localStorage.removeItem('userType');
+        }
+    } catch (error) {
+        console.error('[v0] Erro ao limpar dados de autenticação:', error);
+    }
+}
 
 /**
  * Verificar se página requer autenticação e redirecionar se necessário
@@ -168,5 +249,8 @@ function checkProtectedPageAccess() {
     }
 }
 
-// Chamar verificação quando DOM estiver pronto
-document.addEventListener('DOMContentLoaded', checkProtectedPageAccess);
+// Executar limpeza e verificações quando DOM estiver pronto
+document.addEventListener('DOMContentLoaded', function() {
+    cleanupOldAuthData();
+    checkProtectedPageAccess();
+});

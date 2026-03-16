@@ -80,10 +80,19 @@ class AdminAuthManager {
     }
 
     /**
-     * Verificar se está autenticado
+     * Obter token admin
+     */
+    getAdminToken() {
+        return localStorage.getItem('adminToken');
+    }
+
+    /**
+     * Verificar se está autenticado com role válido e token
      */
     isAuthenticated() {
-        return !!localStorage.getItem('adminRole');
+        const role = localStorage.getItem('adminRole');
+        const token = localStorage.getItem('adminToken');
+        return !!(role && role === 'admin' && token);
     }
 
     /**

@@ -3,15 +3,15 @@
    ============================================ */
 
 :root {
-    --primary: #0d6efd;
-    --primary-dark: #0b5ed7;
+    --primary: #E21912;
+    --primary-dark: #c71510;
     --success: #198754;
     --danger: #dc3545;
     --warning: #ffc107;
     --info: #0dcaf0;
     --secondary: #6c757d;
-    --light: #f8f9fa;
-    --dark: #212529;
+    --light: #f5f5f5;
+    --dark: #1A3960;
 }
 
 *,
@@ -43,9 +43,9 @@ nav.navbar {
     top: 0;
     z-index: 1040;
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    background: linear-gradient(135deg, rgba(13, 110, 253, 0.92) 0%, rgba(11, 94, 215, 0.92) 100%);
+    background: var(--dark);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
 }
 
 nav.navbar .navbar-brand {
@@ -397,7 +397,7 @@ nav.navbar .dropdown-item:hover {
    ============================================ */
 
 .login-page {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--light);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -406,40 +406,43 @@ nav.navbar .dropdown-item:hover {
 }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 18px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     padding: 32px 32px 24px;
     width: 100%;
     max-width: 420px;
-    border: 1px solid rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .login-header h1 {
     font-size: 1.85rem;
+    color: var(--dark);
 }
 
 .btn-login {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--primary);
     border: none;
     padding: 12px;
     font-weight: 600;
+    color: white;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-login:hover {
+    background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.28);
+    box-shadow: 0 6px 18px rgba(226, 25, 18, 0.2);
 }
 
 .demo-info {
-    background-color: rgba(207, 226, 255, 0.65);
-    border: 1px solid rgba(182, 212, 254, 0.7);
+    background-color: #fef5f4;
+    border: 1px solid #f5d5d0;
     border-radius: 10px;
     padding: 14px;
     margin-bottom: 20px;
     font-size: 0.9rem;
-    color: #084298;
+    color: #c71510;
 }
 
 .demo-info strong {

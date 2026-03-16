@@ -35,80 +35,101 @@
     <!-- Main Content -->
     <main class="py-5 page-main">
         <div class="container">
-            <h1 class="fw-bold mb-4"><i class="bi bi-briefcase me-2 text-primary"></i>Vagas Disponíveis</h1>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold mb-0"><i class="bi bi-briefcase me-2 text-primary"></i>Vagas Disponíveis</h1>
+                <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filtrosCollapse" aria-expanded="false" aria-controls="filtrosCollapse" id="toggleFiltros">
+                    <i class="bi bi-funnel me-2"></i>Filtros
+                </button>
+            </div>
 
             <div class="row">
-                <!-- Filtros Sidebar -->
-                <div class="col-lg-3 mb-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="fw-bold mb-4"><i class="bi bi-funnel me-2"></i>Filtros</h5>
+                <!-- Filtros Collapse -->
+                <div class="col-12 mb-4">
+                    <div class="collapse" id="filtrosCollapse">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- Busca -->
+                                    <div class="col-md-6 col-lg-3 mb-4">
+                                        <label for="searchVagas" class="form-label fw-bold">
+                                            <i class="bi bi-search me-2"></i>Buscar
+                                        </label>
+                                        <input type="text" class="form-control" id="searchVagas" placeholder="Cargo, empresa...">
+                                    </div>
 
-                            <!-- Busca -->
-                            <div class="mb-4">
-                                <label for="searchVagas" class="form-label fw-bold">Buscar</label>
-                                <input type="text" class="form-control" id="searchVagas" placeholder="Cargo, empresa...">
+                                    <!-- Tipo de Vaga -->
+                                    <div class="col-md-6 col-lg-3 mb-4">
+                                        <label class="form-label fw-bold">
+                                            <i class="bi bi-briefcase me-2"></i>Tipo de Vaga
+                                        </label>
+                                        <div class="form-check">
+                                            <input class="form-check-input filter-checkbox" type="checkbox" id="estagio" value="estagio">
+                                            <label class="form-check-label" for="estagio">Estágio</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input filter-checkbox" type="checkbox" id="emprego" value="emprego">
+                                            <label class="form-check-label" for="emprego">Emprego</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input filter-checkbox" type="checkbox" id="freelance" value="freelance">
+                                            <label class="form-check-label" for="freelance">Freelance</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Localização -->
+                                    <div class="col-md-6 col-lg-3 mb-4">
+                                        <label for="filterLocation" class="form-label fw-bold">
+                                            <i class="bi bi-geo-alt me-2"></i>Localização
+                                        </label>
+                                        <select class="form-select" id="filterLocation">
+                                            <option value="">Todas as cidades</option>
+                                            <option value="luanda">Luanda Centro</option>
+                                            <option value="luanda-centro">Luanda Centro</option>
+                                            <option value="luanda-kilamba">Kilamba Kiaxi</option>
+                                            <option value="luanda-viana">Viana</option>
+                                            <option value="luanda-cazenga">Cazenga</option>
+                                            <option value="remoto">Remoto</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Remuneração -->
+                                    <div class="col-md-6 col-lg-3 mb-4">
+                                        <label class="form-label fw-bold">
+                                            <i class="bi bi-cash-coin me-2"></i>Remuneração
+                                        </label>
+                                        <div class="form-check">
+                                            <input class="form-check-input filter-checkbox" type="checkbox" id="unpaid" value="unpaid">
+                                            <label class="form-check-label" for="unpaid">
+                                                <i class="bi bi-award me-1"></i>Sem Remuneração
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input filter-checkbox" type="checkbox" id="paid" value="paid">
+                                            <label class="form-check-label" for="paid">
+                                                <i class="bi bi-cash-coin me-1"></i>Com Remuneração
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-secondary w-100" id="clearFilters">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>Limpar Filtros
+                                </button>
                             </div>
-
-                            <!-- Tipo de Vaga -->
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Tipo de Vaga</label>
-                                <div class="form-check">
-                                    <input class="form-check-input filter-checkbox" type="checkbox" id="estagio" value="estagio">
-                                    <label class="form-check-label" for="estagio">Estágio</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input filter-checkbox" type="checkbox" id="emprego" value="emprego">
-                                    <label class="form-check-label" for="emprego">Emprego</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input filter-checkbox" type="checkbox" id="freelance" value="freelance">
-                                    <label class="form-check-label" for="freelance">Freelance</label>
-                                </div>
-                            </div>
-
-                            <!-- Localização -->
-                            <div class="mb-4">
-                                <label for="filterLocation" class="form-label fw-bold">Localização</label>
-                                <select class="form-select" id="filterLocation">
-                                    <option value="">Todas as cidades</option>
-                                    <option value="luanda">Luanda Centro</option>
-                                    <option value="luanda-centro">Luanda Centro</option>
-                                    <option value="luanda-kilamba">Kilamba Kiaxi</option>
-                                    <option value="luanda-viana">Viana</option>
-                                    <option value="luanda-cazenga">Cazenga</option>
-                                    <option value="remoto">Remoto</option>
-                                </select>
-                            </div>
-
-                            <!-- Remuneração -->
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Remuneração</label>
-                                <div class="form-check">
-                                    <input class="form-check-input filter-checkbox" type="checkbox" id="unpaid" value="unpaid">
-                                    <label class="form-check-label" for="unpaid">
-                                        <i class="bi bi-award me-1"></i>Sem Remuneração
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input filter-checkbox" type="checkbox" id="paid" value="paid">
-                                    <label class="form-check-label" for="paid">
-                                        <i class="bi bi-cash-coin me-1"></i>Com Remuneração
-                                    </label>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary w-100" id="clearFilters">Limpar Filtros</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Vagas List -->
-                <div class="col-lg-9">
+                <div class="col-12">
                     <div id="vagasList">
                         <!-- Vagas serão inseridas aqui por JavaScript -->
                     </div>
                 </div>
+            </div>
+
+            <!-- Pagination Controls -->
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-5" id="paginationControls">
+                <!-- Botões de paginação serão inseridos aqui -->
             </div>
         </div>
     </main>

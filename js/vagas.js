@@ -6,10 +6,17 @@
 class VagasManager {
     constructor() {
         this.vagas = [];
+        this.vagasFiltradas = [];
         this.filtrosTipo = [];
         this.filtrosRemuneracao = [];
         this.filtrosLocalizacao = '';
         this.searchTerm = '';
+        
+        // Paginação
+        this.itemsPerPage = 50;
+        this.currentPage = 1;
+        this.totalPages = 1;
+        
         this.init();
     }
 
@@ -135,9 +142,17 @@ class VagasManager {
         this.renderVagas(this.vagas);
     }
 
+    /**
+     * Calcular páginas e renderizar vagas da página atual
+     */
     renderVagas(vagas) {
         const vagasList = document.getElementById('vagasList');
         if (!vagasList) return;
+
+        // Armazenar vagas filtradas
+        this.vagasFiltradas = vagas;
+        this.currentPage = 1;
+        this.totalPages = Math.ceil(vagas.length / this.itemsPerPage);
 
         if (vagas.length === 0) {
             vagasList.innerHTML = `
@@ -146,13 +161,25 @@ class VagasManager {
                     <h5>Nenhuma vaga encontrada</h5>
                 </div>
             `;
+            this.renderPaginationControls();
             return;
         }
 
+        this.renderCurrentPage();
+    }
+
+    /**
+     * Renderizar página atual de vagas
+     */
+    renderCurrentPage() {
+        const vagasList = document.getElementById('vagasList');
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const vagasPage = this.vagasFiltradas.slice(startIndex, endIndex);
+
         let html = '<div class="row g-4">';
 
-        vagas.forEach(vaga => {
-
+        vagasPage.forEach(vaga => {
             const tipo = vaga.tipo === 'estagio' ? 'Estágio' :
                          vaga.tipo === 'emprego' ? 'Emprego' : 'Freelance';
 
@@ -199,6 +226,81 @@ class VagasManager {
 
         html += '</div>';
         vagasList.innerHTML = html;
+
+        // Renderizar controles de paginação
+        this.renderPaginationControls();
+
+        // Scroll para o topo da lista
+        vagasList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /**
+     * Renderizar controles de paginação
+     */
+    renderPaginationControls() {
+        const paginationControls = document.getElementById('paginationControls');
+        if (!paginationControls) return;
+
+        if (this.totalPages <= 1) {
+            paginationControls.innerHTML = '';
+            return;
+        }
+
+        let html = `<div class="pagination-info">
+            <small class="text-muted">
+                Página <strong>${this.currentPage}</strong> de <strong>${this.totalPages}</strong>
+                (${this.vagasFiltradas.length} vagas encontradas)
+            </small>
+        </div>`;
+
+        if (this.currentPage > 1) {
+            html += `
+                <button class="btn btn-outline-primary" id="btnVoltar">
+                    <i class="bi bi-arrow-left me-2"></i>Voltar
+                </button>
+            `;
+        }
+
+        if (this.currentPage < this.totalPages) {
+            html += `
+                <button class="btn btn-primary" id="btnVerMais">
+                    <i class="bi bi-arrow-right me-2"></i>Ver Mais
+                </button>
+            `;
+        }
+
+        paginationControls.innerHTML = html;
+
+        // Adicionar event listeners aos botões
+        const btnVerMais = document.getElementById('btnVerMais');
+        if (btnVerMais) {
+            btnVerMais.addEventListener('click', () => this.goToNextPage());
+        }
+
+        const btnVoltar = document.getElementById('btnVoltar');
+        if (btnVoltar) {
+            btnVoltar.addEventListener('click', () => this.goToPreviousPage());
+        }
+    }
+
+    /**
+     * Ir para próxima página
+     */
+    goToNextPage() {
+        if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+            this.renderCurrentPage();
+        }
+    }
+
+    /**
+     * Ir para página anterior
+     */
+    goToPreviousPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.renderCurrentPage();
+        }
     }
 }
 

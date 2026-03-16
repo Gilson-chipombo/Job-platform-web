@@ -34,12 +34,27 @@ class NavbarManager {
     }
 
     /**
-     * Verificar autenticação usando tokenStudent ou user
+     * Verificar autenticação usando token válido ou authManager
      */
     checkAuthentication() {
+        // Verificar primeiro com authManager (sistema novo com tokens válidos)
+        if (typeof authManager !== 'undefined') {
+            return authManager.isLoggedIn();
+        }
+        
+        // Fallback apenas se authManager não estiver disponível
         const tokenStudent = localStorage.getItem('tokenStudent');
         const user = this.getCurrentUser();
-        return !!(tokenStudent || user);
+        const authToken = localStorage.getItem('authToken');
+        const tokenExpiry = localStorage.getItem('tokenExpiry');
+        
+        // Se há authToken, validar expiração
+        if (authToken && tokenExpiry) {
+            return new Date().getTime() < parseInt(tokenExpiry);
+        }
+        
+        // Apenas se houver tanto token quanto usuário
+        return !!(tokenStudent && user);
     }
 
     /**
@@ -146,10 +161,14 @@ class NavbarManager {
      * Logout - Limpar autenticação
      */
     logout() {
-        localStorage.removeItem('user');
-        localStorage.removeItem('userType');
-        localStorage.removeItem('tokenStudent');
-        localStorage.removeItem('idStudent');
+        if (typeof authManager !== 'undefined') {
+            authManager.logout();
+        } else {
+            localStorage.removeItem('user');
+            localStorage.removeItem('userType');
+            localStorage.removeItem('tokenStudent');
+            localStorage.removeItem('idStudent');
+        }
         showNotification('Você foi desconectado!', 'info');
         setTimeout(() => {
             window.location.href = 'index.html';
@@ -158,6 +177,10 @@ class NavbarManager {
 }
 
 // Inicializar navbar quando DOM estiver pronto
+// Aguarda um pequeno delay para garantir que auth.js fez a limpeza
 document.addEventListener('DOMContentLoaded', function() {
-    new NavbarManager();
+    // Pequeno delay para garantir que cleanupOldAuthData() já executou
+    setTimeout(() => {
+        new NavbarManager();
+    }, 50);
 });

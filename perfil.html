@@ -84,7 +84,7 @@ margin-bottom:20px;
 <div class="container">
 
 <a class="navbar-brand fw-bold" href="index.html">
-<i class="fas fa-briefcase text-primary"></i> CarreiraHub
+<i class="bi bi-briefcase text-primary"></i> CarreiraHub
 </a>
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -96,7 +96,7 @@ margin-bottom:20px;
 <ul class="navbar-nav ms-auto">
 
 <li class="nav-item">
-<a class="nav-link" href="index.html">Início</a>
+<a class="nav-link" href="index.html">Home</a>
 </li>
 
 <li class="nav-item">
@@ -205,6 +205,11 @@ class="profile-avatar">
 
 </a>
 
+    <a href="#" onclick="eliminarConta()" class="list-group-item list-group-item-action">
+
+    <i class="bi bi-heart me-2"></i>Eliminar conta
+
+    </a>
 </div>
 
 </div>
@@ -341,23 +346,66 @@ Habilidades
 </div>
 
 </main>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 
 <footer class="bg-dark text-light py-4 mt-5">
 
 <div class="container text-center">
 
-<small>© 2026 CarreiraHub. Todos os direitos reservados.</small>
+<small>© 2024 CarreiraHub. Todos os direitos reservados.</small>
 
 </div>
 
 </footer>
 
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
+<script>
+    async function eliminarConta(){
+       if (!confirm("Tens a certrza que pretendes eliminar a conta? Essa acção será irreversivel")) return;
+
+       const idStudent = localStorage.getItem("idStudent");
+
+       const data = {idStudent}
+       try{
+            const response = await fetch(`http://127.0.0.1:3000/students/${idStudent}`,
+            {
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+            }
+        )
+        
+        const res = await response.data;
+
+        if (!data.message){
+        localStorage.removeItem("tokenStudent");
+        localStorage.removeItem("idStudent");
+
+        setTimeout(() => {
+               window.location.href = "index.html" 
+            }, 1000);
+        }
+
+       }catch(err){
+            console.log(err);
+            
+       }
+    }
+</script>
 <script src="js/auth.js"></script>
 <script src="js/perfil.js"></script>
-
 </body>
 </html>

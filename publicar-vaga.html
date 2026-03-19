@@ -104,14 +104,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="localizacaoVaga" class="form-label">Localização</label>
-                                            <select class="form-select" id="localizacaoVaga" required>
-                                                <option selected disabled value="">Selecione...</option>
-                                                <option value="sao-paulo">São Paulo</option>
-                                                <option value="rio">Rio de Janeiro</option>
-                                                <option value="bh">Belo Horizonte</option>
-                                                <option value="remoto">Remoto</option>
-                                                <option value="hibrido">Híbrido</option>
-                                            </select>
+                                            <input type="text" name="" value="" id="localizacaoVaga" class="form-control" placeholder="Ex: São Paulo, Rio, Belo Horizonte ou Remoto" required>
                                             <div class="invalid-feedback">Por favor, selecione a localização.</div>
                                         </div>
                                     </div>
@@ -251,7 +244,7 @@
 
                 const title           = document.getElementById("tituloVaga").value;
                 const type            = document.getElementById("tipoVagaPublicar").value;      
-                const location        = document.getElementById("localizacaoVaga").value;     
+                const location        = document.getElementById("localizacaoVaga").value;
                 const minSalary       = parseFloat(document.getElementById("salarioMin").value);   
                 const maxSalary       = parseFloat(document.getElementById("salarioMax").value);    
                 const experience      = document.getElementById("experienciaVaga").value;   

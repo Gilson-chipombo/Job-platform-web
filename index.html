@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -36,9 +38,46 @@
     <!-- Hero -->
     <section class="hero-section">
         <div class="hero-slideshow" aria-hidden="true">
-            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=80');"></div>
-            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=1800&q=80');"></div>
-            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1800&q=80');"></div>
+            <!-- Tecnologia / Programação -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Medicina / Saúde -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Engenharia / Construção -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Negócios / Escritório -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Educação / Ensino -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Design / Criatividade -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Direito / Advocacia -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Finanças / Contabilidade -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Marketing / Comunicação -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1800&q=80');">
+            </div>
+            <!-- Gastronomia / Culinária -->
+            <div class="hero-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1800&q=80');">
+            </div>
         </div>
         <div class="hero-overlay"></div>
         <div class="container text-center hero-content">
@@ -148,27 +187,27 @@
     <script src="js/main.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', async function () {
+        document.addEventListener('DOMContentLoaded', async function () {
 
-        const featuredContainer = document.getElementById('featured-jobs');
-        const recentContainer = document.getElementById('recent-jobs');
+            const featuredContainer = document.getElementById('featured-jobs');
+            const recentContainer = document.getElementById('recent-jobs');
 
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value);
-        }
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(value);
+            }
 
-        function createJobCard(job) {
-            const skillsArray = job.skills 
-                ? job.skills.split(',').map(s => s.trim()) 
-                : [];
+            function createJobCard(job) {
+                const skillsArray = job.skills
+                    ? job.skills.split(',').map(s => s.trim())
+                    : [];
 
-            const badgeClass = job.type === 'emprego' ? 'bg-info' : 'bg-success';
-            const badgeText = job.type === 'emprego' ? 'Emprego' : 'Estágio';
+                const badgeClass = job.type === 'emprego' ? 'bg-info' : 'bg-success';
+                const badgeText = job.type === 'emprego' ? 'Emprego' : 'Estágio';
 
-            return `
+                return `
                 <div class="col-lg-4 col-md-6">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
@@ -178,9 +217,9 @@
                                 <i class="fas fa-map-marker-alt me-2"></i>${job.location}
                             </p>
                             <div class="mb-3">
-                                ${skillsArray.slice(0,3).map(skill =>
-                                    `<span class="badge bg-light text-dark me-1">${skill}</span>`
-                                ).join('')}
+                                ${skillsArray.slice(0, 3).map(skill =>
+                    `<span class="badge bg-light text-dark me-1">${skill}</span>`
+                ).join('')}
                             </div>
                             <p class="text-primary fw-bold mb-3">
                                 ${formatCurrency(job.minSalary)} - ${formatCurrency(job.maxSalary)}/mês
@@ -193,31 +232,32 @@
                     </div>
                 </div>
             `;
-        }
+            }
 
-        try {
-            const [featuredRes, recentRes] = await Promise.all([
-                fetch('http://127.0.0.1:3000/vagas/destaques'),
-                fetch('http://127.0.0.1:3000/vagas/recentes')
-            ]);
+            try {
+                const [featuredRes, recentRes] = await Promise.all([
+                    fetch('http://127.0.0.1:3000/vagas/destaques'),
+                    fetch('http://127.0.0.1:3000/vagas/recentes')
+                ]);
 
-            const featuredJobs = await featuredRes.json();
-            const recentJobs = await recentRes.json();
+                const featuredJobs = await featuredRes.json();
+                const recentJobs = await recentRes.json();
 
-            featuredJobs.forEach(job => {
-                featuredContainer.innerHTML += createJobCard(job);
-            });
+                featuredJobs.forEach(job => {
+                    featuredContainer.innerHTML += createJobCard(job);
+                });
 
-            recentJobs.slice(0,6).forEach(job => {
-                recentContainer.innerHTML += createJobCard(job);
-            });
+                recentJobs.slice(0, 6).forEach(job => {
+                    recentContainer.innerHTML += createJobCard(job);
+                });
 
-        } catch (error) {
-            console.error('Erro ao carregar vagas:', error);
-        }
+            } catch (error) {
+                console.error('Erro ao carregar vagas:', error);
+            }
 
-    });
+        });
     </script>
 
 </body>
+
 </html>

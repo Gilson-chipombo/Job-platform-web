@@ -1,411 +1,398 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Meu Perfil - CarreiraHub</title>
+    <title>Meu Perfil - CarreiraHub</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
+    <style>
+        body {
+            background: #f5f7fb;
+        }
 
-body{
-background:#f5f7fb;
-}
+        .profile-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
 
-.profile-card{
-border:none;
-border-radius:12px;
-box-shadow:0 4px 20px rgba(0,0,0,0.05);
-}
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-.profile-avatar{
-width:120px;
-height:120px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid white;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
 
-.avatar-wrapper{
-position:relative;
-display:inline-block;
-}
+        .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-radius: 50%;
+        }
 
-.avatar-edit{
-position:absolute;
-bottom:0;
-right:0;
-border-radius:50%;
-}
+        .info-label {
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 2px;
+        }
 
-.info-label{
-font-size:13px;
-color:#6c757d;
-margin-bottom:2px;
-}
+        .info-value {
+            font-weight: 500;
+        }
 
-.info-value{
-font-weight:500;
-}
+        .badge-skill {
+            background: #fef5f4;
+            color: #E21912;
+            font-weight: 500;
+            margin: 3px;
+        }
 
-.badge-skill{
-background:#fef5f4;
-color:#E21912;
-font-weight:500;
-margin:3px;
-}
+        .badge-interest {
+            background: #eef8f1;
+            color: #198754;
+            font-weight: 500;
+            margin: 3px;
+        }
 
-.badge-interest{
-background:#eef8f1;
-color:#198754;
-font-weight:500;
-margin:3px;
-}
-
-.section-title{
-font-size:18px;
-font-weight:600;
-margin-bottom:20px;
-}
-
-</style>
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<!-- Navbar -->
+    <!-- Navbar -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
 
-<a class="navbar-brand fw-bold" href="index.html">
- <img src="https://www.walljobs.com.br/assets/walljobs-logo-red-C1wJ7zVg.png" width="95" alt="Logo">
-</a>
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="https://www.walljobs.com.br/assets/walljobs-logo-red-C1wJ7zVg.png" width="95" alt="Logo">
+            </a>
 
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-<span class="navbar-toggler-icon"></span>
-</button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNav">
 
-<ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto">
 
-<li class="nav-item">
-<a class="nav-link" href="index.html">Home</a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
 
-<li class="nav-item">
-<a class="nav-link" href="vagas.html">Vagas</a>
-</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vagas.html">Vagas</a>
+                    </li>
 
-<li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
 
-<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
 
-<i class="bi bi-person me-1"></i> Minha Conta
+                            <i class="bi bi-person me-1"></i> Minha Conta
 
-</a>
+                        </a>
 
-<ul class="dropdown-menu">
+                        <ul class="dropdown-menu">
 
-<li>
-<a class="dropdown-item" href="perfil.html">
-<i class="bi bi-person-circle me-2"></i>Perfil
-</a>
-</li>
+                            <li>
+                                <a class="dropdown-item" href="perfil.html">
+                                    <i class="bi bi-person-circle me-2"></i>Perfil
+                                </a>
+                            </li>
 
-<li>
-<a class="dropdown-item" href="minhas-candidaturas.html">
-<i class="bi bi-file-earmark-text me-2"></i>Minhas Candidaturas
-</a>
-</li>
+                            <li>
+                                <a class="dropdown-item" href="minhas-candidaturas.html">
+                                    <i class="bi bi-file-earmark-text me-2"></i>Minhas Candidaturas
+                                </a>
+                            </li>
 
-<li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
 
-<li>
-<a class="dropdown-item text-danger" href="#" onclick="logout()">
-<i class="bi bi-box-arrow-right me-2"></i>Sair
-</a>
-</li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="#" onclick="logout()">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Sair
+                                </a>
+                            </li>
 
-</ul>
+                        </ul>
 
-</li>
+                    </li>
 
-</ul>
+                </ul>
 
-</div>
-</div>
-</nav>
+            </div>
+        </div>
+    </nav>
 
 
-<!-- Conteúdo -->
+    <!-- Conteúdo -->
 
-<main class="py-5">
+    <main class="py-5">
 
-<div class="container">
+        <div class="container">
 
-<div class="row">
+            <div class="row">
 
 
-<!-- SIDEBAR -->
+                <!-- SIDEBAR -->
 
-<div class="col-lg-3 mb-4">
+                <div class="col-lg-3 mb-4">
 
-<div class="card profile-card text-center p-4">
+                    <div class="card profile-card text-center p-4">
 
-<div class="avatar-wrapper mb-3">
+                        <div class="avatar-wrapper mb-3">
 
-<img id="avatarPerfil"
-src="https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128"
-class="profile-avatar">
+                            <img id="avatarPerfil"
+                                src="https://ui-avatars.com/api/?name=User&background=0d6efd&color=fff&size=128"
+                                class="profile-avatar">
+                        </div>
 
-<button class="btn btn-light btn-sm avatar-edit">
-<i class="bi bi-camera"></i>
-</button>
+                        <h5 class="fw-bold mb-1" id="nomePerfilDisplay">Nome do Usuário</h5>
 
-</div>
+                        <p class="text-muted small mb-3" id="profissaoDisplay">Estudante</p>
 
-<h5 class="fw-bold mb-1" id="nomePerfilDisplay">Nome do Usuário</h5>
+                        <button class="btn btn-primary btn-sm w-100 mb-2">
+                            <i class="bi bi-pencil me-1"></i>Editar Perfil
+                        </button>
 
-<p class="text-muted small mb-3" id="profissaoDisplay">Estudante</p>
+                    </div>
 
-<button class="btn btn-primary btn-sm w-100 mb-2">
-<i class="bi bi-pencil me-1"></i>Editar Perfil
-</button>
+                    <div class="list-group mt-4">
 
-<button class="btn btn-outline-secondary btn-sm w-100">
-<i class="bi bi-download me-1"></i>Baixar CV
-</button>
+                        <button class="list-group-item list-group-item-action active" id="tabInfoPessoal">
 
-</div>
+                            <i class="bi bi-person me-2"></i>Informações
 
-<div class="list-group mt-4">
+                        </button>
 
-<button class="list-group-item list-group-item-action active" id="tabInfoPessoal">
+                        <a href="minhas-candidaturas.html" class="list-group-item list-group-item-action">
 
-<i class="bi bi-person me-2"></i>Informações
+                            <i class="bi bi-file-earmark-text me-2"></i>Minhas Candidaturas
 
-</button>
+                        </a>
 
-<a href="minhas-candidaturas.html" class="list-group-item list-group-item-action">
+                        <a href="#" onclick="eliminarConta()" class="list-group-item list-group-item-action">
 
-<i class="bi bi-file-earmark-text me-2"></i>Minhas Candidaturas
+                            <i class="bi bi-heart me-2"></i>Eliminar conta
 
-</a>
+                        </a>
+                    </div>
 
-<a href="vagas-salvas.html" class="list-group-item list-group-item-action">
+                </div>
 
-<i class="bi bi-heart me-2"></i>Vagas Salvas
 
-</a>
+                <!-- ÁREA PRINCIPAL -->
 
-    <a href="#" onclick="eliminarConta()" class="list-group-item list-group-item-action">
+                <div class="col-lg-9">
 
-    <i class="bi bi-heart me-2"></i>Eliminar conta
 
-    </a>
-</div>
+                    <div class="card profile-card">
 
-</div>
+                        <div class="card-body p-4">
 
 
-<!-- ÁREA PRINCIPAL -->
+                            <h5 class="section-title">
+                                <i class="bi bi-person-circle me-2"></i>
+                                Informações Pessoais
+                            </h5>
 
-<div class="col-lg-9">
 
+                            <div class="row">
 
-<div class="card profile-card">
+                                <div class="col-md-6 mb-3">
 
-<div class="card-body p-4">
+                                    <div class="info-label">Nome Completo</div>
+                                    <div class="info-value" id="displayNomeCompleto">—</div>
 
+                                </div>
 
-<h5 class="section-title">
-<i class="bi bi-person-circle me-2"></i>
-Informações Pessoais
-</h5>
 
+                                <div class="col-md-6 mb-3">
 
-<div class="row">
+                                    <div class="info-label">Email</div>
+                                    <div class="info-value" id="displayEmail">—</div>
 
-<div class="col-md-6 mb-3">
+                                </div>
 
-<div class="info-label">Nome Completo</div>
-<div class="info-value" id="displayNomeCompleto">—</div>
+                            </div>
 
-</div>
 
+                            <div class="row">
 
-<div class="col-md-6 mb-3">
+                                <div class="col-md-6 mb-3">
 
-<div class="info-label">Email</div>
-<div class="info-value" id="displayEmail">—</div>
+                                    <div class="info-label">Telefone</div>
+                                    <div class="info-value" id="displayTelefone">—</div>
 
-</div>
+                                </div>
 
-</div>
 
+                                <div class="col-md-6 mb-3">
 
-<div class="row">
+                                    <div class="info-label">NIF</div>
+                                    <div class="info-value" id="displayCPF">—</div>
 
-<div class="col-md-6 mb-3">
+                                </div>
 
-<div class="info-label">Telefone</div>
-<div class="info-value" id="displayTelefone">—</div>
+                            </div>
 
-</div>
 
+                            <hr class="my-4">
 
-<div class="col-md-6 mb-3">
 
-<div class="info-label">NIF</div>
-<div class="info-value" id="displayCPF">—</div>
+                            <h5 class="section-title">
 
-</div>
+                                <i class="bi bi-mortarboard me-2"></i>
+                                Informações Acadêmicas
 
-</div>
+                            </h5>
 
 
-<hr class="my-4">
+                            <div class="row">
 
+                                <div class="col-md-4 mb-3">
 
-<h5 class="section-title">
+                                    <div class="info-label">Escola</div>
+                                    <div class="info-value" id="displayEscola">—</div>
 
-<i class="bi bi-mortarboard me-2"></i>
-Informações Acadêmicas
+                                </div>
 
-</h5>
 
+                                <div class="col-md-4 mb-3">
 
-<div class="row">
+                                    <div class="info-label">Ano</div>
+                                    <div class="info-value" id="displaySerie">—</div>
 
-<div class="col-md-4 mb-3">
+                                </div>
 
-<div class="info-label">Escola</div>
-<div class="info-value" id="displayEscola">—</div>
 
-</div>
+                                <div class="col-md-4 mb-3">
 
+                                    <div class="info-label">Turno</div>
+                                    <div class="info-value" id="displayTurno">—</div>
 
-<div class="col-md-4 mb-3">
+                                </div>
 
-<div class="info-label">Ano</div>
-<div class="info-value" id="displaySerie">—</div>
+                            </div>
 
-</div>
 
+                            <hr class="my-4">
 
-<div class="col-md-4 mb-3">
 
-<div class="info-label">Turno</div>
-<div class="info-value" id="displayTurno">—</div>
+                            <h5 class="section-title">
 
-</div>
+                                <i class="bi bi-lightbulb me-2"></i>
+                                Áreas de Interesse
 
-</div>
+                            </h5>
 
+                            <div id="interessesDisplay"></div>
 
-<hr class="my-4">
 
+                            <hr class="my-4">
 
-<h5 class="section-title">
 
-<i class="bi bi-lightbulb me-2"></i>
-Áreas de Interesse
+                            <h5 class="section-title">
 
-</h5>
+                                <i class="bi bi-tools me-2"></i>
+                                Habilidades
 
-<div id="interessesDisplay"></div>
+                            </h5>
 
+                            <div id="habilidadesDisplay"></div>
 
-<hr class="my-4">
 
+                        </div>
+                    </div>
 
-<h5 class="section-title">
+                </div>
 
-<i class="bi bi-tools me-2"></i>
-Habilidades
 
-</h5>
+            </div>
+        </div>
 
-<div id="habilidadesDisplay"></div>
+    </main>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 
-</div>
-</div>
 
-</div>
+    <footer class="bg-dark text-light py-4 mt-5">
 
+        <div class="container text-center">
 
-</div>
-</div>
+            <small>© 2024 CarreiraHub. Todos os direitos reservados.</small>
 
-</main>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+        </div>
 
+    </footer>
 
 
-<footer class="bg-dark text-light py-4 mt-5">
 
-<div class="container text-center">
 
-<small>© 2024 CarreiraHub. Todos os direitos reservados.</small>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-</div>
 
-</footer>
 
+    <script>
+        async function eliminarConta() {
+            if (!confirm("Tens a certrza que pretendes eliminar a conta? Essa acção será irreversivel")) return;
 
+            const idStudent = localStorage.getItem("idStudent");
 
+            const data = { idStudent }
+            try {
+                const response = await fetch(`http://127.0.0.1:3000/students/${idStudent}`,
+                    {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" },
+                    }
+                )
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                const res = await response.data;
 
+                if (!data.message) {
+                    localStorage.removeItem("tokenStudent");
+                    localStorage.removeItem("idStudent");
 
+                    setTimeout(() => {
+                        window.location.href = "index.html"
+                    }, 1000);
+                }
 
-<script>
-    async function eliminarConta(){
-       if (!confirm("Tens a certrza que pretendes eliminar a conta? Essa acção será irreversivel")) return;
+            } catch (err) {
+                console.log(err);
 
-       const idStudent = localStorage.getItem("idStudent");
-
-       const data = {idStudent}
-       try{
-            const response = await fetch(`http://127.0.0.1:3000/students/${idStudent}`,
-            {
-                method: "DELETE",
-                headers: {"Content-Type": "application/json"},
             }
-        )
-        
-        const res = await response.data;
-
-        if (!data.message){
-        localStorage.removeItem("tokenStudent");
-        localStorage.removeItem("idStudent");
-
-        setTimeout(() => {
-               window.location.href = "index.html" 
-            }, 1000);
         }
-
-       }catch(err){
-            console.log(err);
-            
-       }
-    }
-</script>
-<script src="js/auth.js"></script>
-<script src="js/perfil.js"></script>
+    </script>
+    <script src="js/auth.js"></script>
+    <script src="js/perfil.js"></script>
 </body>
+
 </html>

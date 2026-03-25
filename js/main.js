@@ -162,7 +162,6 @@ function formatCurrency(value, currency = 'BRL') {
     if (!value && value !== 0) return '';
     
     const currencyMap = {
-        'BRL': { code: 'BRL', symbol: 'R$', locale: 'pt-BR' },
         'KZS': { code: 'AOA', symbol: 'Kzs', locale: 'pt-BR' }
     };
     

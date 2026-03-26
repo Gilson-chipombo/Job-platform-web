@@ -1,10 +1,10 @@
-# CarreiraHub - Plataforma de Estágios e Empregos
+# VagasAo - Plataforma de Estágios e Empregos
 
 Uma plataforma web profissional de estágios e empregos voltada para estudantes que concluíram o Ensino Médio e Ensino Superio.
 
 ## 📋 Descrição
 
-CarreiraHub é uma aplicação frontend-only que permite:
+VagasAo é uma aplicação frontend-only que permite:
 - **Estudantes**: Criar conta, visualizar vagas e se candidatar
 - **Empresas**: Cadastrar vagas e visualizar candidatos
 

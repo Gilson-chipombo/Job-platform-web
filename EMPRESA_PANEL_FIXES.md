@@ -33,7 +33,7 @@
   - Minhas Vagas (minhas-vagas-empresa.html)
   - Publicar Vaga (publicar-vaga.html)
   - Dropdown: Configurações (placeholder) e Sair
-- Navbar branding agora mostra "Painel da Empresa" em vez de "CarreiraHub"
+- Navbar branding agora mostra "Painel da Empresa" em vez de "VagasAo"
 - Todos os links usam ícones bootstrap para clareza visual
 
 **Arquivos**:

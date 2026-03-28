@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - CarreiraHub</title>
+    <script>
+        // Verificar se admin está logado
+        const adminRole = localStorage.getItem('adminRole');
+        
+        if (adminRole === 'admin') {
+            // Redirecionar para dashboard
+            window.location.href = 'pages/dashboard.html';
+        } else {
+            // Redirecionar para login
+            window.location.href = 'pages/login-admin.html';
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecionando...</p>
+</body>
+</html>

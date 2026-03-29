@@ -128,9 +128,12 @@
                                         <button class="btn btn-sm btn-outline-primary" onclick="toggleCandidatos(${vaga.id})">
                                             Ver Candidatos
                                         </button>
-                                        <a href="publicar-vaga.html?id=${vaga.id}" class="btn btn-sm btn-outline-secondary">
-                                            Editar
+                                        <a href="publicar-vaga.html?vagaId=${vaga.id}" class="btn btn-sm btn-outline-secondary">
+                                            <i class="bi bi-pencil me-1"></i>Editar
                                         </a>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteVaga(${vaga.id})">
+                                            <i class="bi bi-trash me-1"></i>Deletar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +237,32 @@
 
         statusEl.textContent = status;
         statusEl.className = `badge ${status === 'Aprovado' ? 'bg-success' : 'bg-danger'} text-white`;
+    }
+
+    async function deleteVaga(vagaId) {
+        if (!confirm('Tem certeza que deseja deletar esta vaga?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/vagas/${vagaId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${authManager.getToken()}`
+                }
+            });
+
+            if (response.ok) {
+                alert('Vaga deletada com sucesso!');
+                location.reload();
+            } else {
+                const error = await response.json();
+                alert(`Erro ao deletar vaga: ${error.message || 'Erro desconhecido'}`);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao deletar a vaga');
+        }
     }
 
     function logout() {

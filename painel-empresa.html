@@ -88,8 +88,13 @@
 
     <!-- Saudação -->
     <div class="alert alert-info mb-4">
-        <h5>Bem-vindo, <span id="nomeEmpresaDisplay">Empresa</span>!</h5>
-        <p class="mb-0">Gerencie suas vagas em um único lugar e acompanhe as candidaturas em tempo real.</p>
+        <div class="d-flex align-items-center gap-3">
+            <img id="logoImg" src="" alt="Logo" style="display: none; max-width: 50px; max-height: 50px; border-radius: 4px;">
+            <div>
+                <h5>Bem-vindo, <span id="nomeEmpresaDisplay">Empresa</span>!</h5>
+                <p class="mb-0">Gerencie suas vagas em um único lugar e acompanhe as candidaturas em tempo real.</p>
+            </div>
+        </div>
     </div>
 
     <!-- Ações Rápidas -->
@@ -207,6 +212,19 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const idCompany = localStorage.getItem("idCompany");
     if (!idCompany) return;
+
+    // Carregar logo da empresa
+    try {
+        const companyResponse = await fetch(`http://127.0.0.1:3000/companies/${idCompany}`);
+        const company = await companyResponse.json();
+        if (company.logo) {
+            const logoImg = document.getElementById('logoImg');
+            logoImg.src = `http://127.0.0.1:3000/uploads/logos/${company.logo}`;
+            logoImg.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Erro ao carregar logo:', error);
+    }
 
     try {
         const response = await fetch(`http://127.0.0.1:3000/vagas/company/${idCompany}`);

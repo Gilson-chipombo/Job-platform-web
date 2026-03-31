@@ -65,7 +65,8 @@ class VagaDetailsManager {
                 website: data.company?.website,
                 provincia: data.company?.Province,
                 endereco: data.company?.address,
-                segmento: data.company?.segment
+                segmento: data.company?.segment,
+                logo: data.company?.logo
             };
 
             this.renderVagaDetails();
@@ -134,7 +135,31 @@ class VagaDetailsManager {
         document.getElementById('empresaWebsite').textContent = this.vaga.website || '';
         empresaRamo.textContent = this.vaga.segmento || '';
         empresaAddress.textContent = this.vaga.endereco || '';
+        
+        // Carregar logo da empresa
+        this.loadEmpresaLogo();
+        
         this.setupFavoritarBtn();
+    }
+
+    /**
+     * Carregar logo da empresa ou usar imagem padrão da internet
+     */
+    loadEmpresaLogo() {
+        const logoImg = document.getElementById('empresaLogo');
+        const defaultLogoUrl = 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=150&h=150&fit=crop';
+
+        if (this.vaga && this.vaga.logo) {
+            // Se houver logo definida, carregar da API
+            const logoPath = `http://127.0.0.1:3000/uploads/logos/${this.vaga.logo}`;
+            logoImg.src = logoPath;
+            logoImg.onerror = () => {
+                logoImg.src = defaultLogoUrl;
+            };
+        } else {
+            // Se não houver logo, usar imagem padrão da internet
+            logoImg.src = defaultLogoUrl;
+        }
     }
 
     formatCurrency(valor) {

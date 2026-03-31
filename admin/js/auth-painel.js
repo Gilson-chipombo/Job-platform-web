@@ -51,8 +51,9 @@ class AdminAuthManager {
     /**
      * Definir dados de autenticação (armazenar no localStorage)
      */
-    setAuth({ username, email, name, role = 'admin', token }) {
+    setAuth({ id, username, email, name, role = 'admin', token }) {
         const adminData = {
+            id: id || null,
             username: username || 'admin',
             email: email || 'admin@careeirahub.com',
             name: name || 'Administrador',

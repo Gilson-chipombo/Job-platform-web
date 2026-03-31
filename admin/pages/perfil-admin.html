@@ -120,73 +120,6 @@
                             </div>
                         </div>
 
-                        <!-- Cadastrar Novo Admin -->
-                        <div class="card mb-4">
-                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Cadastrar Novo Admin</h5>
-                                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="collapse" data-bs-target="#formNovoAdmin" aria-expanded="false">
-                                    <i class="bi bi-plus me-2"></i>Adicionar
-                                </button>
-                            </div>
-                            <div class="collapse" id="formNovoAdmin">
-                                <div class="card-body">
-                                    <form id="formCadastroAdmin">
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Nome Completo *</label>
-                                                <input type="text" class="form-control" id="novoAdminNome" placeholder="Ex: João Silva" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Email *</label>
-                                                <input type="email" class="form-control" id="novoAdminEmail" placeholder="admin@empresa.com" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Senha *</label>
-                                                <input type="password" class="form-control" id="novoAdminSenha" placeholder="••••••••" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Confirmar Senha *</label>
-                                                <input type="password" class="form-control" id="novoAdminConfirmSenha" placeholder="••••••••" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label">Telefone</label>
-                                                <input type="tel" class="form-control" id="novoAdminTelefone" placeholder="+244 900 000 000">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label">Papel/Permissões</label>
-                                                <select class="form-select" id="novoAdminPapel">
-                                                    <option value="admin">Administrador</option>
-                                                    <option value="moderador">Moderador</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" id="novoAdminAtivo" checked>
-                                                Usuário Ativo
-                                            </label>
-                                        </div>
-
-                                        <div class="d-flex gap-2">
-                                            <button type="submit" class="btn btn-primary">
-                                                <i class="bi bi-person-check me-2"></i>Cadastrar Admin
-                                            </button>
-                                            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#formNovoAdmin">
-                                                Cancelar
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Alterar Senha -->
                         <div class="card">
                             <div class="card-header bg-light">
@@ -242,20 +175,6 @@
                                 </p>
                             </div>
                         </div>
-
-                        <!-- Lista de Admins -->
-                        <div class="card">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0">
-                                    <i class="bi bi-shield-lock me-2"></i>Admins do Sistema
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="adminsList" class="list-group list-group-flush">
-                                    <p class="text-muted small">Carregando admins...</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </main>
@@ -278,26 +197,65 @@
             admins: [],
 
             async init() {
+                console.log('Iniciando adminProfileManager...');
+                
+                // Sincronizar adminId do localStorage admin
+                let adminId = localStorage.getItem('adminId');
+                console.log('AdminId inicial:', adminId);
+                
+                const adminData = localStorage.getItem('admin');
+                console.log('AdminData:', adminData);
+                
+                if (adminData && !adminId) {
+                    try {
+                        const parsed = JSON.parse(adminData);
+                        if (parsed.id) {
+                            localStorage.setItem('adminId', parsed.id);
+                            adminId = parsed.id;
+                            console.log('AdminId sincronizado:', adminId);
+                        }
+                    } catch (e) {
+                        console.error('Erro ao parsear admin data:', e);
+                    }
+                }
+                
                 await this.loadCurrentAdmin();
-                await this.loadAllAdmins();
                 this.setupEventListeners();
             },
 
             /**
-             * Carregar dados do admin logado
+             * Carregar dados do admin logado do banco de dados
              */
             async loadCurrentAdmin() {
                 try {
                     const adminId = localStorage.getItem('adminId');
+                    console.log('Admin ID from localStorage:', adminId);
+                    
+                    // Fallback: carregar do localStorage se não tiver adminId
                     if (!adminId) {
-                        console.error('ID do admin não encontrado');
+                        const adminData = localStorage.getItem('admin');
+                        console.log('Fallback - Usando dados do localStorage:', adminData);
+                        
+                        if (adminData) {
+                            this.currentAdmin = JSON.parse(adminData);
+                            this.displayCurrentAdmin();
+                        } else {
+                            console.error('ID do admin não encontrado e localStorage vazio');
+                        }
                         return;
                     }
 
                     const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}`);
-                    if (!response.ok) throw new Error('Erro ao carregar dados do admin');
+                    console.log('Response status:', response.status);
+                    
+                    if (!response.ok) {
+                        console.error('Erro na resposta:', response.statusText);
+                        throw new Error('Erro ao carregar dados do admin');
+                    }
 
                     const admin = await response.json();
+                    console.log('Admin data from API:', admin);
+                    
                     this.currentAdmin = admin;
                     this.displayCurrentAdmin();
                 } catch (error) {
@@ -314,7 +272,7 @@
                 document.getElementById('adminNome').value = this.currentAdmin.name || '';
                 document.getElementById('adminEmail').value = this.currentAdmin.email || '';
                 document.getElementById('adminTelefone').value = this.currentAdmin.phone || '';
-                document.getElementById('adminCargo').value = 'Administrador do Sistema';
+                document.getElementById('adminCargo').value = this.currentAdmin.role || 'Administrador do Sistema';
                 document.getElementById('adminPermissoes').value = 'Admin - Acesso Total';
                 
                 // Atualizar status
@@ -327,123 +285,16 @@
                 }
             },
 
-            /**
-             * Carregar todos os admins
-             */
-            async loadAllAdmins() {
-                try {
-                    const response = await fetch('http://127.0.0.1:3000/admin');
-                    if (!response.ok) throw new Error('Erro ao carregar admins');
 
-                    this.admins = await response.json();
-                    this.displayAdminsList();
-                } catch (error) {
-                    console.error('Erro ao carregar lista de admins:', error);
-                }
-            },
-
-            /**
-             * Exibir lista de admins
-             */
-            displayAdminsList() {
-                const container = document.getElementById('adminsList');
-                
-                if (this.admins.length === 0) {
-                    container.innerHTML = '<p class="text-muted small">Nenhum admin cadastrado</p>';
-                    return;
-                }
-
-                container.innerHTML = this.admins.map(admin => `
-                    <div class="list-group-item">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h6 class="mb-1">${admin.name}</h6>
-                                <small class="text-muted">${admin.email}</small>
-                            </div>
-                            ${admin.id !== this.currentAdmin?.id ? `
-                                <button class="btn btn-sm btn-danger" onclick="adminProfileManager.deleteAdmin(${admin.id})">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            ` : '<span class="badge bg-primary">Você</span>'}
-                        </div>
-                    </div>
-                `).join('');
-            },
 
             /**
              * Setup event listeners
              */
             setupEventListeners() {
-                // Formulário de cadastro de novo admin
-                const formCadastro = document.getElementById('formCadastroAdmin');
-                if (formCadastro) {
-                    formCadastro.addEventListener('submit', (e) => this.handleCreateAdmin(e));
-                }
-
                 // Formulário de alterar senha
                 const formSenha = document.getElementById('formAlterarSenha');
                 if (formSenha) {
                     formSenha.addEventListener('submit', (e) => this.handleChangePassword(e));
-                }
-            },
-
-            /**
-             * Criar novo admin
-             */
-            async handleCreateAdmin(e) {
-                e.preventDefault();
-
-                const nome = document.getElementById('novoAdminNome').value;
-                const email = document.getElementById('novoAdminEmail').value;
-                const senha = document.getElementById('novoAdminSenha').value;
-                const confirmSenha = document.getElementById('novoAdminConfirmSenha').value;
-                const telefone = document.getElementById('novoAdminTelefone').value;
-                const papel = document.getElementById('novoAdminPapel').value;
-                const ativo = document.getElementById('novoAdminAtivo').checked;
-
-                // Validações
-                if (senha !== confirmSenha) {
-                    alert('As senhas não correspondem!');
-                    return;
-                }
-
-                if (senha.length < 6) {
-                    alert('A senha deve ter no mínimo 6 caracteres!');
-                    return;
-                }
-
-                try {
-                    const response = await fetch('http://127.0.0.1:3000/admin', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: nome,
-                            email: email,
-                            password: senha,
-                            phone: telefone,
-                            role: papel,
-                            isActive: ativo
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok) {
-                        alert('Admin cadastrado com sucesso!');
-                        // Limpar formulário
-                        document.getElementById('formCadastroAdmin').reset();
-                        // Fechar collapse
-                        const collapse = new bootstrap.Collapse(document.getElementById('formNovoAdmin'), { toggle: true });
-                        // Recarregar lista
-                        await this.loadAllAdmins();
-                    } else {
-                        alert(data.message || 'Erro ao cadastrar admin');
-                    }
-                } catch (error) {
-                    console.error('Erro ao cadastrar admin:', error);
-                    alert('Erro ao cadastrar novo admin');
                 }
             },
 
@@ -457,6 +308,12 @@
                 const novaSenha = document.getElementById('novaSenha').value;
                 const confirmarSenha = document.getElementById('confirmarSenha').value;
 
+                // Validações
+                if (!senhaAtual || !novaSenha || !confirmarSenha) {
+                    alert('Por favor, preencha todos os campos!');
+                    return;
+                }
+
                 if (novaSenha !== confirmarSenha) {
                     alert('As novas senhas não correspondem!');
                     return;
@@ -467,8 +324,43 @@
                     return;
                 }
 
+                if (senhaAtual === novaSenha) {
+                    alert('A nova senha deve ser diferente da atual!');
+                    return;
+                }
+
                 try {
-                    const response = await fetch(`http://127.0.0.1:3000/admin/${this.currentAdmin.id}/change-password`, {
+                    // Tentar obter adminId de várias fontes
+                    let adminId = localStorage.getItem('adminId');
+                    
+                    if (!adminId && this.currentAdmin?.id) {
+                        adminId = this.currentAdmin.id;
+                    }
+                    
+                    if (!adminId) {
+                        const adminData = localStorage.getItem('admin');
+                        if (adminData) {
+                            try {
+                                const parsed = JSON.parse(adminData);
+                                adminId = parsed.id;
+                            } catch (e) {
+                                console.error('Erro ao parsear admin data:', e);
+                            }
+                        }
+                    }
+                    
+                    if (!adminId) {
+                        alert('ID do admin não encontrado. Faça login novamente.');
+                        console.error('AdminId não encontrado em nenhuma fonte');
+                        console.log('localStorage adminId:', localStorage.getItem('adminId'));
+                        console.log('currentAdmin id:', this.currentAdmin?.id);
+                        console.log('admin data:', localStorage.getItem('admin'));
+                        return;
+                    }
+
+                    console.log('Alterando senha para admin ID:', adminId);
+
+                    const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}/change-password`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -479,39 +371,18 @@
                         })
                     });
 
+                    const data = await response.json();
+
                     if (response.ok) {
                         alert('Senha alterada com sucesso!');
                         document.getElementById('formAlterarSenha').reset();
                     } else {
-                        const data = await response.json();
                         alert(data.message || 'Erro ao alterar senha');
+                        console.error('Erro na resposta:', data);
                     }
                 } catch (error) {
                     console.error('Erro ao alterar senha:', error);
-                    alert('Erro ao alterar a senha');
-                }
-            },
-
-            /**
-             * Deletar admin
-             */
-            async deleteAdmin(adminId) {
-                if (!confirm('Tem certeza que deseja deletar este admin?')) return;
-
-                try {
-                    const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}`, {
-                        method: 'DELETE'
-                    });
-
-                    if (response.ok) {
-                        alert('Admin deletado com sucesso!');
-                        await this.loadAllAdmins();
-                    } else {
-                        alert('Erro ao deletar admin');
-                    }
-                } catch (error) {
-                    console.error('Erro ao deletar admin:', error);
-                    alert('Erro ao deletar admin');
+                    alert('Erro ao alterar a senha. Tente novamente.');
                 }
             }
         };

@@ -67,19 +67,34 @@
                 });
 
                 const data = await response.json();
+                console.log('Login response:', data);
 
                 if (!response.ok || data.message) {
                     alert(data.message || 'Credenciais inválidas');
                     return;
                 }
 
+                // Garantir que idUser existe
+                const adminId = data.idUser || data.id;
+                console.log('Admin ID:', adminId);
+
+                if (!adminId) {
+                    alert('Erro: ID do admin não retornado pelo servidor');
+                    return;
+                }
+
                 adminAuth.setAuth({
+                    id: adminId,
                     username: data.username || 'admin',
                     email: data.email || email,
                     name: data.name || 'Administrador',
                     role: 'admin',
-                    token: data.token || data.adminToken || 'token_' + Date.now()
+                    token: data.access_token || data.token || data.adminToken || 'token_' + Date.now()
                 });
+
+                // Armazenar o ID do admin para requisições posteriores
+                localStorage.setItem('adminId', adminId);
+                console.log('AdminId stored:', localStorage.getItem('adminId'));
 
                 window.location.href = 'dashboard.html';
             } catch (error) {

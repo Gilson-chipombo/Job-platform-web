@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Admins - Painel Administrativo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/painel-styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <button class="btn btn-link text-white d-md-none me-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Abrir menu">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+
+            <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+                <i class="bi bi-shield-lock me-2"></i>CarreiraHub Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Dropdown será inserido aqui pelo auth-painel.js -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebarMenu" class="col-md-2 d-md-block sidebar collapse" aria-label="Sidebar">
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="bi bi-speedometer2"></i>Dashboard
+                        </a>
+                    </li>
+        
+                    <li>
+                        <a href="usuarios.html?tipo=estudante">
+                            <i class="bi bi-person-badge"></i>Estudantes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="usuarios.html?tipo=empresa">
+                            <i class="bi bi-building"></i>Empresas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="perfil-admin.html">
+                            <i class="bi bi-person-circle"></i>Perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="admins.html" class="active">
+                            <i class="bi bi-shield-lock"></i>Administradores
+                        </a>
+                    </li>
+                    <li>
+                        <a href="configuracoes.html">
+                            <i class="bi bi-gear"></i>Configurações
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="logoutAdmin(); return false;">
+                            <i class="bi bi-box-arrow-right"></i>Sair
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-10 main-content">
+                <div class="page-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1><i class="bi bi-shield-lock"></i>Administradores</h1>
+                        <p>Gerenciar administradores do sistema</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovoAdmin">
+                        <i class="bi bi-plus me-2"></i>Novo Administrador
+                    </button>
+                </div>
+
+                <!-- Tabela de Administradores -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">
+                            <i class="bi bi-list me-2"></i>Lista de Administradores
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Papel</th>
+                                        <th>Status</th>
+                                        <th>Data de Criação</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminsTableBody">
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted py-4">
+                                            <i class="bi bi-hourglass-split me-2"></i>Carregando administradores...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal - Novo Administrador -->
+    <div class="modal fade" id="modalNovoAdmin" tabindex="-1" aria-labelledby="modalNovoAdminLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalNovoAdminLabel">
+                        <i class="bi bi-person-plus me-2"></i>Novo Administrador
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formNovoAdmin">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="adminNome" class="form-label">Nome Completo *</label>
+                            <input type="text" class="form-control" id="adminNome" placeholder="Ex: João Silva" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="adminEmail" class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="adminEmail" placeholder="admin@empresa.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="adminSenha" class="form-label">Senha *</label>
+                            <input type="password" class="form-control" id="adminSenha" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="adminConfirmSenha" class="form-label">Confirmar Senha *</label>
+                            <input type="password" class="form-control" id="adminConfirmSenha" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="adminTelefone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="adminTelefone" placeholder="+244 900 000 000">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="adminPapel" class="form-label">Papel/Permissões *</label>
+                            <select class="form-select" id="adminPapel" required>
+                                <option value="">Selecione um papel</option>
+                                <option value="admin">Administrador</option>
+                                <option value="moderador">Moderador</option>
+                            </select>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="adminAtivo" checked>
+                            <label class="form-check-label" for="adminAtivo">
+                                Usuário Ativo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check me-2"></i>Cadastrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal - Editar Administrador -->
+    <div class="modal fade" id="modalEditarAdmin" tabindex="-1" aria-labelledby="modalEditarAdminLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditarAdminLabel">
+                        <i class="bi bi-pencil me-2"></i>Editar Administrador
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formEditarAdmin">
+                    <div class="modal-body">
+                        <input type="hidden" id="editAdminId">
+
+                        <div class="mb-3">
+                            <label for="editAdminNome" class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" id="editAdminNome" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editAdminEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editAdminEmail" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editAdminTelefone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="editAdminTelefone">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editAdminPapel" class="form-label">Papel/Permissões</label>
+                            <select class="form-select" id="editAdminPapel">
+                                <option value="admin">Administrador</option>
+                                <option value="moderador">Moderador</option>
+                            </select>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="editAdminAtivo">
+                            <label class="form-check-label" for="editAdminAtivo">
+                                Usuário Ativo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check me-2"></i>Salvar Alterações
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth-painel.js"></script>
+    <script>
+        adminAuth.ensureAuthenticated();
+    </script>
+
+    <script>
+        // ============================================
+        // GERENCIADOR DE ADMINISTRADORES
+        // ============================================
+
+        const adminsManager = {
+            admins: [],
+            modalNovoAdmin: null,
+            modalEditarAdmin: null,
+
+            async init() {
+                this.modalNovoAdmin = new bootstrap.Modal(document.getElementById('modalNovoAdmin'));
+                this.modalEditarAdmin = new bootstrap.Modal(document.getElementById('modalEditarAdmin'));
+                
+                await this.loadAdmins();
+                this.setupEventListeners();
+            },
+
+            /**
+             * Carregar lista de admins
+             */
+            async loadAdmins() {
+                try {
+                    const response = await fetch('http://127.0.0.1:3000/admin');
+                    if (!response.ok) throw new Error('Erro ao carregar admins');
+
+                    this.admins = await response.json();
+                    this.renderAdminsTable();
+                } catch (error) {
+                    console.error('Erro ao carregar admins:', error);
+                    this.showError('Erro ao carregar lista de admins');
+                }
+            },
+
+            /**
+             * Renderizar tabela de admins
+             */
+            renderAdminsTable() {
+                const tbody = document.getElementById('adminsTableBody');
+                const currentAdminId = parseInt(localStorage.getItem('adminId'));
+
+                if (this.admins.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox me-2"></i>Nenhum administrador cadastrado
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = this.admins.map(admin => {
+                    const dataCriacao = new Date(admin.createdAt).toLocaleDateString('pt-BR');
+                    const statusBadge = admin.isActive 
+                        ? '<span class="badge bg-success">Ativo</span>' 
+                        : '<span class="badge bg-danger">Inativo</span>';
+                    
+                    const isCurrentAdmin = admin.id === currentAdminId;
+                    const botoesAcao = isCurrentAdmin
+                        ? '<span class="badge bg-info">Você</span>'
+                        : `
+                            <button class="btn btn-sm btn-warning" onclick="adminsManager.abrirEditarModal(${admin.id})">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="adminsManager.deletarAdmin(${admin.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        `;
+
+                    return `
+                        <tr>
+                            <td>${admin.id}</td>
+                            <td>${admin.name}</td>
+                            <td>${admin.email}</td>
+                            <td>${admin.phone || '-'}</td>
+                            <td>
+                                <span class="badge bg-primary">
+                                    ${admin.role === 'admin' ? 'Administrador' : 'Moderador'}
+                                </span>
+                            </td>
+                            <td>${statusBadge}</td>
+                            <td>${dataCriacao}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    ${botoesAcao}
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            },
+
+            /**
+             * Setup event listeners
+             */
+            setupEventListeners() {
+                const formNovoAdmin = document.getElementById('formNovoAdmin');
+                if (formNovoAdmin) {
+                    formNovoAdmin.addEventListener('submit', (e) => this.handleCreateAdmin(e));
+                }
+
+                const formEditarAdmin = document.getElementById('formEditarAdmin');
+                if (formEditarAdmin) {
+                    formEditarAdmin.addEventListener('submit', (e) => this.handleEditAdmin(e));
+                }
+            },
+
+            /**
+             * Criar novo admin
+             */
+            async handleCreateAdmin(e) {
+                e.preventDefault();
+
+                const nome = document.getElementById('adminNome').value;
+                const email = document.getElementById('adminEmail').value;
+                const senha = document.getElementById('adminSenha').value;
+                const confirmSenha = document.getElementById('adminConfirmSenha').value;
+                const telefone = document.getElementById('adminTelefone').value;
+                const papel = document.getElementById('adminPapel').value;
+                const ativo = document.getElementById('adminAtivo').checked;
+
+                // Validações
+                if (senha !== confirmSenha) {
+                    this.showError('As senhas não correspondem!');
+                    return;
+                }
+
+                if (senha.length < 6) {
+                    this.showError('A senha deve ter no mínimo 6 caracteres!');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('http://127.0.0.1:3000/admin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: nome,
+                            email: email,
+                            password: senha,
+                            phone: telefone,
+                            role: papel,
+                            isActive: ativo
+                        })
+                    });
+
+                    if (response.ok) {
+                        this.showSuccess('Admin cadastrado com sucesso!');
+                        document.getElementById('formNovoAdmin').reset();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('modalNovoAdmin'));
+                        modal.hide();
+                        await this.loadAdmins();
+                    } else {
+                        const data = await response.json();
+                        this.showError(data.message || 'Erro ao cadastrar admin');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    this.showError('Erro ao cadastrar novo admin');
+                }
+            },
+
+            /**
+             * Abrir modal de edição
+             */
+            abrirEditarModal(adminId) {
+                const admin = this.admins.find(a => a.id === adminId);
+                if (!admin) return;
+
+                document.getElementById('editAdminId').value = admin.id;
+                document.getElementById('editAdminNome').value = admin.name;
+                document.getElementById('editAdminEmail').value = admin.email;
+                document.getElementById('editAdminTelefone').value = admin.phone || '';
+                document.getElementById('editAdminPapel').value = admin.role;
+                document.getElementById('editAdminAtivo').checked = admin.isActive;
+
+                this.modalEditarAdmin.show();
+            },
+
+            /**
+             * Editar admin
+             */
+            async handleEditAdmin(e) {
+                e.preventDefault();
+
+                const adminId = document.getElementById('editAdminId').value;
+                const nome = document.getElementById('editAdminNome').value;
+                const telefone = document.getElementById('editAdminTelefone').value;
+                const papel = document.getElementById('editAdminPapel').value;
+                const ativo = document.getElementById('editAdminAtivo').checked;
+
+                try {
+                    const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: nome,
+                            phone: telefone,
+                            role: papel,
+                            isActive: ativo
+                        })
+                    });
+
+                    if (response.ok) {
+                        this.showSuccess('Admin atualizado com sucesso!');
+                        this.modalEditarAdmin.hide();
+                        await this.loadAdmins();
+                    } else {
+                        const data = await response.json();
+                        this.showError(data.message || 'Erro ao atualizar admin');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    this.showError('Erro ao atualizar admin');
+                }
+            },
+
+            /**
+             * Deletar admin
+             */
+            async deletarAdmin(adminId) {
+                if (!confirm('Tem certeza que deseja deletar este administrador?')) return;
+
+                try {
+                    const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        this.showSuccess('Admin deletado com sucesso!');
+                        await this.loadAdmins();
+                    } else {
+                        this.showError('Erro ao deletar admin');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    this.showError('Erro ao deletar admin');
+                }
+            },
+
+            /**
+             * Mostrar notificação de sucesso
+             */
+            showSuccess(mensagem) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                alertDiv.role = 'alert';
+                alertDiv.innerHTML = `
+                    <i class="bi bi-check-circle me-2"></i>
+                    ${mensagem}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                
+                const mainContent = document.querySelector('.main-content');
+                mainContent.insertBefore(alertDiv, mainContent.firstChild);
+                
+                setTimeout(() => alertDiv.remove(), 5000);
+            },
+
+            /**
+             * Mostrar notificação de erro
+             */
+            showError(mensagem) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                alertDiv.role = 'alert';
+                alertDiv.innerHTML = `
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    ${mensagem}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                
+                const mainContent = document.querySelector('.main-content');
+                mainContent.insertBefore(alertDiv, mainContent.firstChild);
+                
+                setTimeout(() => alertDiv.remove(), 5000);
+            }
+        };
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            adminsManager.init();
+        });
+    </script>
+</body>
+</html>

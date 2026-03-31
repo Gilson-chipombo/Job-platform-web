@@ -58,6 +58,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="admins.html">
+                            <i class="bi bi-shield-lock"></i>Administradores
+                        </a>
+                    </li>
+                    <li>
                         <a href="configuracoes.html">
                             <i class="bi bi-gear"></i>Configurações
                         </a>
@@ -89,28 +94,95 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Nome Completo</label>
-                                        <input type="text" class="form-control" value="Administrador" readonly>
+                                        <input type="text" class="form-control" id="adminNome" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Cargo</label>
-                                        <input type="text" class="form-control" value="Administrador do Sistema" readonly>
+                                        <input type="text" class="form-control" id="adminCargo" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" value="admin@careeirahub.com" readonly>
+                                        <input type="email" class="form-control" id="adminEmail" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Telefone</label>
-                                        <input type="tel" class="form-control" placeholder="+244 900 000 000">
+                                        <input type="tel" class="form-control" id="adminTelefone" placeholder="+244 900 000 000">
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Permissions (Papel)</label>
-                                    <input type="text" class="form-control" value="Admin - Acesso Total" readonly>
+                                    <input type="text" class="form-control" id="adminPermissoes" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cadastrar Novo Admin -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Cadastrar Novo Admin</h5>
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="collapse" data-bs-target="#formNovoAdmin" aria-expanded="false">
+                                    <i class="bi bi-plus me-2"></i>Adicionar
+                                </button>
+                            </div>
+                            <div class="collapse" id="formNovoAdmin">
+                                <div class="card-body">
+                                    <form id="formCadastroAdmin">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Nome Completo *</label>
+                                                <input type="text" class="form-control" id="novoAdminNome" placeholder="Ex: João Silva" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email *</label>
+                                                <input type="email" class="form-control" id="novoAdminEmail" placeholder="admin@empresa.com" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Senha *</label>
+                                                <input type="password" class="form-control" id="novoAdminSenha" placeholder="••••••••" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Confirmar Senha *</label>
+                                                <input type="password" class="form-control" id="novoAdminConfirmSenha" placeholder="••••••••" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Telefone</label>
+                                                <input type="tel" class="form-control" id="novoAdminTelefone" placeholder="+244 900 000 000">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Papel/Permissões</label>
+                                                <select class="form-select" id="novoAdminPapel">
+                                                    <option value="admin">Administrador</option>
+                                                    <option value="moderador">Moderador</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" id="novoAdminAtivo" checked>
+                                                Usuário Ativo
+                                            </label>
+                                        </div>
+
+                                        <div class="d-flex gap-2">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-person-check me-2"></i>Cadastrar Admin
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#formNovoAdmin">
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -121,24 +193,26 @@
                                 <h5 class="mb-0">Alterar Senha</h5>
                             </div>
                             <div class="card-body">
-                                <div class="mb-3">
-                                    <label class="form-label">Senha Atual</label>
-                                    <input type="password" class="form-control" placeholder="••••••••">
-                                </div>
+                                <form id="formAlterarSenha">
+                                    <div class="mb-3">
+                                        <label class="form-label">Senha Atual</label>
+                                        <input type="password" class="form-control" id="senhaAtual" placeholder="••••••••" required>
+                                    </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Nova Senha</label>
-                                    <input type="password" class="form-control" placeholder="••••••••">
-                                </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nova Senha</label>
+                                        <input type="password" class="form-control" id="novaSenha" placeholder="••••••••" required>
+                                    </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Confirmar Senha</label>
-                                    <input type="password" class="form-control" placeholder="••••••••">
-                                </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Confirmar Senha</label>
+                                        <input type="password" class="form-control" id="confirmarSenha" placeholder="••••••••" required>
+                                    </div>
 
-                                <button class="btn btn-primary">
-                                    <i class="bi bi-check me-2"></i>Atualizar Senha
-                                </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-check me-2"></i>Atualizar Senha
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -152,42 +226,34 @@
                             <div class="card-body">
                                 <p class="mb-2">
                                     <i class="bi bi-check-circle text-success"></i>
-                                    <strong>Status:</strong> Autenticado
+                                    <strong>Status:</strong> <span id="statusAcesso">Autenticado</span>
                                 </p>
                                 <p class="mb-2">
                                     <i class="bi bi-shield-check text-success"></i>
-                                    <strong>Permissões:</strong> Completas
+                                    <strong>Permissões:</strong> <span id="statusPermissoes">Completas</span>
                                 </p>
                                 <p class="mb-2">
                                     <i class="bi bi-clock"></i>
-                                    <strong>Último Login:</strong> Hoje
+                                    <strong>Último Login:</strong> <span id="ultimoLogin">-</span>
                                 </p>
                                 <p class="mb-0">
                                     <i class="bi bi-calendar-event"></i>
-                                    <strong>Membro desde:</strong> Janeiro 2026
+                                    <strong>Membro desde:</strong> <span id="membroDesde">-</span>
                                 </p>
                             </div>
                         </div>
 
+                        <!-- Lista de Admins -->
                         <div class="card">
                             <div class="card-header bg-light">
-                                <h5 class="mb-0">Atividades Recentes</h5>
+                                <h5 class="mb-0">
+                                    <i class="bi bi-shield-lock me-2"></i>Admins do Sistema
+                                </h5>
                             </div>
                             <div class="card-body">
-                                <ul class="list-unstyled">
-                                    <li class="mb-3">
-                                        <small class="text-muted">Hoje</small><br>
-                                        Aprovou 5 usuários
-                                    </li>
-                                    <li class="mb-3">
-                                        <small class="text-muted">Ontem</small><br>
-                                        Rejeitou 2 usuários
-                                    </li>
-                                    <li class="mb-3">
-                                        <small class="text-muted">2 dias atrás</small><br>
-                                        Bloqueou 1 conta
-                                    </li>
-                                </ul>
+                                <div id="adminsList" class="list-group list-group-flush">
+                                    <p class="text-muted small">Carregando admins...</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -203,7 +269,257 @@
     </script>
     <script src="../js/usuarios-manager.js"></script>
     <script>
-        // Placeholder para lógica de perfil
+        // ============================================
+        // GERENCIAR PERFIL DO ADMIN
+        // ============================================
+
+        const adminProfileManager = {
+            currentAdmin: null,
+            admins: [],
+
+            async init() {
+                await this.loadCurrentAdmin();
+                await this.loadAllAdmins();
+                this.setupEventListeners();
+            },
+
+            /**
+             * Carregar dados do admin logado
+             */
+            async loadCurrentAdmin() {
+                try {
+                    const adminId = localStorage.getItem('adminId');
+                    if (!adminId) {
+                        console.error('ID do admin não encontrado');
+                        return;
+                    }
+
+                    const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}`);
+                    if (!response.ok) throw new Error('Erro ao carregar dados do admin');
+
+                    const admin = await response.json();
+                    this.currentAdmin = admin;
+                    this.displayCurrentAdmin();
+                } catch (error) {
+                    console.error('Erro ao carregar admin atual:', error);
+                }
+            },
+
+            /**
+             * Exibir dados do admin logado
+             */
+            displayCurrentAdmin() {
+                if (!this.currentAdmin) return;
+
+                document.getElementById('adminNome').value = this.currentAdmin.name || '';
+                document.getElementById('adminEmail').value = this.currentAdmin.email || '';
+                document.getElementById('adminTelefone').value = this.currentAdmin.phone || '';
+                document.getElementById('adminCargo').value = 'Administrador do Sistema';
+                document.getElementById('adminPermissoes').value = 'Admin - Acesso Total';
+                
+                // Atualizar status
+                document.getElementById('statusAcesso').textContent = 'Autenticado';
+                document.getElementById('statusPermissoes').textContent = 'Completas';
+                
+                if (this.currentAdmin.createdAt) {
+                    const criacao = new Date(this.currentAdmin.createdAt);
+                    document.getElementById('membroDesde').textContent = criacao.toLocaleDateString('pt-BR');
+                }
+            },
+
+            /**
+             * Carregar todos os admins
+             */
+            async loadAllAdmins() {
+                try {
+                    const response = await fetch('http://127.0.0.1:3000/admin');
+                    if (!response.ok) throw new Error('Erro ao carregar admins');
+
+                    this.admins = await response.json();
+                    this.displayAdminsList();
+                } catch (error) {
+                    console.error('Erro ao carregar lista de admins:', error);
+                }
+            },
+
+            /**
+             * Exibir lista de admins
+             */
+            displayAdminsList() {
+                const container = document.getElementById('adminsList');
+                
+                if (this.admins.length === 0) {
+                    container.innerHTML = '<p class="text-muted small">Nenhum admin cadastrado</p>';
+                    return;
+                }
+
+                container.innerHTML = this.admins.map(admin => `
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">${admin.name}</h6>
+                                <small class="text-muted">${admin.email}</small>
+                            </div>
+                            ${admin.id !== this.currentAdmin?.id ? `
+                                <button class="btn btn-sm btn-danger" onclick="adminProfileManager.deleteAdmin(${admin.id})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            ` : '<span class="badge bg-primary">Você</span>'}
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            /**
+             * Setup event listeners
+             */
+            setupEventListeners() {
+                // Formulário de cadastro de novo admin
+                const formCadastro = document.getElementById('formCadastroAdmin');
+                if (formCadastro) {
+                    formCadastro.addEventListener('submit', (e) => this.handleCreateAdmin(e));
+                }
+
+                // Formulário de alterar senha
+                const formSenha = document.getElementById('formAlterarSenha');
+                if (formSenha) {
+                    formSenha.addEventListener('submit', (e) => this.handleChangePassword(e));
+                }
+            },
+
+            /**
+             * Criar novo admin
+             */
+            async handleCreateAdmin(e) {
+                e.preventDefault();
+
+                const nome = document.getElementById('novoAdminNome').value;
+                const email = document.getElementById('novoAdminEmail').value;
+                const senha = document.getElementById('novoAdminSenha').value;
+                const confirmSenha = document.getElementById('novoAdminConfirmSenha').value;
+                const telefone = document.getElementById('novoAdminTelefone').value;
+                const papel = document.getElementById('novoAdminPapel').value;
+                const ativo = document.getElementById('novoAdminAtivo').checked;
+
+                // Validações
+                if (senha !== confirmSenha) {
+                    alert('As senhas não correspondem!');
+                    return;
+                }
+
+                if (senha.length < 6) {
+                    alert('A senha deve ter no mínimo 6 caracteres!');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('http://127.0.0.1:3000/admin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: nome,
+                            email: email,
+                            password: senha,
+                            phone: telefone,
+                            role: papel,
+                            isActive: ativo
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert('Admin cadastrado com sucesso!');
+                        // Limpar formulário
+                        document.getElementById('formCadastroAdmin').reset();
+                        // Fechar collapse
+                        const collapse = new bootstrap.Collapse(document.getElementById('formNovoAdmin'), { toggle: true });
+                        // Recarregar lista
+                        await this.loadAllAdmins();
+                    } else {
+                        alert(data.message || 'Erro ao cadastrar admin');
+                    }
+                } catch (error) {
+                    console.error('Erro ao cadastrar admin:', error);
+                    alert('Erro ao cadastrar novo admin');
+                }
+            },
+
+            /**
+             * Alterar senha
+             */
+            async handleChangePassword(e) {
+                e.preventDefault();
+
+                const senhaAtual = document.getElementById('senhaAtual').value;
+                const novaSenha = document.getElementById('novaSenha').value;
+                const confirmarSenha = document.getElementById('confirmarSenha').value;
+
+                if (novaSenha !== confirmarSenha) {
+                    alert('As novas senhas não correspondem!');
+                    return;
+                }
+
+                if (novaSenha.length < 6) {
+                    alert('A nova senha deve ter no mínimo 6 caracteres!');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`http://127.0.0.1:3000/admin/${this.currentAdmin.id}/change-password`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            currentPassword: senhaAtual,
+                            newPassword: novaSenha
+                        })
+                    });
+
+                    if (response.ok) {
+                        alert('Senha alterada com sucesso!');
+                        document.getElementById('formAlterarSenha').reset();
+                    } else {
+                        const data = await response.json();
+                        alert(data.message || 'Erro ao alterar senha');
+                    }
+                } catch (error) {
+                    console.error('Erro ao alterar senha:', error);
+                    alert('Erro ao alterar a senha');
+                }
+            },
+
+            /**
+             * Deletar admin
+             */
+            async deleteAdmin(adminId) {
+                if (!confirm('Tem certeza que deseja deletar este admin?')) return;
+
+                try {
+                    const response = await fetch(`http://127.0.0.1:3000/admin/${adminId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('Admin deletado com sucesso!');
+                        await this.loadAllAdmins();
+                    } else {
+                        alert('Erro ao deletar admin');
+                    }
+                } catch (error) {
+                    console.error('Erro ao deletar admin:', error);
+                    alert('Erro ao deletar admin');
+                }
+            }
+        };
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            adminProfileManager.init();
+        });
     </script>
 </body>
 </html>

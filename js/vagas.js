@@ -11,6 +11,7 @@ class VagasManager {
         this.filtrosRemuneracao = [];
         this.filtrosLocalizacao = '';
         this.searchTerm = '';
+        this.companyIdFilter = null; // Filtro por empresa
         
         // Paginação
         this.itemsPerPage = 50;
@@ -21,9 +22,56 @@ class VagasManager {
     }
 
     async init() {
+        // Verificar se há ID de empresa na URL
+        this.checkCompanyIdFromURL();
+        
         await this.loadVagasFromAPI();
+        console.log("=== DEBUG VAGAS ===");
+        console.log("Total de vagas carregadas:", this.vagas.length);
+        console.log("Filtro de empresa ativo:", this.companyIdFilter);
+        console.log("CompanyIds disponíveis:", [...new Set(this.vagas.map(v => v.companyId))]);
+        
         this.setupEventListeners();
-        this.renderVagas(this.vagas);
+        
+        // Aplicar filtro de empresa se houver
+        if (this.companyIdFilter) {
+            console.log("Filtrando vagas para companyId:", this.companyIdFilter);
+            const vagasFiltradasPorEmpresa = this.vagas.filter(vaga => {
+                const match = vaga.companyId === this.companyIdFilter;
+                if (match) {
+                    console.log("✓ Vaga correspondida:", vaga.titulo, "- CompanyId:", vaga.companyId);
+                }
+                return match;
+            });
+            console.log("Vagas após filtro:", vagasFiltradasPorEmpresa.length);
+            this.renderVagas(vagasFiltradasPorEmpresa);
+        } else {
+            console.log("Nenhum filtro de empresa. Mostrando todas as vagas");
+            this.renderVagas(this.vagas);
+        }
+    }
+
+    /**
+     * Verificar se há ID de empresa na URL e atualizar título
+     */
+    checkCompanyIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const companyId = params.get('empresa');
+        
+        console.log("URL Params:", window.location.search);
+        console.log("Company ID from URL:", companyId);
+        
+        if (companyId) {
+            this.companyIdFilter = parseInt(companyId);
+            console.log("Filtro de empresa ativo:", this.companyIdFilter);
+            
+            // Atualizar título da página se houver filtro por empresa
+            const titleElement = document.querySelector('h1');
+            if (titleElement) {
+                // O nome da empresa será atualizado após carregar as vagas
+                titleElement.innerHTML = '<i class="bi bi-briefcase me-2 text-primary"></i>Vagas da Empresa';
+            }
+        }
     }
 
     async loadVagasFromAPI() {
@@ -35,19 +83,40 @@ class VagasManager {
             }
 
             const data = await response.json();
+            
+            // Log da primeira vaga para entender a estrutura
+            console.log("Primeira vaga da API:", JSON.stringify(data[0], null, 2));
 
-            this.vagas = data.map(vaga => ({
-                id: vaga.id,
-                titulo: vaga.title,
-                tipo: vaga.type,
-                localizacao: vaga.Location,
-                empresa: vaga.company?.name || "Empresa",
-                salario_min: vaga.minSalary,
-                salario_max: vaga.maxSalary,
-                currency: "AOA",
-                isPaid: vaga.minSalary > 0,
-                skills: vaga.skills ? vaga.skills.split(",") : []
-            }));
+            this.vagas = data.map(vaga => {
+                // Tentar extrair ID da empresa - pode estar em vários lugares
+                let companyId = null;
+                
+                if (vaga.company?.id) {
+                    companyId = vaga.company.id;
+                } else if (vaga.companyId) {
+                    companyId = vaga.companyId;
+                } else if (vaga.idCompany) {
+                    companyId = vaga.idCompany;
+                }
+                
+                const vagaObj = {
+                    id: vaga.id,
+                    titulo: vaga.title,
+                    tipo: vaga.type,
+                    localizacao: vaga.Location,
+                    empresa: vaga.company?.name || "Empresa",
+                    companyId: companyId,
+                    salario_min: vaga.minSalary,
+                    salario_max: vaga.maxSalary,
+                    currency: "AOA",
+                    isPaid: vaga.minSalary > 0,
+                    skills: vaga.skills ? vaga.skills.split(",") : []
+                };
+                
+                return vagaObj;
+            });
+            
+            console.log("Todas as vagas mapeadas:", this.vagas);
 
         } catch (error) {
             console.error("Erro ao carregar vagas:", error);
@@ -103,6 +172,9 @@ class VagasManager {
         this.searchTerm = searchVagas ? searchVagas.value.toLowerCase() : '';
 
         let vagasFiltradas = this.vagas.filter(vaga => {
+            // Filtro por empresa (se houver)
+            let passCompany = !this.companyIdFilter || vaga.companyId === this.companyIdFilter;
+            
             let passType = this.filtrosTipo.length === 0 || this.filtrosTipo.includes(vaga.tipo);
             let passLocation = !this.filtrosLocalizacao || vaga.localizacao === this.filtrosLocalizacao;
             let passSearch = !this.searchTerm ||
@@ -117,7 +189,7 @@ class VagasManager {
                     (this.filtrosRemuneracao.includes('paid') && vagaIsPaid);
             }
 
-            return passType && passLocation && passSearch && passRemuneracao;
+            return passCompany && passType && passLocation && passSearch && passRemuneracao;
         });
 
         this.renderVagas(vagasFiltradas);
@@ -139,7 +211,13 @@ class VagasManager {
         this.filtrosLocalizacao = '';
         this.searchTerm = '';
 
-        this.renderVagas(this.vagas);
+        // Se houver filtro de empresa, mostrar apenas vagas dessa empresa
+        if (this.companyIdFilter) {
+            const vagasEmpresa = this.vagas.filter(vaga => vaga.companyId === this.companyIdFilter);
+            this.renderVagas(vagasEmpresa);
+        } else {
+            this.renderVagas(this.vagas);
+        }
     }
 
     /**

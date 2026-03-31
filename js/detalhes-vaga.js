@@ -6,6 +6,7 @@ class VagaDetailsManager {
     constructor() {
         this.vagaId = this.getVagaIdFromUrl();
         this.vaga = null;
+        this.userApplication = null;
         this.authManager = new AuthManager();
         this.favoritesManager = new FavoritesManager();
         this.init();
@@ -147,10 +148,14 @@ class VagaDetailsManager {
      * Eventos
      */
     setupEventListeners() {
+        console.log("Configurando event listeners");
+        
         const aplicarBtn = document.getElementById('aplicarBtn');
+        console.log("Botão Aplicar encontrado:", aplicarBtn);
 
         if (aplicarBtn) {
             aplicarBtn.addEventListener('click', () => {
+                console.log("Click no botão Aplicar");
                 if (this.authManager.isLoggedIn()) {
                     const modal = new bootstrap.Modal(document.getElementById('aplicacaoModal'));
                     modal.show();
@@ -160,6 +165,16 @@ class VagaDetailsManager {
                         window.location.href = 'login.html';
                     }, 1500);
                 }
+            });
+        }
+
+        const cancelarBtn = document.getElementById('cancelarCandidaturaBtn');
+        console.log("Botão Cancelar encontrado:", cancelarBtn);
+        
+        if (cancelarBtn) {
+            cancelarBtn.addEventListener('click', () => {
+                console.log("Click no botão Cancelar");
+                this.handleCancelApplication();
             });
         }
 
@@ -176,9 +191,82 @@ class VagaDetailsManager {
         if (this.authManager.isLoggedIn()) {
             if (notLoggedIn) notLoggedIn.style.display = 'none';
             if (loggedIn) loggedIn.style.display = 'block';
+            this.checkUserApplication();
         } else {
             if (notLoggedIn) notLoggedIn.style.display = 'block';
             if (loggedIn) loggedIn.style.display = 'none';
+        }
+    }
+
+    /**
+     * Verificar se o usuário já se candidatou a esta vaga
+     */
+    async checkUserApplication() {
+        try {
+            const idStudent = localStorage.getItem("idStudent");
+            if (!idStudent) {
+                console.log("ID do estudante não encontrado");
+                return;
+            }
+
+            const response = await fetch(`http://127.0.0.1:3000/applies/student/${idStudent}`);
+            const applications = await response.json();
+
+            console.log("Candidaturas do usuário:", applications);
+            console.log("Vaga ID procurado:", this.vagaId);
+
+            // Procurar por uma aplicação para esta vaga (tentar múltiplos nomes de campo)
+            const myApplication = applications.find(app => {
+                return app.vagaId === this.vagaId || 
+                       app.idVaga === this.vagaId || 
+                       (app.vaga && app.vaga.id === this.vagaId);
+            });
+
+            console.log("Candidatura encontrada:", myApplication);
+
+            if (myApplication) {
+                this.userApplication = myApplication;
+                console.log("Mostrando botão Cancelar Candidatura");
+                this.updateApplicationButtonsState(true);
+            } else {
+                console.log("Mostrando botão Candidatar-se agora");
+                this.updateApplicationButtonsState(false);
+            }
+        } catch (error) {
+            console.error('Erro ao verificar candidatura:', error);
+            this.updateApplicationButtonsState(false);
+        }
+    }
+
+    /**
+     * Atualizar estado dos botões de candidatura
+     */
+    updateApplicationButtonsState(hasApplied) {
+        const aplicarBtn = document.getElementById('aplicarBtn');
+        const cancelarBtn = document.getElementById('cancelarCandidaturaBtn');
+
+        console.log("Atualizando botões - hasApplied:", hasApplied);
+        console.log("Botão Aplicar:", aplicarBtn);
+        console.log("Botão Cancelar:", cancelarBtn);
+
+        if (hasApplied) {
+            if (aplicarBtn) {
+                aplicarBtn.style.display = 'none';
+                console.log("Escondendo botão Aplicar");
+            }
+            if (cancelarBtn) {
+                cancelarBtn.style.display = 'block';
+                console.log("Mostrando botão Cancelar");
+            }
+        } else {
+            if (aplicarBtn) {
+                aplicarBtn.style.display = 'block';
+                console.log("Mostrando botão Aplicar");
+            }
+            if (cancelarBtn) {
+                cancelarBtn.style.display = 'none';
+                console.log("Escondendo botão Cancelar");
+            }
         }
     }
 
@@ -213,6 +301,40 @@ class VagaDetailsManager {
                 showNotification('Vaga adicionada aos favoritos', 'success');
             }
         });
+    }
+
+    /**
+     * Cancelar candidatura
+     */
+    async handleCancelApplication() {
+        if (!this.userApplication) {
+            showNotification('Erro: candidatura não encontrada', 'danger');
+            return;
+        }
+
+        // Confirmação
+        if (!confirm('Tem certeza que deseja cancelar esta candidatura?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/applies/${this.userApplication.id}`, {
+                method: 'DELETE'
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showNotification('Candidatura cancelada com sucesso!', 'success');
+                this.userApplication = null;
+                this.updateApplicationButtonsState(false);
+            } else {
+                showNotification(data.message || 'Erro ao cancelar candidatura', 'danger');
+            }
+        } catch (error) {
+            console.error('Erro ao cancelar candidatura:', error);
+            showNotification('Erro ao cancelar candidatura. Tente novamente.', 'danger');
+        }
     }
 
     async handleApplicationSubmit(e) {
@@ -255,6 +377,12 @@ class VagaDetailsManager {
             else{
 
                 showNotification('Candidatura enviada com sucesso!', 'success');
+
+                // Atualizar estado dos botões
+                if (data.id) {
+                    this.userApplication = data;
+                    this.updateApplicationButtonsState(true);
+                }
 
                 const modal = bootstrap.Modal.getInstance(document.getElementById('aplicacaoModal'));
                 modal.hide();

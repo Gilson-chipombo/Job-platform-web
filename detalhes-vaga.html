@@ -149,6 +149,9 @@
                                 <button class="btn btn-success w-100 mb-3" id="aplicarBtn">
                                     <i class="bi bi-paper-plane me-2"></i>Candidatar-se Agora
                                 </button>
+                                <button class="btn btn-danger w-100 mb-3" id="cancelarCandidaturaBtn" style="display: none;">
+                                    <i class="bi bi-trash me-2"></i>Cancelar Candidatura
+                                </button>
                                 <p class="text-muted small text-center mb-0">
                                     Ao se candidatar você concorda com nossos <a href="#" class="text-decoration-none">termos</a>.
                                 </p>
@@ -161,9 +164,8 @@
                         <div class="card-body p-4">
                             <h5 class="fw-bold mb-3">Informações da Empresa</h5>
                             <div class="text-center mb-4">
-                                <div class="bg-info text-white rounded-circle p-4 mx-auto" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="bi bi-building" style="font-size: 40px;"></i>
-                                </div>
+                                <img id="empresaLogo" src="" alt="Logo da Empresa" 
+                                     style="max-width: 100px; max-height: 100px; object-fit: contain; border-radius: 8px;">
                             </div>
                             <h6 class="fw-bold text-center mb-3" id="empresaNome">Tech Innovations</h6>
                             <ul class="list-unstyled small">

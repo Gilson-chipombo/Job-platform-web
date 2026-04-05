@@ -250,11 +250,28 @@ Limpar
 
 <script>
 
+// Função para obter parâmetros da URL
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search)
+    return {
+        tipo: params.get('tipo')
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
 
-await userManager.loadUsers()
-
-renderUsuarios(userManager.getAllUsers())
+    await userManager.loadUsers()
+    
+    // Obter parâmetro tipo da URL
+    const urlParams = getUrlParams()
+    
+    // Se houver parâmetro tipo na URL, pré-selecionar e aplicar o filtro
+    if (urlParams.tipo) {
+        document.getElementById("tipoFilter").value = urlParams.tipo
+        applyFilters()
+    } else {
+        renderUsuarios(userManager.getAllUsers())
+    }
 
 })
 

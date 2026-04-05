@@ -219,22 +219,22 @@ Limpar
 <!-- MODAL -->
 
 <div class="modal fade" id="userModal">
-
 <div class="modal-dialog modal-lg">
-
 <div class="modal-content">
-
-<div class="modal-header">
+<div class="modal-header bg-light">
 <h5 class="modal-title" id="userModalTitle"></h5>
 <button class="btn-close" data-bs-dismiss="modal"></button>
 </div>
-
 <div class="modal-body" id="userModalBody"></div>
-
-<div class="modal-footer">
+<div class="modal-footer bg-light">
+<button class="btn btn-warning" id="btnAprovarModal" onclick="aprovarDoModal()" style="display:none">
+<i class="bi bi-check-circle me-2"></i>Aprovar
+</button>
+<button class="btn btn-danger" id="btnRejeitarModal" onclick="rejeitarDoModal()" style="display:none">
+<i class="bi bi-x-circle me-2"></i>Rejeitar
+</button>
 <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 </div>
-
 </div>
 </div>
 </div>
@@ -398,23 +398,181 @@ async function rejectUser(id){
 
 
 function viewUser(id){
+    const user = userManager.getUserById(id);
+    
+    if (!user) return;
 
-const user = userManager.getUserById(id)
+    // Guardar ID do usuário para ações
+    window.currentUserId = id;
+    window.currentUserType = user.tipo;
 
-const html = `
+    let html = `
+        <div class="row">
+            <div class="col-md-8">
+    `;
 
-<p><strong>Nome:</strong> ${user.nome}</p>
-<p><strong>Email:</strong> ${user.email}</p>
-<p><strong>Telefone:</strong> ${user.telefone}</p>
-<p><strong>Status:</strong> ${user.status}</p>
+    // Informações Básicas
+    html += `
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                <h6 class="mb-0"><i class="bi bi-person-circle me-2"></i>Informações Básicas</h6>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="text-muted small">Nome</label>
+                        <p class="fw-bold">${user.nome}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small">Tipo</label>
+                        <p>
+                            <span class="badge bg-${user.tipo === 'estudante' ? 'info' : 'warning'} text-dark">
+                                ${user.tipo.charAt(0).toUpperCase() + user.tipo.slice(1)}
+                            </span>
+                        </p>
+                    </div>
+                </div>
 
-`
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="text-muted small">Email</label>
+                        <p><a href="mailto:${user.email}">${user.email}</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small">Telefone</label>
+                        <p>${user.telefone || '-'}</p>
+                    </div>
+                </div>
 
-document.getElementById("userModalTitle").innerText=user.nome
-document.getElementById("userModalBody").innerHTML=html
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="text-muted small">Status</label>
+                        <p>
+                            <span class="badge bg-${
+                                user.status === 'aprovado' ? 'success' : 
+                                user.status === 'pendente' ? 'warning' : 'danger'
+                            }">
+                                ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted small">Data de Cadastro</label>
+                        <p>${new Date(user.dataCadastr).toLocaleDateString('pt-BR')}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 
-new bootstrap.Modal(document.getElementById("userModal")).show()
+    // Informações Específicas
+    if (user.tipo === 'estudante') {
+        html += `
+            <div class="card mb-3">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Informações do Estudante</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Escola/Universidade</label>
+                        <p>${user.escola || '-'}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Habilidades</label>
+                        <p>${user.skills ? user.skills.split(',').map(s => `<span class="badge bg-light text-dark">${s.trim()}</span>`).join(' ') : '-'}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (user.tipo === 'empresa') {
+        html += `
+            <div class="card mb-3">
+                <div class="card-header bg-warning text-dark">
+                    <h6 class="mb-0"><i class="bi bi-building me-2"></i>Informações da Empresa</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Segmento</label>
+                        <p>${user.segmento || '-'}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
+    html += `
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>Status Conta</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="small text-muted mb-2">Bloqueado:</p>
+                        <p>
+                            <span class="badge bg-${user.bloqueado ? 'danger' : 'success'}">
+                                ${user.bloqueado ? 'SIM' : 'NÃO'}
+                            </span>
+                        </p>
+                        
+                        <hr>
+                        
+                        <p class="small text-muted mb-2">Status Atual:</p>
+                        <p class="fw-bold">${user.status.toUpperCase()}</p>
+                        
+                        <hr>
+                        
+                        <p class="small text-muted mb-2">ID do Usuário:</p>
+                        <p class="small font-monospace">${user.id}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("userModalTitle").innerHTML = `
+        <i class="bi bi-person-circle me-2"></i>${user.nome}
+    `;
+    document.getElementById("userModalBody").innerHTML = html;
+
+    // Mostrar botões de ação apenas se pendente
+    const btnAprovar = document.getElementById("btnAprovarModal");
+    const btnRejeitar = document.getElementById("btnRejeitarModal");
+    
+    if (user.status === 'pendente') {
+        btnAprovar.style.display = 'inline-block';
+        btnRejeitar.style.display = 'inline-block';
+    } else {
+        btnAprovar.style.display = 'none';
+        btnRejeitar.style.display = 'none';
+    }
+
+    new bootstrap.Modal(document.getElementById("userModal")).show();
+}
+
+// Funções para ações no modal
+async function aprovarDoModal() {
+    const userId = window.currentUserId;
+    const userType = window.currentUserType;
+    
+    if (confirm("Tem certeza que deseja aprovar este usuário?")) {
+        await userManager.approveUser(userId, userType);
+        await userManager.loadUsers();
+        renderUsuarios(userManager.getAllUsers());
+        bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
+    }
+}
+
+async function rejeitarDoModal() {
+    const userId = window.currentUserId;
+    const userType = window.currentUserType;
+    
+    if (confirm("Tem certeza que deseja rejeitar este usuário?")) {
+        await userManager.rejectUser(userId, userType);
+        await userManager.loadUsers();
+        renderUsuarios(userManager.getAllUsers());
+        bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
+    }
 }
 
 </script>

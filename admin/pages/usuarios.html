@@ -1,297 +1,296 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Usuários - Painel Administrativo CarreiraHub</title>
+    <title>Usuários - Painel Administrativo CarreiraHub</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-<link rel="stylesheet" href="../css/painel-styles.css">
+    <link rel="stylesheet" href="../css/painel-styles.css">
 
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-<div class="container-fluid">
-
-<button class="btn btn-link text-white d-md-none me-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Abrir menu">
-    <i class="bi bi-list fs-4"></i>
-</button>
-
-<a class="navbar-brand d-flex align-items-center" href="dashboard.html">
-    <i class="bi bi-shield-lock me-2"></i>
-    CarreiraHub Admin
-</a>
-
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
-    <span class="navbar-toggler-icon"></span>
-</button>
-
-<div class="collapse navbar-collapse" id="navbarNav">
-<ul class="navbar-nav ms-auto"></ul>
-</div>
-
-</div>
-</nav>
-
-<div class="container-fluid">
-<div class="row">
-
-<!-- SIDEBAR -->
-<nav id="sidebarMenu" class="col-md-2 d-md-block sidebar collapse" aria-label="Sidebar">
-
-<ul class="sidebar-menu">
-
-<li>
-<a href="dashboard.html">
-<i class="bi bi-speedometer2"></i>
-Dashboard
-</a>
-</li>
-
-<li>
-<a href="usuarios.html?tipo=estudante">
-<i class="bi bi-person-badge"></i>
-Estudantes
-</a>
-</li>
-
-<li>
-<a href="usuarios.html?tipo=empresa">
-<i class="bi bi-building"></i>
-Empresas
-</a>
-</li>
-
-<li>
-<a href="perfil-admin.html">
-<i class="bi bi-person-circle"></i>
-Perfil
-</a>
-</li>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+
+            <button class="btn btn-link text-white d-md-none me-2 p-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Abrir menu">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+
+            <a class="navbar-brand d-flex align-items-center" href="dashboard.html">
+                <i class="bi bi-shield-lock me-2"></i>
+                CarreiraHub Admin
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto"></ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <nav id="sidebarMenu" class="col-md-2 d-md-block sidebar collapse" aria-label="Sidebar">
+
+                <ul class="sidebar-menu">
+
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="bi bi-speedometer2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="usuarios.html" class="active">
+                            <i class="bi bi-people"></i>
+                            Usuários
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="perfil-admin.html">
+                            <i class="bi bi-person-circle"></i>
+                            Perfil
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="admins.html">
+                            <i class="bi bi-shield-lock"></i>
+                            Administradores
+                        </a>
+                    </li>
 
-<li>
-<a href="admins.html">
-<i class="bi bi-shield-lock"></i>
-Administradores
-</a>
-</li>
+                    <li>
+                        <a href="configuracoes.html">
+                            <i class="bi bi-gear"></i>
+                            Configurações
+                        </a>
+                    </li>
 
-<li>
-<a href="configuracoes.html">
-<i class="bi bi-gear"></i>
-Configurações
-</a>
-</li>
+                    <li>
+                        <a href="#" onclick="logoutAdmin(); return false;">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Sair
+                        </a>
+                    </li>
 
-<li>
-<a href="#" onclick="logoutAdmin(); return false;">
-<i class="bi bi-box-arrow-right"></i>
-Sair
-</a>
-</li>
+                </ul>
+            </nav>
 
-</ul>
-</nav>
+            <!-- MAIN -->
+            <main class="col-md-10 main-content">
 
-<!-- MAIN -->
-<main class="col-md-10 main-content">
+                <div class="page-header">
+                    <h1><i class="bi bi-people"></i> Gerenciamento de Usuários</h1>
+                    <p>Controle e aprovação de contas</p>
+                </div>
 
-<div class="page-header">
-<h1><i class="bi bi-people"></i> Gerenciamento de Usuários</h1>
-<p>Controle e aprovação de contas</p>
-</div>
 
+                <!-- FILTROS -->
+                <div class="filter-section">
 
-<!-- FILTROS -->
-<div class="filter-section">
+                    <div class="row g-3">
 
-<div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label"><i class="bi bi-search me-2"></i>Buscar</label>
+                            <input type="text" class="form-control" id="searchInput"
+                                placeholder="Nome, email ou telefone...">
+                        </div>
 
-<div class="col-md-3">
-<label class="form-label">Buscar</label>
-<input type="text" class="form-control" id="searchInput" placeholder="Nome, email ou telefone...">
-</div>
+                        <div class="col-md-2">
+                            <label class="form-label"><i class="bi bi-tag me-2"></i>Tipo</label>
 
-<div class="col-md-3">
-<label class="form-label">Tipo</label>
+                            <select class="form-select" id="tipoFilter">
+                                <option value="">Todos</option>
+                                <option value="estudante"><i class="bi bi-person-badge"></i> Estudante</option>
+                                <option value="empresa"><i class="bi bi-building"></i> Empresa</option>
+                            </select>
 
-<select class="form-select" id="tipoFilter">
-<option value="">Todos</option>
-<option value="estudante">Estudante</option>
-<option value="empresa">Empresa</option>
-</select>
+                        </div>
 
-</div>
+                        <div class="col-md-2">
+                            <label class="form-label"><i class="bi bi-check-circle me-2"></i>Status</label>
 
-<div class="col-md-3">
-<label class="form-label">Status</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">Todos</option>
+                                <option value="aprovado">Aprovado</option>
+                                <option value="pendente">Pendente</option>
+                                <option value="rejeitado">Rejeitado</option>
+                            </select>
 
-<select class="form-select" id="statusFilter">
-<option value="">Todos</option>
-<option value="aprovado">Aprovado</option>
-<option value="pendente">Pendente</option>
-<option value="rejeitado">Rejeitado</option>
-</select>
+                        </div>
 
-</div>
+                        <div class="col-md-2">
+                            <label class="form-label"><i class="bi bi-lock me-2"></i>Bloqueio</label>
 
-<div class="col-md-3">
-<label class="form-label">Bloqueio</label>
+                            <select class="form-select" id="bloqueioFilter">
+                                <option value="">Todos</option>
+                                <option value="bloqueado">Bloqueados</option>
+                                <option value="ativo">Ativos</option>
+                            </select>
 
-<select class="form-select" id="bloqueioFilter">
-<option value="">Todos</option>
-<option value="bloqueado">Bloqueados</option>
-<option value="ativo">Ativos</option>
-</select>
+                        </div>
 
-</div>
+                        <div class="col-md-2 d-flex align-items-end gap-2">
+                            <button class="btn btn-primary w-100" onclick="applyFilters()">
+                                <i class="bi bi-funnel me-1"></i>Filtrar
+                            </button>
+                        </div>
 
-</div>
+                    </div>
 
-<div class="row mt-3">
+                    <div class="row mt-2">
 
-<div class="col-md-12">
+                        <div class="col-md-12">
 
-<button class="btn btn-primary" onclick="applyFilters()">
-<i class="bi bi-funnel me-2"></i>
-Aplicar Filtros
-</button>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="clearFilters()">
+                                <i class="bi bi-arrow-clockwise me-1"></i>Limpar Filtros
+                            </button>
 
-<button class="btn btn-secondary" onclick="clearFilters()">
-<i class="bi bi-arrow-clockwise me-2"></i>
-Limpar
-</button>
+                        </div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
 
+                <!-- TABELA -->
 
-<!-- TABELA -->
+                <div class="table-wrapper">
 
-<div class="table-wrapper">
+                    <table class="table table-hover mb-0" id="usuariosTable">
 
-<table class="table table-hover mb-0" id="usuariosTable">
+                        <thead>
 
-<thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                                <th>Telefone</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
 
-<tr>
-<th>Nome</th>
-<th>Email</th>
-<th>Tipo</th>
-<th>Telefone</th>
-<th>Status</th>
-<th>Data</th>
-<th>Ações</th>
-</tr>
+                        </thead>
 
-</thead>
+                        <tbody id="usuariosTableBody"></tbody>
 
-<tbody id="usuariosTableBody"></tbody>
+                    </table>
 
-</table>
+                    <div class="no-data" id="emptyUsers" style="display:none">
 
-<div class="no-data" id="emptyUsers" style="display:none">
+                        <i class="bi bi-inbox"></i>
 
-<i class="bi bi-inbox"></i>
+                        <p>Nenhum usuário encontrado</p>
 
-<p>Nenhum usuário encontrado</p>
+                    </div>
 
-</div>
+                </div>
 
-</div>
+            </main>
 
-</main>
+        </div>
+    </div>
 
-</div>
-</div>
 
+    <!-- MODAL -->
 
-<!-- MODAL -->
+    <div class="modal fade" id="userModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="userModalTitle"></h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="userModalBody"></div>
+                <div class="modal-footer bg-light">
+                    <button class="btn btn-warning" id="btnAprovarModal" onclick="aprovarDoModal()"
+                        style="display:none">
+                        <i class="bi bi-check-circle me-2"></i>Aprovar
+                    </button>
+                    <button class="btn btn-danger" id="btnRejeitarModal" onclick="rejeitarDoModal()"
+                        style="display:none">
+                        <i class="bi bi-x-circle me-2"></i>Rejeitar
+                    </button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="modal fade" id="userModal">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header bg-light">
-<h5 class="modal-title" id="userModalTitle"></h5>
-<button class="btn-close" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body" id="userModalBody"></div>
-<div class="modal-footer bg-light">
-<button class="btn btn-warning" id="btnAprovarModal" onclick="aprovarDoModal()" style="display:none">
-<i class="bi bi-check-circle me-2"></i>Aprovar
-</button>
-<button class="btn btn-danger" id="btnRejeitarModal" onclick="rejeitarDoModal()" style="display:none">
-<i class="bi bi-x-circle me-2"></i>Rejeitar
-</button>
-<button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-</div>
-</div>
-</div>
-</div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth-painel.js"></script>
+    <script>
+        adminAuth.ensureAuthenticated();
+    </script>
+    <script src="../js/usuarios-manager.js"></script>
 
-<script src="../js/auth-painel.js"></script>
-<script>
-    adminAuth.ensureAuthenticated();
-</script>
-<script src="../js/usuarios-manager.js"></script>
+    <script>
 
-<script>
+        // Função para obter parâmetros da URL
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search)
+            return {
+                tipo: params.get('tipo')
+            }
+        }
 
-// Função para obter parâmetros da URL
-function getUrlParams() {
-    const params = new URLSearchParams(window.location.search)
-    return {
-        tipo: params.get('tipo')
-    }
-}
+        document.addEventListener("DOMContentLoaded", async () => {
 
-document.addEventListener("DOMContentLoaded", async () => {
+            await userManager.loadUsers()
 
-    await userManager.loadUsers()
-    
-    // Obter parâmetro tipo da URL
-    const urlParams = getUrlParams()
-    
-    // Se houver parâmetro tipo na URL, pré-selecionar e aplicar o filtro
-    if (urlParams.tipo) {
-        document.getElementById("tipoFilter").value = urlParams.tipo
-        applyFilters()
-    } else {
-        renderUsuarios(userManager.getAllUsers())
-    }
+            // Obter parâmetro tipo da URL
+            const urlParams = getUrlParams()
 
-})
+            // Se houver parâmetro tipo na URL, pré-selecionar e aplicar o filtro
+            if (urlParams.tipo) {
+                document.getElementById("tipoFilter").value = urlParams.tipo
+                applyFilters()
+            } else {
+                renderUsuarios(userManager.getAllUsers())
+            }
 
+        })
 
-function renderUsuarios(usuarios){
 
-const tbody = document.getElementById("usuariosTableBody")
-const empty = document.getElementById("emptyUsers")
+        function renderUsuarios(usuarios) {
 
-if(!usuarios.length){
+            const tbody = document.getElementById("usuariosTableBody")
+            const empty = document.getElementById("emptyUsers")
 
-tbody.innerHTML=""
-empty.style.display="block"
-return
+            if (!usuarios.length) {
 
-}
+                tbody.innerHTML = ""
+                empty.style.display = "block"
+                return
 
-empty.style.display="none"
+            }
 
-tbody.innerHTML = usuarios.map(user => `
+            empty.style.display = "none"
+
+            tbody.innerHTML = usuarios.map(user => `
 
 <tr>
 
@@ -337,82 +336,82 @@ ${new Date(user.dataCadastr).toLocaleDateString()}
 
 `).join("")
 
-}
+        }
 
 
-function applyFilters(){
-    let users = userManager.getAllUsers()
+        function applyFilters() {
+            let users = userManager.getAllUsers()
 
-    const search = document.getElementById("searchInput").value.toLowerCase()
-    const tipo = document.getElementById("tipoFilter").value
-    const status = document.getElementById("statusFilter").value
+            const search = document.getElementById("searchInput").value.toLowerCase()
+            const tipo = document.getElementById("tipoFilter").value
+            const status = document.getElementById("statusFilter").value
 
-    if(search){
-        users = users.filter(u =>
-        u.nome.toLowerCase().includes(search) ||
-        u.email.toLowerCase().includes(search) ||
-        (u.telefone && u.telefone.includes(search))
-        )
-    }
+            if (search) {
+                users = users.filter(u =>
+                    u.nome.toLowerCase().includes(search) ||
+                    u.email.toLowerCase().includes(search) ||
+                    (u.telefone && u.telefone.includes(search))
+                )
+            }
 
-    if(tipo){
-        users = users.filter(u => u.tipo === tipo)
-    }
+            if (tipo) {
+                users = users.filter(u => u.tipo === tipo)
+            }
 
-    if(status){
-        users = users.filter(u => u.status === status)
-    }
-    renderUsuarios(users)
-}
-
-
-function clearFilters(){
-
-document.getElementById("searchInput").value=""
-document.getElementById("tipoFilter").value=""
-document.getElementById("statusFilter").value=""
-
-renderUsuarios(userManager.getAllUsers())
-
-}
+            if (status) {
+                users = users.filter(u => u.status === status)
+            }
+            renderUsuarios(users)
+        }
 
 
+        function clearFilters() {
 
-async function approveUser(id){
+            document.getElementById("searchInput").value = ""
+            document.getElementById("tipoFilter").value = ""
+            document.getElementById("statusFilter").value = ""
 
-    if(!confirm("Aprovar usuário?")) return
-    await userManager.approveUser(id)
-    await userManager.loadUsers()
-    renderUsuarios(userManager.getAllUsers())
-}
+            renderUsuarios(userManager.getAllUsers())
 
-
-async function rejectUser(id){
-
-    if(!confirm("Rejeitar usuário?")) return
-
-    await userManager.rejectUser(id)
-    await userManager.loadUsers()
-    renderUsuarios(userManager.getAllUsers())
-}
+        }
 
 
-function viewUser(id){
-    const user = userManager.getUserById(id);
-    
-    if (!user) return;
 
-    // Guardar ID do usuário para ações
-    window.currentUserId = id;
-    window.currentUserType = user.tipo;
+        async function approveUser(id, tipo) {
 
-    let html = `
+            if (!confirm("Aprovar usuário?")) return
+            await userManager.approveUser(id, tipo)
+            await userManager.loadUsers()
+            applyFilters()
+        }
+
+
+        async function rejectUser(id, tipo) {
+
+            if (!confirm("Rejeitar usuário?")) return
+
+            await userManager.rejectUser(id, tipo)
+            await userManager.loadUsers()
+            applyFilters()
+        }
+
+
+        function viewUser(id) {
+            const user = userManager.getUserById(id);
+
+            if (!user) return;
+
+            // Guardar ID do usuário para ações
+            window.currentUserId = id;
+            window.currentUserType = user.tipo;
+
+            let html = `
         <div class="row">
             <div class="col-md-8">
     `;
 
-    // Informações Básicas
-    html += `
+            // Informações Básicas
+            html += `
         <div class="card mb-3">
             <div class="card-header bg-primary text-white">
                 <h6 class="mb-0"><i class="bi bi-person-circle me-2"></i>Informações Básicas</h6>
@@ -448,10 +447,9 @@ function viewUser(id){
                     <div class="col-md-6">
                         <label class="text-muted small">Status</label>
                         <p>
-                            <span class="badge bg-${
-                                user.status === 'aprovado' ? 'success' : 
-                                user.status === 'pendente' ? 'warning' : 'danger'
-                            }">
+                            <span class="badge bg-${user.status === 'aprovado' ? 'success' :
+                    user.status === 'pendente' ? 'warning' : 'danger'
+                }">
                                 ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                             </span>
                         </p>
@@ -465,9 +463,9 @@ function viewUser(id){
         </div>
     `;
 
-    // Informações Específicas
-    if (user.tipo === 'estudante') {
-        html += `
+            // Informações Específicas
+            if (user.tipo === 'estudante') {
+                html += `
             <div class="card mb-3">
                 <div class="card-header bg-info text-white">
                     <h6 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Informações do Estudante</h6>
@@ -484,8 +482,8 @@ function viewUser(id){
                 </div>
             </div>
         `;
-    } else if (user.tipo === 'empresa') {
-        html += `
+            } else if (user.tipo === 'empresa') {
+                html += `
             <div class="card mb-3">
                 <div class="card-header bg-warning text-dark">
                     <h6 class="mb-0"><i class="bi bi-building me-2"></i>Informações da Empresa</h6>
@@ -498,9 +496,9 @@ function viewUser(id){
                 </div>
             </div>
         `;
-    }
+            }
 
-    html += `
+            html += `
             </div>
             <div class="col-md-4">
                 <div class="card bg-light">
@@ -530,52 +528,53 @@ function viewUser(id){
         </div>
     `;
 
-    document.getElementById("userModalTitle").innerHTML = `
+            document.getElementById("userModalTitle").innerHTML = `
         <i class="bi bi-person-circle me-2"></i>${user.nome}
     `;
-    document.getElementById("userModalBody").innerHTML = html;
+            document.getElementById("userModalBody").innerHTML = html;
 
-    // Mostrar botões de ação apenas se pendente
-    const btnAprovar = document.getElementById("btnAprovarModal");
-    const btnRejeitar = document.getElementById("btnRejeitarModal");
-    
-    if (user.status === 'pendente') {
-        btnAprovar.style.display = 'inline-block';
-        btnRejeitar.style.display = 'inline-block';
-    } else {
-        btnAprovar.style.display = 'none';
-        btnRejeitar.style.display = 'none';
-    }
+            // Mostrar botões de ação apenas se pendente
+            const btnAprovar = document.getElementById("btnAprovarModal");
+            const btnRejeitar = document.getElementById("btnRejeitarModal");
 
-    new bootstrap.Modal(document.getElementById("userModal")).show();
-}
+            if (user.status === 'pendente') {
+                btnAprovar.style.display = 'inline-block';
+                btnRejeitar.style.display = 'inline-block';
+            } else {
+                btnAprovar.style.display = 'none';
+                btnRejeitar.style.display = 'none';
+            }
 
-// Funções para ações no modal
-async function aprovarDoModal() {
-    const userId = window.currentUserId;
-    const userType = window.currentUserType;
-    
-    if (confirm("Tem certeza que deseja aprovar este usuário?")) {
-        await userManager.approveUser(userId, userType);
-        await userManager.loadUsers();
-        renderUsuarios(userManager.getAllUsers());
-        bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
-    }
-}
+            new bootstrap.Modal(document.getElementById("userModal")).show();
+        }
 
-async function rejeitarDoModal() {
-    const userId = window.currentUserId;
-    const userType = window.currentUserType;
-    
-    if (confirm("Tem certeza que deseja rejeitar este usuário?")) {
-        await userManager.rejectUser(userId, userType);
-        await userManager.loadUsers();
-        renderUsuarios(userManager.getAllUsers());
-        bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
-    }
-}
+        // Funções para ações no modal
+        async function aprovarDoModal() {
+            const userId = window.currentUserId;
+            const userType = window.currentUserType;
 
-</script>
+            if (confirm("Tem certeza que deseja aprovar este usuário?")) {
+                await userManager.approveUser(userId, userType);
+                await userManager.loadUsers();
+                renderUsuarios(userManager.getAllUsers());
+                bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
+            }
+        }
+
+        async function rejeitarDoModal() {
+            const userId = window.currentUserId;
+            const userType = window.currentUserType;
+
+            if (confirm("Tem certeza que deseja rejeitar este usuário?")) {
+                await userManager.rejectUser(userId, userType);
+                await userManager.loadUsers();
+                renderUsuarios(userManager.getAllUsers());
+                bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
+            }
+        }
+
+    </script>
 
 </body>
+
 </html>

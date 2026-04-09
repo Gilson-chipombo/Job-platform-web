@@ -3,15 +3,15 @@
    ============================================ */
 
 :root {
-    --primary: #E21912;
-    --primary-dark: #c71510;
-    --success: #198754;
-    --danger: #dc3545;
-    --warning: #ffc107;
-    --info: #0dcaf0;
-    --secondary: #6c757d;
-    --light: #f5f5f5;
-    --dark: #1A3960;
+    --primary: #FFC107;
+    --primary-dark: #E5AE00;
+    --success: #00B894;
+    --danger: #D63031;
+    --warning: #FDCB6E;
+    --info: #0984E3;
+    --secondary: #636E72;
+    --light: #F8F9FA;
+    --dark: #2D3436;
 }
 
 *,
@@ -352,7 +352,7 @@ nav.navbar .dropdown-item:hover {
 .btn-primary:hover {
     background-color: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.25);
 }
 
 .btn-sm {
@@ -432,7 +432,7 @@ nav.navbar .dropdown-item:hover {
 .btn-login:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(226, 25, 18, 0.2);
+    box-shadow: 0 6px 18px rgba(255, 193, 7, 0.2);
 }
 
 .demo-info {

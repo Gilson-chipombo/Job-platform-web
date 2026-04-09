@@ -212,11 +212,33 @@ class VagaDetailsManager {
     checkUserStatus() {
         const notLoggedIn = document.getElementById('notLoggedIn');
         const loggedIn = document.getElementById('loggedIn');
+        const userType = localStorage.getItem('userType');
 
         if (this.authManager.isLoggedIn()) {
             if (notLoggedIn) notLoggedIn.style.display = 'none';
             if (loggedIn) loggedIn.style.display = 'block';
-            this.checkUserApplication();
+
+            // Se for empresa, esconder botões de candidatura
+            if (userType === 'empresa') {
+                const aplicarBtn = document.getElementById('aplicarBtn');
+                const cancelarBtn = document.getElementById('cancelarCandidaturaBtn');
+                const favoritarBtn = document.getElementById('favoritarBtn');
+                
+                if (aplicarBtn) aplicarBtn.style.display = 'none';
+                if (cancelarBtn) cancelarBtn.style.display = 'none';
+                if (favoritarBtn) favoritarBtn.style.display = 'none';
+                
+                // Adicionar aviso que empresas não podem se candidatar
+                const actionContainer = document.querySelector('.job-action-card') || loggedIn;
+                if (actionContainer) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-warning mt-3';
+                    alertDiv.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>Empresas não podem se candidatar a vagas.';
+                    actionContainer.appendChild(alertDiv);
+                }
+            } else {
+                this.checkUserApplication();
+            }
         } else {
             if (notLoggedIn) notLoggedIn.style.display = 'block';
             if (loggedIn) loggedIn.style.display = 'none';

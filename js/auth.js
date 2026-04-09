@@ -236,15 +236,54 @@ function cleanupOldAuthData() {
 }
 
 /**
+ * Exibir notificação com fallback caso showNotification não exista
+ */
+function safeShowNotification(message, type = 'info') {
+    if (typeof showNotification === 'function') {
+        showNotification(message, type);
+        return;
+    }
+    console.log(`[${type.toUpperCase()}] ${message}`);
+}
+
+/**
  * Verificar se página requer autenticação e redirecionar se necessário
  * Use data-require-auth="true" no <body> para proteger a página
  */
 function checkProtectedPageAccess() {
     const body = document.querySelector('body[data-require-auth]');
     if (body && !authManager.isLoggedIn()) {
-        showNotification('Você precisa estar logado para acessar esta página!', 'warning');
+        safeShowNotification('Você precisa estar logado para acessar esta página!', 'warning');
         setTimeout(() => {
             window.location.href = 'login.html';
+        }, 1500);
+    }
+}
+
+/**
+ * Esconder elementos que não devem aparecer para usuários já autenticados
+ * Use data-hide-when-authenticated nos elementos que devem ficar ocultos.
+ */
+function hideAuthenticatedOnlyElements() {
+    if (!authManager.isLoggedIn()) {
+        return;
+    }
+
+    document.querySelectorAll('[data-hide-when-authenticated]').forEach((element) => {
+        element.style.display = 'none';
+    });
+}
+
+/**
+ * Redirecionar usuários autenticados que tentarem abrir páginas de cadastro/login
+ * Use data-guest-only-page="true" no <body> das páginas que devem ser inacessíveis.
+ */
+function redirectAuthenticatedUsersFromGuestPages() {
+    const body = document.querySelector('body[data-guest-only-page]');
+    if (body && authManager.isLoggedIn()) {
+        safeShowNotification('Você já está logado. Redirecionando...', 'info');
+        setTimeout(() => {
+            window.location.href = 'index.html';
         }, 1500);
     }
 }
@@ -253,4 +292,6 @@ function checkProtectedPageAccess() {
 document.addEventListener('DOMContentLoaded', function() {
     cleanupOldAuthData();
     checkProtectedPageAccess();
+    hideAuthenticatedOnlyElements();
+    redirectAuthenticatedUsersFromGuestPages();
 });

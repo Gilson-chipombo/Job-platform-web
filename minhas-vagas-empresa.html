@@ -191,7 +191,6 @@
                                 <th>Skills</th>
                                 <th>CV</th>
                                 <th>Status</th>
-                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,16 +206,10 @@
                         <td>${c.student.areaInterest}</td>
                         <td>${c.student.skills}</td>
                         <td>
-                            ${c.cvUrl ? `<a href="${c.cvUrl}" target="_blank" class="btn btn-sm btn-outline-primary">Ver CV</a>` : 'CV não disponível'}
+                            ${c.cvUrl ? `<a href="${c.cvUrl}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i>Ver CV</a>` : 'CV não disponível'}
                         </td>
                         <td>
-                            <span class="badge bg-warning text-dark" id="candidate-status-${c.id}">${c.status || 'Pendente'}</span>
-                        </td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-success" onclick="setCandidateStatus(${c.id}, 'Aprovado')">Aprovar</button>
-                                <button class="btn btn-sm btn-danger" onclick="setCandidateStatus(${c.id}, 'Rejeitado')">Rejeitar</button>
-                            </div>
+                            <span class="badge bg-warning text-dark">${c.status || 'Pendente'}</span>
                         </td>
                     </tr>
                 `;
@@ -231,13 +224,7 @@
         }
     }
 
-    function setCandidateStatus(candidateId, status) {
-        const statusEl = document.getElementById(`candidate-status-${candidateId}`);
-        if (!statusEl) return;
 
-        statusEl.textContent = status;
-        statusEl.className = `badge ${status === 'Aprovado' ? 'bg-success' : 'bg-danger'} text-white`;
-    }
 
     async function deleteVaga(vagaId) {
         if (!confirm('Tem certeza que deseja deletar esta vaga?')) {

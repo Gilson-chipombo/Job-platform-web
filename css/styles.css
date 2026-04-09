@@ -5,16 +5,19 @@
    ============================================ */
 
 :root {
-    --primary-color: #E21912;
-    --secondary-color: #1A3960;
-    --accent-color: #22c55e;
-    --success-color: #22c55e;
-    --danger-color: #ef4444;
-    --warning-color: #f97316;
-    --info-color: #0ea5e9;
-    --light-bg: #f5f5f5;
-    --dark-bg: #1A3960;
-    --border-radius: 8px;
+    --primary-color: #FFC107; /* Amarelo Moderno */
+    --primary-dark: #E5AE00;
+    --primary-light: #FFD54F;
+    --secondary-color: #2D3436; /* Cinza Escuro Profissional */
+    --accent-color: #FFC107;
+    --success-color: #00B894;
+    --danger-color: #D63031;
+    --warning-color: #FDCB6E;
+    --info-color: #0984E3;
+    --light-bg: #F8F9FA;
+    --dark-bg: #2D3436;
+    --border-radius: 12px;
+    --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -201,15 +204,17 @@ main {
 }
 
 .dashboard-stats .stat-card {
-    background: #fef5f4;
+    background: white;
     border: none;
-    border-left: 4px solid var(--primary-color);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    border-bottom: 4px solid var(--primary-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dashboard-stats .stat-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(226, 25, 18, 0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-stats .stat-card h4 {
@@ -232,7 +237,7 @@ main {
 }
 
 .dashboard-table .table thead {
-    background: #fef5f4;
+    background: #FFF9E6;
 }
 
 .dashboard-table .table-hover tbody tr:hover {
@@ -266,14 +271,15 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
     background: var(--primary-color);
     border: none;
-    color: white;
+    color: #2D3436;
+    font-weight: 600;
 }
 
 .btn-primary:hover {
-    background: #c71510;
+    background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(226, 25, 18, 0.3);
-    color: white;
+    box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
+    color: #2D3436;
 }
 
 .btn-primary:active {
@@ -385,7 +391,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(226, 25, 18, 0.15);
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.15);
 }
 
 .form-label {
@@ -449,8 +455,8 @@ footer a:hover {
 .step-circle.active {
     background: var(--primary-color);
     border-color: var(--primary-color);
-    color: white;
-    box-shadow: 0 5px 15px rgba(226, 25, 18, 0.3);
+    color: #2D3436;
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
 }
 
 .step-circle.completed {

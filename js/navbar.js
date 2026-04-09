@@ -104,21 +104,42 @@ class NavbarManager {
      */
     renderAutenticatedNav(navbarNav) {
         const userName = this.getUserName();
+        const userType = this.userType;
+        
+        let menuItems = '';
+        
+        if (userType === 'empresa') {
+            // Menu específico para Empresa
+            menuItems = `
+                <li><a class="dropdown-item" href="painel-empresa.html">
+                    <i class="bi bi-speedometer2 me-2"></i>Painel
+                </a></li>
+                <li><a class="dropdown-item" href="publicar-vaga.html">
+                    <i class="bi bi-plus-circle me-2"></i>Publicar Vaga
+                </a></li>
+            `;
+        } else {
+            // Menu padrão para Estudante
+            menuItems = `
+                <li><a class="dropdown-item" href="perfil.html">
+                    <i class="bi bi-person me-2"></i>Perfil
+                </a></li>
+                <li><a class="dropdown-item" href="vagas-salvas.html">
+                    <i class="bi bi-heart me-2"></i>Vagas Salvas
+                </a></li>
+                <li><a class="dropdown-item" href="minhas-candidaturas.html">
+                    <i class="bi bi-file-earmark-text me-2"></i>Minhas Candidaturas
+                </a></li>
+            `;
+        }
+
         const dropdownHtml = `
             <li class="nav-item dropdown" data-nav="user-dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle me-1"></i>${userName}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="perfil.html">
-                        <i class="bi bi-person me-2"></i>Perfil
-                    </a></li>
-                    <li><a class="dropdown-item" href="vagas-salvas.html">
-                        <i class="bi bi-heart me-2"></i>Vagas Salvas
-                    </a></li>
-                    <li><a class="dropdown-item" href="minhas-candidaturas.html">
-                        <i class="bi bi-file-earmark-text me-2"></i>Minhas Candidaturas
-                    </a></li>
+                    ${menuItems}
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">
                         <i class="bi bi-box-arrow-right me-2"></i>Sair

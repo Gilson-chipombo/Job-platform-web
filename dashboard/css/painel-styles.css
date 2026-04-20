@@ -1,0 +1,437 @@
+/* ============================================
+   PAINEL ADMINISTRATIVO - ESTILOS
+   ============================================ */
+
+:root {
+    --primary: #0d6efd;
+    --primary-dark: #0b5ed7;
+    --success: #198754;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #0dcaf0;
+    --secondary: #6c757d;
+    --light: #f8f9fa;
+    --dark: #212529;
+}
+
+body {
+    background-color: (#f8f9fa);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+
+nav.navbar {
+    border-bottom: 2px solid var(--light);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+nav.navbar .navbar-brand {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+nav.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav.navbar .nav-link:hover {
+    color: white !important;
+}
+
+nav.navbar .dropdown-menu {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav.navbar .dropdown-item {
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+}
+
+nav.navbar .dropdown-item:hover {
+    background-color: var(--light);
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.sidebar {
+    background: white;
+    border-right: 1px solid #e0e0e0;
+    min-height: 100vh;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: var(--dark);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar-menu a:hover {
+    background-color: var(--light);
+    border-left-color: var(--primary);
+    color: var(--primary);
+}
+
+.sidebar-menu a.active {
+    background-color: var(--light);
+    border-left-color: var(--primary);
+    color: var(--primary);
+}
+
+.sidebar-menu i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   DASHBOARD
+   ============================================ */
+
+.main-content {
+    background-color: #f8f9fa;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1,
+.page-header h2 {
+    color: var(--dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* ============================================
+   CARDS DE ESTATÍSTICAS
+   ============================================ */
+
+.stat-card {
+    background: white;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card .card-body {
+    padding: 25px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Cores para estatísticas */
+.stat-primary .stat-number {
+    color: var(--primary);
+}
+
+.stat-success .stat-number {
+    color: var(--success);
+}
+
+.stat-warning .stat-number {
+    color: var(--warning);
+}
+
+.stat-danger .stat-number {
+    color: var(--danger);
+}
+
+.stat-info .stat-number {
+    color: var(--info);
+}
+
+/* ============================================
+   TABELAS
+   ============================================ */
+
+.table-wrapper {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.table-wrapper table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: var(--light);
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    color: var(--dark);
+    font-weight: 600;
+    padding: 15px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.table tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table tbody tr.blocked {
+    opacity: 0.6;
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-aprovado {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-pendente {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.badge-rejeitado {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.badge-bloqueado {
+    background-color: #e7d4f5;
+    color: #664d03;
+}
+
+.badge-estudante {
+    background-color: #cfe2ff;
+    color: #084298;
+}
+
+.badge-empresa {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+
+.btn {
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.25);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+/* ============================================
+   FILTROS
+   ============================================ */
+
+.filter-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--dark);
+}
+
+.filter-section .form-control,
+.filter-section .form-select {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.filter-section .form-control:focus,
+.filter-section .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* ============================================
+   MODAIS
+   ============================================ */
+
+.modal-header {
+    background-color: var(--light);
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.modal-header .btn-close {
+    opacity: 0.6;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        min-height: auto;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .stat-card .card-body {
+        padding: 15px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .table thead th,
+    .table tbody td {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================
+   ANIMAÇÕES
+   ============================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.opacity-75 {
+    opacity: 0.75;
+}
+
+.border-top-light {
+    border-top: 1px solid #e0e0e0;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--secondary);
+}
+
+.no-data i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}

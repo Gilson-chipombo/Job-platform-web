@@ -191,6 +191,7 @@
                                 <th>Skills</th>
                                 <th>CV</th>
                                 <th>Status</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -209,7 +210,10 @@
                             ${c.cvUrl ? `<a href="${c.cvUrl}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-download me-1"></i>Ver CV</a>` : 'CV não disponível'}
                         </td>
                         <td>
-                            <span class="badge bg-warning text-dark">${c.status || 'Pendente'}</span>
+                            <span class="badge ${getStatusBadgeClass(c.status)}">${c.status}</span>
+                        </td>
+                        <td>
+                            ${getActionButtons(c.id, c.status)}
                         </td>
                     </tr>
                 `;
@@ -259,6 +263,113 @@
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 500);
+        }
+    }
+
+    // Função para retornar a classe do badge baseado no status
+    function getStatusBadgeClass(status) {
+        switch(status?.toLowerCase()) {
+            case 'aprovada':
+                return 'bg-success';
+            case 'rejeitada':
+                return 'bg-danger';
+            case 'pendente':
+                return 'bg-warning text-dark';
+            default:
+                return 'bg-secondary';
+        }
+    }
+
+    // Função para retornar os botões de ações baseado no status
+    function getActionButtons(applyId, status) {
+        if (status?.toLowerCase() === 'pendente') {
+            return `
+                <div class="btn-group btn-group-sm" role="group">
+                    <button class="btn btn-success" onclick="approveApplication(${applyId})" title="Aprovar">
+                        <i class="bi bi-check-lg"></i>
+                    </button>
+                    <button class="btn btn-danger" onclick="showRejectModal(${applyId})" title="Rejeitar">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+            `;
+        } else if (status?.toLowerCase() === 'aprovada') {
+            return `<span class="badge bg-success">Aprovada</span>`;
+        } else if (status?.toLowerCase() === 'rejeitada') {
+            return `<span class="badge bg-danger">Rejeitada</span>`;
+        }
+        return '-';
+    }
+
+    // Função para aprovar candidatura
+    async function approveApplication(applyId) {
+        applyId = parseInt(applyId); // Garantir que é número
+        
+        if (!confirm('Tem certeza que deseja aprovar esta candidatura?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/applies/${applyId}/approve`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${authManager.getToken()}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                alert('Candidatura aprovada com sucesso! Email enviado ao candidato.');
+                location.reload();
+            } else {
+                const error = await response.json();
+                alert(`Erro ao aprovar: ${error.message || 'Erro desconhecido'}`);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao aprovar a candidatura');
+        }
+    }
+
+    // Modal para rejeição com motivo
+    function showRejectModal(applyId) {
+        applyId = parseInt(applyId); // Garantir que é número
+        const reason = prompt('Indique o motivo da rejeição (opcional):', '');
+        if (reason !== null) {
+            rejectApplication(applyId, reason);
+        }
+    }
+
+    // Função para rejeitar candidatura
+    async function rejectApplication(applyId, reason = '') {
+        applyId = parseInt(applyId); // Garantir que é número
+        
+        if (!confirm('Tem certeza que deseja rejeitar esta candidatura?')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/applies/${applyId}/reject`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${authManager.getToken()}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    reason: reason || 'Não foi selecionado nesta ocasião'
+                })
+            });
+
+            if (response.ok) {
+                alert('Candidatura rejeitada com sucesso! Email enviado ao candidato.');
+                location.reload();
+            } else {
+                const error = await response.json();
+                alert(`Erro ao rejeitar: ${error.message || 'Erro desconhecido'}`);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao rejeitar a candidatura');
         }
     }
 </script>

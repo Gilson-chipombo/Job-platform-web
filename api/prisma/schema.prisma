@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id           Int     @id @default(autoincrement())
+  fullName     String
+  email        String  @unique
+  telphone     Int     @unique
+  nif          String  @unique
+  school       String
+  year         String
+  turno        String
+  areaInterest String
+  state        String? @default("Pendente")
+  type         String? @default("Estudante")
+  skills       String?
+  password     String
+
+  applies Apply[]
+
+  createdAt DateTime @default(now())
+}
+
+model Company {
+  id              Int     @id @default(autoincrement())
+  name            String  @unique
+  nif             String  @unique
+  description     String?
+  segment         String
+  size            String
+  website         String?
+  email           String  @unique
+  telphone        String  @unique
+  responsavelName String?
+  role            String
+  password        String
+  state           String  @default("Pendente")
+  type            String? @default("Empresa")
+  address         String
+  city            String
+  Province        String
+
+  vagas Vaga[]
+
+  createdAt DateTime @default(now())
+}
+
+model Vaga {
+  id             Int     @id @default(autoincrement())
+  title          String
+  type           String
+  location       String
+  minSalary      Float
+  maxSalary      Float?
+  experience     String
+  description    String?
+  responsability String?
+  requirements   String?
+  skills         String?
+  beneficios     String?
+  idCompany      Int
+
+  company Company @relation(fields: [idCompany], references: [id])
+
+  applies Apply[]
+
+  createdAt DateTime @default(now())
+}
+
+model Apply {
+  id          Int    @id @default(autoincrement())
+  idStudent   Int
+  idVaga      Int
+  description String
+  status      String @default("pendente")
+  cvPath          String?
+
+  student Student @relation(fields: [idStudent], references: [id], onDelete: Cascade)
+  vaga    Vaga    @relation(fields: [idVaga], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([idStudent, idVaga])
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}

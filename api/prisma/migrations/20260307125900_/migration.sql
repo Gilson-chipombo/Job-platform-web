@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Apply` ADD COLUMN `cvPath` VARCHAR(191) NULL;

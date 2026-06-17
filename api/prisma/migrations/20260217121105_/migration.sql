@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Student` MODIFY `Year` VARCHAR(191) NOT NULL;
